@@ -236,16 +236,19 @@
       var v = vek === null ? null : vek;
       prazdno(vrstvy.kurzor);
 
-      // Bez kurzoru jen legenda a pobídka — čísla z pravého okraje osy
-      // by mátla, protože nikam nepatří.
+      // Hodnota má vždycky vlastní řádek a pevné místo — jinak se legenda
+      // při najetí přelomí jinak a celá karta poskočí do jiné výšky.
+      // Bez kurzoru stojí na jejím místě pomlčka.
       var radky = CESTY.map(function (c) {
-        var hodnota = '';
+        var hodnota = '—';
         if (v !== null) {
-          var r = renta(kapital(v - M.vekStart, stav.vstup.pocatek, stav.vstup.mesicne, c.vynos));
-          hodnota = ' <strong>' + kc(r) + '</strong>';
+          hodnota = kc(renta(kapital(v - M.vekStart, stav.vstup.pocatek, stav.vstup.mesicne, c.vynos)));
         }
-        return '<span class="graf__legendaPolozka"><i style="background:' + c.barva + '"></i>'
-             + c.nazev + hodnota + '</span>';
+        return '<span class="graf__legendaPolozka">'
+             + '<i style="background:' + c.barva + '"></i>'
+             + '<span class="graf__legendaNazev">' + c.nazev + '</span>'
+             + '<span class="graf__legendaHodnota">' + hodnota + '</span>'
+             + '</span>';
       });
       var hlavicka = v === null
         ? '<span class="graf__vyzva">Přejeďte po grafu</span>'

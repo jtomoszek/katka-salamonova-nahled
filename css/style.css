@@ -329,14 +329,19 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
   }
 }
 
+/* Čtyři karty ve dvou řadách vedle časové osy. */
+.certifikace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--gutter);
+  margin-top: var(--gutter);
+}
 .card--cert {
   border-radius: 14px;
   padding: 25px 20px;
   text-align: center;
 }
 .card--cert .ikona--sm { margin: 0 auto 8px; }
-.s--milniky .row--tesne + .row--tesne { margin-top: var(--gutter); }
-.s--milniky .row--tesne:first-of-type { margin-top: var(--gutter); }
 
 
 /* ---------- sekce 6 a 7 — studie / reference -------------- */
@@ -416,15 +421,25 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 .graf__vodic     { stroke: var(--copper-dark); stroke-width: 1; opacity: .5; }
 .graf__kurzorBod { stroke: var(--surface); stroke-width: 2; }
 
+/* Pevná mřížka: hlavička přes celou šířku, pod ní dvě cesty vedle sebe,
+   každá s názvem a hodnotou pod sebou. Výška je tím konstantní a karta
+   při najetí myší nepodskočí. */
 .graf__odecet {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 6px 16px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 14px;
   margin: 10px 0 0;
-  min-height: 1.5em;
   font-size: 12.5px;
-  line-height: 1.5;
+  line-height: 1.45;
+}
+.graf__odecetVek,
+.graf__vyzva {
+  grid-column: 1 / -1;
+  /* Hlavička musí zůstat na jednom řádku — jinak je klidový stav
+     („Přejeďte po grafu“) vyšší než stav s věkem a karta poskočí. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .graf__odecetVek { font-weight: 700; }
 .graf__vyzva {
@@ -432,14 +447,29 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
   color: var(--copper-dark);
 }
 .graf__vyzva::after { content: ' →'; }
-.graf__legendaPolozka { display: inline-flex; align-items: baseline; gap: 6px; }
+.graf__legendaPolozka {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  column-gap: 6px;
+  align-items: center;
+  min-width: 0;
+}
 .graf__legendaPolozka i {
+  grid-column: 1; grid-row: 1;
   width: 10px; height: 10px;
   border-radius: 50%;
-  flex: 0 0 auto;
-  transform: translateY(1px);
 }
-.graf__legendaPolozka strong { font-weight: 600; }
+.graf__legendaNazev {
+  grid-column: 2; grid-row: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.graf__legendaHodnota {
+  grid-column: 2; grid-row: 2;
+  font-weight: 700;
+  white-space: nowrap;
+}
 
 .graf__ovladace {
   display: grid;
@@ -516,14 +546,15 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 /* ---------- sekce 8 — co u mě nenajdete ------------------- */
 
 .s--nenajdete { border-top: 1px solid var(--hairline); padding: 100px 0; }
-.row--nenajdete .col--uzky   { flex: 0 0 25%; }
-.row--nenajdete .col--siroky { flex: 0 0 75%; }
+/* Vlevo nadpis, vpravo první karta. Poměr je štědřejší k nadpisu než
+   původních 25/75 — ten se ve čtvrtinové šířce lámal na tři řádky. */
+.row--nenajdete .col--uzky   { flex: 0 0 38%; align-self: center; }
+.row--nenajdete .col--siroky { flex: 1 1 auto; }
 .zvyraznene { color: var(--copper-dark); }
 .podnadpis  { margin-top: 1em; }
 .zapor { color: var(--copper-dark); }
 
-.card--siroka, .card--zapor { border-radius: 14px; padding: 25px 20px; }
-.card--siroka { border-radius: 18px; }
+.card--zapor { border-radius: 14px; padding: 25px 20px; }
 .s--nenajdete .row--gap { margin-top: var(--gutter); }
 
 
@@ -630,6 +661,7 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 
   .col--prazdny { display: none; }
   .row--mrizka { grid-template-columns: 1fr 1fr; }
+  .row--nenajdete .col--uzky { flex: 1 1 100%; }
   .col--p40 { padding: 24px 0; }
 
   /* Po zalomení do jednoho sloupce už fotka nemá k čemu se přizpůsobovat,
@@ -656,6 +688,7 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
   .txt--pt80 { padding-top: 48px; }
   .card--pilir { padding: 32px 24px; }
   .row--mrizka { grid-template-columns: 1fr; gap: 32px; }
+  .certifikace { grid-template-columns: 1fr; gap: 16px; }
   .paticka__text { max-width: none; }
   .paticka__spodek { margin-top: 34px; }
   .podpis { margin-bottom: 40px; }
