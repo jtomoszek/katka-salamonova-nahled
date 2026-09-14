@@ -1,0 +1,3 @@
+# Stránka zatím není určená k indexaci.
+User-agent: *
+Disallow: /
