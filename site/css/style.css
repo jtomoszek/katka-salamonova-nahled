@@ -124,9 +124,11 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
 .s--hero h2 { text-align: center; }
 .s--hero h1 { font-size: var(--fs-h1-hero); text-align: center; }
 .s--hero p  { text-align: center; }
-/* Originál měl hvězdičky bílé — počítal s tmavším hero snímkem.
-   Na současné fotce (světlé studiové pozadí) by zanikly, proto měděná. */
-.stars { color: var(--copper); }
+/* Originál měl hvězdičky bílé, což počítalo s jinou fotkou. Na šedém
+   studiovém pozadí má bílá kontrast 2,1:1 a měď dokonce 1,5:1 — obojí
+   zaniká. Tmavě hnědá dá 5,2:1 a drží i na světlém podkladu, kdyby se
+   hero fotka zase měnila. */
+.stars { color: var(--brown); }
 
 /* ---- spodní přechod hera: rozostření + gradient do pozadí ---- */
 
