@@ -325,19 +325,58 @@
       </div>
     </div>
     <div class="col col--p40">
-      <img class="studie-img" src="assets/img/pripadova-studie.webp" data-fallback="assets/img/placeholder-studie.svg"
-           alt="Případová studie" width="2253" height="1918">
+      <!-- Interaktivní model místo statického obrázku. Vstupy si nastaví
+           návštěvník sám, křivky počítá js/graf.js. -->
+      <div class="graf" data-graf>
+        <p class="graf__nadpis">Kdy vám portfolio začne platit rentu?</p>
+
+        <svg class="graf__plocha" viewBox="0 0 520 300" role="img"
+             aria-labelledby="graf-popis" preserveAspectRatio="xMidYMid meet"></svg>
+        <p class="graf__popis vizualne-skryte" id="graf-popis"></p>
+
+        <p class="graf__odecet"></p>
+
+        <div class="graf__ovladace">
+          <label class="graf__ovladac">
+            <span class="graf__stitek">Výchozí portfolio <b data-vypis="pocatek"></b></span>
+            <input type="range" data-vstup="pocatek" min="1000000" max="20000000" step="500000" value="10000000">
+          </label>
+          <label class="graf__ovladac">
+            <span class="graf__stitek">Měsíčně investuji <b data-vypis="mesicne"></b></span>
+            <input type="range" data-vstup="mesicne" min="5000" max="80000" step="1000" value="35000">
+          </label>
+          <label class="graf__ovladac">
+            <span class="graf__stitek">Cílová renta <b data-vypis="cil"></b></span>
+            <input type="range" data-vstup="cil" min="20000" max="120000" step="5000" value="60000">
+          </label>
+        </div>
+
+        <p class="graf__shrnuti"></p>
+
+        <p class="graf__poznamka">
+          Ilustrativní model, ne příslib výnosu. Počítá s reálným výnosem trhu 5,5 % ročně
+          (tedy už po inflaci) a bezpečným výběrem 4 % ročně. Rozdíl mezi cestami dělají
+          poplatky — 0,6 % u provázaného celku proti 2,4 % u deseti produktů vedle sebe —
+          a část kapitálu, která v roztříštěném portfoliu reálně nevydělává.
+        </p>
+      </div>
     </div>
   </div>
 </section>
 
 
 <!-- ============================================================
-     SEKCE 7 — Reference
-     POZOR: v původní databázi je tato sekce nedodělaná — pod nadpisem
-     „Co o mě říkají klienti“ je omylem zkopírovaný obsah sekce 6.
-     Zachováno 1:1. Skutečné reference sem teprve patří.
-     ============================================================ -->
+     SEKCE 7 — Reference — DOČASNĚ SKRYTÁ
+     ============================================================
+     V původní databázi je tahle sekce nedodělaná: pod nadpisem
+     „Co o mě říkají klienti“ je omylem zkopírovaný obsah sekce 6
+     a skutečné reference chybí. V náhledu pro klientku by to působilo
+     jako chyba, proto je zakomentovaná.
+
+     Až budou reference k dispozici, odeberte tenhle komentář
+     (řádek s otevřením a řádek se zavřením níž) a vyměňte obsah.
+     ============================================================
+
 <section class="s s--reference">
   <div class="row">
     <div class="col">
@@ -363,6 +402,8 @@
     </div>
   </div>
 </section>
+
+     ============================================================ -->
 
 
 <!-- ============================================================
@@ -418,5 +459,6 @@
 </section>
 
 <script src="js/main.js"></script>
+<script src="js/graf.js"></script>
 </body>
 </html>

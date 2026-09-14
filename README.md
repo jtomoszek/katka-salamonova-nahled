@@ -54,7 +54,8 @@ Vytěžené podklady leží v `podklady/`:
 site/
 ├─ index.html               # celá stránka, 9 sekcí okomentovaných podle originálu
 ├─ css/style.css            # design systém — barvy, typografie a odsazení z databáze
-├─ js/main.js               # náhrada chybějících fotografií placeholderem
+├─ js/main.js               # náhrada chybějících fotek, paralax hera
+├─ js/graf.js               # interaktivní graf případové studie
 ├─ assets/img/
 │  ├─ podpis.png            # 172×67, z původní zálohy
 │  ├─ placeholder-hero.svg
@@ -121,18 +122,14 @@ sips -Z 2400 20260902_portrety_katka/JMENO.jpg --out /tmp/x.jpg
 cwebp -q 82 -m 6 /tmp/x.jpg -o site/assets/img/katka-hero.webp
 ```
 
-### Co ještě chybí
-
-`pripadova-studie.webp` — graf do sekce 6 a 7. Zatím se zobrazuje
-placeholder; jakmile soubor doplníš do `site/assets/img/`, nasadí se sám.
-Do té doby hlásí konzole u tohoto obrázku 404, což je záměr, ne chyba.
-
 ## Co v originálu nebylo dodělané
 
 Zachováno 1:1, protože takhle stránka v databázi opravdu vypadala:
 
-1. **Sekce 7 „Co o mě říkají klienti“** — pod nadpisem je omylem zkopírovaný
-   obsah sekce 6 (případová studie). Skutečné reference chybí.
+1. **Sekce 7 „Co o mě říkají klienti“** — pod nadpisem byl omylem zkopírovaný
+   obsah sekce 6 a skutečné reference chybí. V náhledu pro klientku by to
+   působilo jako chyba, proto je sekce **zakomentovaná** v `index.html`.
+   Až budou reference k dispozici, stačí komentář odebrat a obsah vyměnit.
 2. **Sekce 9 (patička)** — jen hnědé pozadí `#4d3625` a prázdná mřížka
    šesti sloupců. Žádný obsah.
 3. **Pravý sloupec u profesních milníků** — prázdný, počítalo se tu s fotkou.
@@ -184,6 +181,43 @@ v neaktivních panelech se pozastavuje a efekt by zamrznul.
 
 Při zapnutém systémovém **omezení pohybu** (`prefers-reduced-motion: reduce`)
 se posluchače odpojí a fotka zůstane stát.
+
+## Interaktivní graf případové studie
+
+Statický obrázek `pripadova-studie.webp` se ze zálohy nedochoval a nahradil
+ho počítaný model v `js/graf.js` — SVG kreslené ručně, bez knihovny.
+
+Osa Y je **dosažitelná měsíční renta**, osa X věk od 42 do 72. Dvě křivky
+(architektura / původní nastavení), vodorovná cílová linka a body v místech,
+kde ji každá cesta protne. Po najetí na graf naskočí vodicí čára a hodnoty
+pro daný věk; funguje i tahem prstem.
+
+Tři posuvníky si nastaví návštěvník sám: výchozí portfolio, měsíční investice
+a cílová renta. Shrnutí pod grafem se přepisuje živě.
+
+### Model
+
+Konstanty jsou nahoře v `js/graf.js` v objektu `M`:
+
+| veličina | hodnota | odkud |
+|---|---|---|
+| reálný výnos trhu | 5,5 % p.a. | po inflaci |
+| poplatky — architektura | 0,6 % p.a. | jeden provázaný celek |
+| poplatky — původní | 2,4 % p.a. | „deset produktů“ z textu |
+| neefektivita původního | 2,9 % p.a. | „požírala inflace a vysoké poplatky“ |
+| bezpečný výběr | 4 % p.a. | běžná konzervativní míra |
+
+Při výchozích hodnotách vyjde protnutí cíle v **49,5** a **59,9** letech,
+tedy rozdíl 10,4 roku — sedí to na „svobodu o dekádu dříve“ v textu.
+
+Pod grafem je poznámka, že jde o ilustraci, ne příslib výnosu. Katka je
+regulovaný subjekt ČNB, takže tuhle větu tam nechte.
+
+### Osa Y se řídí cílem
+
+Měřítko je `cíl × 2,2`, ne maximum křivky. Kdyby se řídilo koncem křivky,
+cílová linka by se zmáčkla ke dnu a protnutí — kvůli kterému graf existuje —
+by nebylo vidět. Co vyroste nad horní hranu, ořízne `clipPath`.
 
 ## Design systém
 
