@@ -130,8 +130,12 @@ Zachováno 1:1, protože takhle stránka v databázi opravdu vypadala:
    obsah sekce 6 a skutečné reference chybí. V náhledu pro klientku by to
    působilo jako chyba, proto je sekce **zakomentovaná** v `index.html`.
    Až budou reference k dispozici, stačí komentář odebrat a obsah vyměnit.
-2. **Sekce 9 (patička)** — jen hnědé pozadí `#4d3625` a prázdná mřížka
-   šesti sloupců. Žádný obsah.
+2. **Sekce 9 (patička)** — v databázi jen hnědé pozadí `#4d3625` a prázdná
+   mřížka. Barva i rozvržení zůstaly, obsah je **doplněný** z toho, co
+   stránka sama uvádí (odbornost, spolupráce, právní doložka).
+   **Kontaktní údaje chybí** — v podkladech nikde nejsou, takže nejsou
+   vymyšlené: v `index.html` je připravený zakomentovaný blok „Kontakt“,
+   stačí odkomentovat a doplnit e-mail, telefon a LinkedIn.
 3. **Pravý sloupec u profesních milníků** — prázdný, počítalo se tu s fotkou.
 4. **Sekce 3, karta „Ochrana majetku“** — tři odrážky jsou zapsané jako
    jediná položka seznamu oddělená `<br>•`.
@@ -192,8 +196,14 @@ Osa Y je **dosažitelná měsíční renta**, osa X věk od 42 do 72. Dvě křiv
 kde ji každá cesta protne. Po najetí na graf naskočí vodicí čára a hodnoty
 pro daný věk; funguje i tahem prstem.
 
-Tři posuvníky si nastaví návštěvník sám: výchozí portfolio, měsíční investice
-a cílová renta. Shrnutí pod grafem se přepisuje živě.
+Dva posuvníky si nastaví návštěvník sám: měsíční investice a cílová renta.
+Výchozí portfolio je konstanta (10 mil. Kč, v `M.pocatek`) — jako třetí
+posuvník dělalo kartu zbytečně složitou a vysokou. Shrnutí pod grafem se
+přepisuje živě.
+
+Karta je záměrně držená nízko, aby v řádku nepřerostla textový sloupec.
+Kdyby bylo potřeba ještě níž, jde zkrátit plocha grafu: `viewBox` v HTML
+a `PLOCHA` v `js/graf.js` musí zůstat v souladu.
 
 ### Model
 
@@ -218,6 +228,22 @@ regulovaný subjekt ČNB, takže tuhle větu tam nechte.
 Měřítko je `cíl × 2,2`, ne maximum křivky. Kdyby se řídilo koncem křivky,
 cílová linka by se zmáčkla ke dnu a protnutí — kvůli kterému graf existuje —
 by nebylo vidět. Co vyroste nad horní hranu, ořízne `clipPath`.
+
+## Časová osa profesních milníků
+
+Milníky v sekci 5 přijíždějí zprava, jak se k nim uživatel doscrolluje.
+Pohyb dělá CSS transition, `js/main.js` jen ve správnou chvíli přidá třídu
+`.je-videt`; prvek se odkryje, jakmile jeho horní hrana vystoupá nad 85 %
+výšky okna. Stagger řídí `--poradi` na každém prvku (130 ms na kus).
+
+Bez JS by prvky zůstaly neviditelné, proto se schovávají až tehdy, když
+skript označí `<html>` třídou `.prijezdy-aktivni`. Při zapnutém omezení
+pohybu (`prefers-reduced-motion`) se nic neschovává.
+
+Svislou linku kreslí každý milník sám jako spojnici ke svému následníkovi
+(`.milnik:not(:last-child)::before`). Jedna linka přes celý kontejner by
+nahoře začínala až pod prvním uzlem a pod posledním by visela do prázdna —
+uzly totiž nesedí na krajích kontejneru.
 
 ## Design systém
 
@@ -248,5 +274,7 @@ Vědomé a jediné:
   snímkem. Na současné fotce (světlé studiové pozadí) by zanikly, proto měděná.
 - **Spodní přechod hera a paralax fotky** — v originálu ani jedno nebylo
   (Divi mělo `parallax: off`), obojí doplněno na přání (viz výš).
+- **Časová osa a příjezd milníků** — v originálu to byly statické blurby.
+- **Interaktivní graf** — v originálu statický obrázek, který se nedochoval.
 - **Poppins z Google Fonts** — na rozdíl od ostatních projektů zatím není lokální.
   Fonty nemáš na disku; kdykoli je můžu stáhnout jako woff2 do `assets/fonts/`.

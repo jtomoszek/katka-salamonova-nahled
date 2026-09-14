@@ -20,7 +20,8 @@
     poplatekArch: 0.6,  // % p.a. — jeden provázaný celek
     poplatekPuv: 2.4,   // % p.a. — deset produktů vedle sebe
     neefektivita: 2.9,  // % p.a. — část kapitálu, která reálně nevydělává
-    miraVyberu: 4       // % p.a. — bezpečný roční výběr z portfolia
+    miraVyberu: 4,      // % p.a. — bezpečný roční výběr z portfolia
+    pocatek: 10000000   // Kč — výchozí portfolio klienta ze studie
   };
 
   var CESTY = [
@@ -30,7 +31,7 @@
       vynos: (M.vynosTrh - M.poplatekPuv - M.neefektivita) / 100 }
   ];
 
-  var PLOCHA = { x0: 56, x1: 500, y0: 26, y1: 254 };
+  var PLOCHA = { x0: 56, x1: 500, y0: 18, y1: 156 };
   var SIRKA = 520;
   var poradiInstance = 0;
 
@@ -82,7 +83,7 @@
       mesicne: korenu.querySelector('[data-vstup="mesicne"]'),
       cil: korenu.querySelector('[data-vstup="cil"]')
     };
-    if (!svg || !vstupy.pocatek) return;
+    if (!svg || !vstupy.cil) return;
 
     var ns = 'http://www.w3.org/2000/svg';
     var idOrez = 'graf-orez-' + (++poradiInstance);
@@ -114,7 +115,7 @@
 
     function prectiVstupy() {
       return {
-        pocatek: +vstupy.pocatek.value,
+        pocatek: vstupy.pocatek ? +vstupy.pocatek.value : M.pocatek,
         mesicne: +vstupy.mesicne.value,
         cil: +vstupy.cil.value
       };
@@ -163,11 +164,11 @@
       // popisky osy X
       prazdno(vrstvy.osy);
       for (var vek = M.vekStart; vek <= M.vekMax; vek += 6) {
-        var tx = el('text', { x: xOd(vek), y: PLOCHA.y1 + 22, class: 'graf__popisek graf__popisek--x' });
+        var tx = el('text', { x: xOd(vek), y: PLOCHA.y1 + 20, class: 'graf__popisek graf__popisek--x' });
         tx.textContent = vek;
         vrstvy.osy.appendChild(tx);
       }
-      var osaNazev = el('text', { x: PLOCHA.x1, y: PLOCHA.y1 + 44, class: 'graf__popisek graf__popisek--osa' });
+      var osaNazev = el('text', { x: PLOCHA.x1, y: PLOCHA.y1 + 38, class: 'graf__popisek graf__popisek--osa' });
       osaNazev.textContent = 'věk';
       vrstvy.osy.appendChild(osaNazev);
 
@@ -278,6 +279,7 @@
     svg.addEventListener('pointerleave', function () { ukazHodnoty(null); });
 
     Object.keys(vstupy).forEach(function (k) {
+      if (!vstupy[k]) return;
       vstupy[k].addEventListener('input', function () {
         korenu.querySelector('[data-vypis="' + k + '"]').textContent =
           k === 'cil' || k === 'mesicne' ? kc(+vstupy[k].value)

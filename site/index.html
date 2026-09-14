@@ -208,7 +208,10 @@
     <div class="col">
       <div class="txt txt--pt80"><h4>PROFESNÍ MILNÍKY</h4></div>
 
-      <div class="milnik">
+      <!-- Časová osa. Prvky přijíždějí zprava při scrollu, obsluhuje
+           js/main.js; svislou linku kreslí .milniky::before. -->
+      <div class="milniky">
+        <div class="milnik" data-prijezd style="--poradi: 0">
         <span class="ikona ikona--sm" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3.5 14.6 9l6 .9-4.3 4.2 1 6-5.3-2.8L6.7 20l1-6L3.4 9.9l6-.9L12 3.5Z"/>
@@ -219,9 +222,9 @@
           <p><strong>Spoluzakladatelka Fines group s.r.o.</strong></p>
           <p>Zahájení strategické spolupráce se společností <br>EFEKTA brokerpool a.s.</p>
         </div>
-      </div>
+        </div>
 
-      <div class="milnik">
+        <div class="milnik" data-prijezd style="--poradi: 1">
         <span class="ikona ikona--sm" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3.5 14.6 9l6 .9-4.3 4.2 1 6-5.3-2.8L6.7 20l1-6L3.4 9.9l6-.9L12 3.5Z"/>
@@ -232,9 +235,9 @@
           <p><strong>PFP Certifikace a Lektorství</strong></p>
           <p>Lektorka přednášek v ZPF Akademii. Získání prestižní certifikace Poradce finančního plánování od EFPA.</p>
         </div>
-      </div>
+        </div>
 
-      <div class="milnik">
+        <div class="milnik" data-prijezd style="--poradi: 2">
         <span class="ikona ikona--sm" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3.5 14.6 9l6 .9-4.3 4.2 1 6-5.3-2.8L6.7 20l1-6L3.4 9.9l6-.9L12 3.5Z"/>
@@ -245,7 +248,9 @@
           <p><strong>Plné nasazení v osobních financích</strong></p>
           <p>Zápis do registru ČNB a budování vlastního týmu <br>pro komplexní péči o klienty.</p>
         </div>
+        </div>
       </div>
+
     </div>
 
     <!-- V originálu prázdný sloupec — počítalo se tu s fotografií. -->
@@ -330,17 +335,13 @@
       <div class="graf" data-graf>
         <p class="graf__nadpis">Kdy vám portfolio začne platit rentu?</p>
 
-        <svg class="graf__plocha" viewBox="0 0 520 300" role="img"
+        <svg class="graf__plocha" viewBox="0 0 520 196" role="img"
              aria-labelledby="graf-popis" preserveAspectRatio="xMidYMid meet"></svg>
         <p class="graf__popis vizualne-skryte" id="graf-popis"></p>
 
         <p class="graf__odecet"></p>
 
         <div class="graf__ovladace">
-          <label class="graf__ovladac">
-            <span class="graf__stitek">Výchozí portfolio <b data-vypis="pocatek"></b></span>
-            <input type="range" data-vstup="pocatek" min="1000000" max="20000000" step="500000" value="10000000">
-          </label>
           <label class="graf__ovladac">
             <span class="graf__stitek">Měsíčně investuji <b data-vypis="mesicne"></b></span>
             <input type="range" data-vstup="mesicne" min="5000" max="80000" step="1000" value="35000">
@@ -353,12 +354,7 @@
 
         <p class="graf__shrnuti"></p>
 
-        <p class="graf__poznamka">
-          Ilustrativní model, ne příslib výnosu. Počítá s reálným výnosem trhu 5,5 % ročně
-          (tedy už po inflaci) a bezpečným výběrem 4 % ročně. Rozdíl mezi cestami dělají
-          poplatky — 0,6 % u provázaného celku proti 2,4 % u deseti produktů vedle sebe —
-          a část kapitálu, která v roztříštěném portfoliu reálně nevydělává.
-        </p>
+        <p class="graf__poznamka">Ilustrativní model, ne příslib výnosu. Výchozí portfolio 10 mil. Kč, reálný výnos 5,5 % p.a.</p>
       </div>
     </div>
   </div>
@@ -447,16 +443,63 @@
 
 
 <!-- ============================================================
-     SEKCE 9 — nedokončená patička
-     V původní databázi jen hnědé pozadí #4d3625 a prázdná mřížka
-     6 sloupců (3 na řádek). Žádný obsah. Zachováno 1:1.
+     SEKCE 9 — patička
+     V původní databázi byla prázdná: jen hnědé pozadí #4d3625 a mřížka
+     tří sloupců. Barva i rozvržení zůstaly, obsah je doplněný z toho,
+     co stránka sama uvádí — žádné údaje nejsou domyšlené.
+
+     KONTAKTNÍ ÚDAJE ZATÍM CHYBÍ. Až budou k dispozici, odkomentujte
+     blok „Kontakt“ níž a doplňte e-mail, telefon a odkaz na LinkedIn.
      ============================================================ -->
-<section class="s s--paticka">
+<footer class="s s--paticka">
   <div class="row row--mrizka">
-    <div class="col"></div><div class="col"></div><div class="col"></div>
-    <div class="col"></div><div class="col"></div><div class="col"></div>
+
+    <div class="paticka__sloupec paticka__sloupec--hlavni">
+      <p class="paticka__jmeno">Kateřina Šalamonová</p>
+      <p class="paticka__tagline">Architektka rodinné prosperity</p>
+      <p class="paticka__text">
+        Navrhuji finanční ekosystém pro život, který si zasloužíte.
+        Od prvního domova po rentu pro budoucí generace.
+      </p>
+    </div>
+
+    <div class="paticka__sloupec">
+      <h2 class="paticka__nadpis">Odbornost</h2>
+      <ul class="paticka__seznam">
+        <li>Poradce finančního plánování&nbsp;(PFP), EFPA</li>
+        <li>Regulovaný subjekt finančního trhu</li>
+        <li>Investiční akademie DIP</li>
+        <li>Více než 20 let praxe v oboru</li>
+      </ul>
+    </div>
+
+    <div class="paticka__sloupec">
+      <h2 class="paticka__nadpis">Spolupráce</h2>
+      <ul class="paticka__seznam">
+        <li>Fines group s.r.o.</li>
+        <li>EFEKTA brokerpool a.s.</li>
+        <li>ZPF Akademie</li>
+      </ul>
+    </div>
+
+    <!-- Kontakt — odkomentovat a doplnit skutečné údaje.
+    <div class="paticka__sloupec">
+      <h2 class="paticka__nadpis">Kontakt</h2>
+      <ul class="paticka__seznam paticka__seznam--odkazy">
+        <li><a href="mailto:DOPLNIT">DOPLNIT@example.cz</a></li>
+        <li><a href="tel:DOPLNIT">+420 DOPLNIT</a></li>
+        <li><a href="https://www.linkedin.com/in/DOPLNIT" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+    -->
+
   </div>
-</section>
+
+  <div class="row paticka__spodek">
+    <p class="paticka__copy">&copy; 2026 Kateřina Šalamonová</p>
+    <p class="paticka__pravni">Zapsána v registru ČNB. Uvedené modely jsou ilustrativní, nejde o příslib výnosu.</p>
+  </div>
+</footer>
 
 <script src="js/main.js"></script>
 <script src="js/graf.js"></script>
