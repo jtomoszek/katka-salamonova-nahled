@@ -39,7 +39,7 @@
   --hero-blur:     10px;      /* rozostření u spodní hrany */
 
   /* paralax fotky v heru */
-  --parallax-range: 90px;     /* o kolik se fotka celkem posune */
+  --parallax-range: 170px;    /* o kolik se fotka celkem posune */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -240,10 +240,24 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
 
 /* originál: spodní padding 0, horní výchozí 4 % */
 .s--pribeh { background: var(--surface); padding-bottom: 0; }
-.s--pribeh .row--2 { gap: var(--gutter); }
+.s--pribeh .row--2 { gap: var(--gutter); align-items: stretch; }
 .podpis { margin: 26px 0 60px; width: 172px; height: auto; opacity: .85; }
-.col--portret { align-self: flex-end; }
-.portret { width: 100%; height: auto; }
+
+/* Výšku sekce určuje text, ne fotka. Portrét je v poměru 1:2 a v toku by
+   přečníval o stovky pixelů — vedle textu by zůstala prázdná díra (a když
+   se sloupce roztáhly, díra se jen přesunula dolů). Absolutní pozice ho
+   z výpočtu výšky vyjme: sloupec se natáhne podle textu a fotka ho vyplní
+   ořezem. Hlava zůstává nahoře, postava odchází spodní hranou sekce —
+   ta má padding-bottom 0, takže stojí přesně na hraně. */
+.col--portret { position: relative; min-height: 460px; }
+.portret {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
 
 
 /* ---------- sekce 5 — milníky a certifikace --------------- */
@@ -252,10 +266,68 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
 .s--milniky { padding-bottom: 60px; }
 .s--milniky .row--2 { gap: var(--gutter); }
 
-.milnik { display: flex; gap: 16px; margin-top: 30px; }
-.milnik .ikona--sm { flex: 0 0 auto; margin-bottom: 0; }
+/* Časová osa. Linku kreslí každý milník sám jako spojnici ke svému
+   následníkovi — jedna linka přes celý kontejner by nahoře začínala až
+   pod prvním uzlem a pod posledním by visela do prázdna, protože uzly
+   nesedí na krajích. Poslední milník spojnici nemá. */
+.milniky { position: relative; }
+
+.milnik { display: flex; gap: 16px; margin-top: 30px; position: relative; }
+.milnik:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  left: 14px;      /* střed 30px uzlu minus polovina tloušťky linky */
+  top: 30px;       /* těsně pod uzlem */
+  bottom: -30px;   /* přes mezeru až k uzlu dalšího milníku */
+  width: 2px;
+  background: var(--copper);
+  opacity: .4;
+}
 .milnik__body p { margin-bottom: .3em; }
 .milnik__body p:last-child { margin-bottom: 0; }
+
+/* Uzel osy — kolečko v barvě pozadí sekce, aby linka procházela za ním. */
+.milnik .ikona--sm {
+  flex: 0 0 auto;
+  width: 30px; height: 30px;
+  margin-bottom: 0;
+  padding: 5px;
+  position: relative;
+  z-index: 1;
+  background: var(--white);
+  border: 2px solid var(--copper);
+  border-radius: 50%;
+}
+
+/* Příjezd zprava při scrollu. Třídu .je-videt přidává js/main.js. */
+[data-prijezd] {
+  opacity: 0;
+  transform: translateX(56px);
+  transition: opacity .55s ease-out,
+              transform .65s cubic-bezier(.22, .61, .36, 1);
+  transition-delay: calc(var(--poradi, 0) * 130ms);
+}
+[data-prijezd].je-videt {
+  opacity: 1;
+  transform: none;
+}
+
+/* Bez JS by prvky zůstaly neviditelné — proto se skrývají až tehdy,
+   když se skript rozběhne a označí dokument. */
+html:not(.prijezdy-aktivni) [data-prijezd] {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-prijezd],
+  [data-prijezd].je-videt {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 
 .card--cert {
   border-radius: 14px;
@@ -297,10 +369,10 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
   background: var(--surface);
   border: 1px solid var(--hairline);
   border-radius: 14px;
-  padding: 26px 24px 22px;
+  padding: 22px 22px 18px;
 }
 .graf__nadpis {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   font-size: var(--fs-body);
   font-weight: 700;
   color: var(--copper-dark);
@@ -349,9 +421,9 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
   flex-wrap: wrap;
   align-items: baseline;
   gap: 6px 16px;
-  margin: 14px 0 0;
-  min-height: 2.6em;
-  font-size: 13px;
+  margin: 10px 0 0;
+  min-height: 1.5em;
+  font-size: 12.5px;
   line-height: 1.5;
 }
 .graf__odecetVek { font-weight: 700; }
@@ -371,12 +443,12 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
 
 .graf__ovladace {
   display: grid;
-  gap: 12px;
-  margin-top: 18px;
-  padding-top: 18px;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 14px;
   border-top: 1px solid var(--hairline);
 }
-.graf__ovladac { display: grid; gap: 5px; }
+.graf__ovladac { display: grid; gap: 3px; }
 .graf__stitek {
   display: flex;
   justify-content: space-between;
@@ -391,7 +463,7 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
   appearance: none;
   width: 100%;
   height: 4px;
-  margin: 6px 0;
+  margin: 3px 0;
   border-radius: 2px;
   background: rgba(0, 0, 0, .12);
   cursor: pointer;
@@ -418,13 +490,13 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
 }
 
 .graf__shrnuti {
-  margin: 16px 0 0;
-  font-size: 14px;
+  margin: 14px 0 0;
+  font-size: 13.5px;
   font-weight: 500;
   line-height: 1.6;
 }
 .graf__poznamka {
-  margin: 12px 0 0;
+  margin: 9px 0 0;
   font-size: 11.5px;
   line-height: 1.55;
   color: rgba(0, 0, 0, .5);
@@ -457,13 +529,88 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
 
 /* ---------- sekce 9 — nedokončená patička ----------------- */
 
-.s--paticka { background: var(--brown); padding: 60px 0; }
+.s--paticka {
+  background: var(--brown);
+  padding: 64px 0 32px;
+  color: var(--sand);
+}
 .row--mrizka {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--gutter);
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 40px var(--gutter);
+  align-items: start;
 }
-.row--mrizka .col { min-height: 1px; }
+
+.paticka__jmeno {
+  margin: 0 0 2px;
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  color: var(--white);
+}
+.paticka__tagline {
+  margin: 0 0 14px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+}
+.paticka__text {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(234, 221, 212, .78);
+}
+
+.paticka__nadpis {
+  margin: 0 0 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--copper-light);
+}
+.paticka__seznam {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+.paticka__seznam li { margin-bottom: 9px; }
+.paticka__seznam li:last-child { margin-bottom: 0; }
+.paticka__seznam--odkazy a {
+  color: var(--sand);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(234, 221, 212, .3);
+  transition: border-color .2s ease, color .2s ease;
+}
+.paticka__seznam--odkazy a:hover,
+.paticka__seznam--odkazy a:focus-visible {
+  color: var(--white);
+  border-bottom-color: var(--copper-light);
+}
+
+.paticka__spodek {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  margin-top: 48px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(234, 221, 212, .18);
+}
+.paticka__copy,
+.paticka__pravni {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: rgba(234, 221, 212, .6);
+}
+.paticka__pravni { max-width: 52ch; }
 
 
 /* ============================================================
@@ -482,7 +629,17 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
   .row--nenajdete .col--siroky { flex: 1 1 100%; }
 
   .col--prazdny { display: none; }
+  .row--mrizka { grid-template-columns: 1fr 1fr; }
   .col--p40 { padding: 24px 0; }
+
+  /* Po zalomení do jednoho sloupce už fotka nemá k čemu se přizpůsobovat,
+     takže se vrací do toku v původním poměru. */
+  .col--portret { position: static; min-height: 0; }
+  .portret {
+    position: static;
+    height: auto;
+    object-fit: fill;
+  }
 
   .s--hero h1 { font-size: 40px; }
   .s--filozofie h3 { font-size: 26px; }
@@ -498,7 +655,9 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
   .s--pilire { padding-bottom: 60px; }
   .txt--pt80 { padding-top: 48px; }
   .card--pilir { padding: 32px 24px; }
-  .row--mrizka { grid-template-columns: 1fr; }
+  .row--mrizka { grid-template-columns: 1fr; gap: 32px; }
+  .paticka__text { max-width: none; }
+  .paticka__spodek { margin-top: 34px; }
   .podpis { margin-bottom: 40px; }
 
   /* Originál měl v těchto odstavcích ruční <br> pro desktopové zalomení.
