@@ -162,6 +162,26 @@ Ladí se dvěma tokeny v `:root`:
 Vrstva je `pointer-events: none` a `aria-hidden`, text nad ní má `z-index: 1`.
 Prohlížeče bez `backdrop-filter` dostanou samotný gradient.
 
+## Paralax fotky v heru
+
+Fotka je samostatná vrstva `.hero-bg` a při scrollu se posouvá pomaleji než
+stránka, takže hero působí hlouběji. Posun řídí `js/main.js`, rozsah je token:
+
+```css
+--parallax-range: 90px;   /* o kolik se fotka celkem posune */
+```
+
+Vrstva je o rozsah + 2 px vyšší nahoře i dole, takže posun nikdy neodkryje
+okraj (těsnost ověřena měřením: mezera nad fotkou nevyjde nad −2 px).
+Sekce má `overflow: hidden`, aby přesah nic nerozbil.
+
+Výška hera se drží v proměnné a přepočítává jen při `resize` — obsluha scrollu
+tak nic neměří, jen zapíše `transform`. Proto tu není `requestAnimationFrame`:
+v neaktivních panelech se pozastavuje a efekt by zamrznul.
+
+Při zapnutém systémovém **omezení pohybu** (`prefers-reduced-motion: reduce`)
+se posluchače odpojí a fotka zůstane stát.
+
 ## Design systém
 
 Barvy i typografie jsou převzaté přímo z Divi nastavení stránky:
@@ -189,6 +209,7 @@ Vědomé a jediné:
   vznikal roztrhaný text.
 - **Barva hvězdiček v hero** — originál je měl bílé, což počítalo s tmavším
   snímkem. Na současné fotce (světlé studiové pozadí) by zanikly, proto měděná.
-- **Spodní přechod hera** — v originálu nebyl, doplněno na přání (viz výš).
+- **Spodní přechod hera a paralax fotky** — v originálu ani jedno nebylo
+  (Divi mělo `parallax: off`), obojí doplněno na přání (viz výš).
 - **Poppins z Google Fonts** — na rozdíl od ostatních projektů zatím není lokální.
   Fonty nemáš na disku; kdykoli je můžu stáhnout jako woff2 do `assets/fonts/`.

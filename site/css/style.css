@@ -37,6 +37,9 @@
   /* spodní přechod hera */
   --hero-fade-h:   46%;       /* jak vysoko přechod sahá */
   --hero-blur:     10px;      /* rozostření u spodní hrany */
+
+  /* paralax fotky v heru */
+  --parallax-range: 90px;     /* o kolik se fotka celkem posune */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -96,13 +99,26 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
 /* ---------- sekce 1 — hero -------------------------------- */
 
 .s--hero {
+  padding-top: 37%;
+  overflow: hidden;   /* ořízne přesah fotky posunuté paralaxem */
+}
+
+/* Fotka jako vlastní vrstva — posouvá s ní js/main.js při scrollu.
+   Je o --parallax-range vyšší nahoře i dole, aby posun neodkryl okraj. */
+.hero-bg {
+  position: absolute;
+  left: 0; right: 0;
+  /* +2px rezerva, aby se při subpixelovém zaokrouhlení neukázal proužek */
+  top: calc(-1 * var(--parallax-range) - 2px);
+  bottom: calc(-1 * var(--parallax-range) - 2px);
+  z-index: 0;
   /* první vrstva je skutečná fotka; když soubor chybí, prosvitne placeholder */
   background-image: url('../assets/img/katka-hero.webp'),
                     url('../assets/img/placeholder-hero.svg');
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;
-  padding-top: 37%;
+  will-change: transform;
 }
 .s--hero .txt--hero-head { padding-top: 80px; }
 .s--hero h2 { text-align: center; }
