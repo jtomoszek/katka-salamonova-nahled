@@ -1,0 +1,20 @@
+# Systémové
+.DS_Store
+
+# Zdrojová data mimo web — do repa nepatří.
+# Jde o pracovní podklady a originály fotek (dohromady přes 180 MB).
+
+# záloha jádra WordPressu
+tomoszek.com/
+
+# originály z focení 29. 3. 2025
+salamonova/
+
+# originály z focení 2. 9. 2026
+20260902_portrety_katka/
+
+# výtažky z databáze a pracovní materiály
+podklady/
+
+# lokální konfigurace náhledu (cesta platí jen na tomhle stroji)
+.claude/

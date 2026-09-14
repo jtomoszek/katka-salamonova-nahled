@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2253 1918" width="2253" height="1918" role="img" aria-label="Placeholder – graf případové studie">
+  <rect width="2253" height="1918" fill="#f5f3f8"/>
+  <g stroke="#000" stroke-opacity=".08" stroke-width="4">
+    <path d="M250 1560h1800M250 1240h1800M250 920h1800M250 600h1800"/>
+  </g>
+  <path d="M250 1560V420" stroke="#000" stroke-opacity=".18" stroke-width="6" fill="none"/>
+  <path d="M250 1560h1800" stroke="#000" stroke-opacity=".18" stroke-width="6" fill="none"/>
+  <path d="M300 1480 L700 1300 L1100 1080 L1500 760 L1980 480" fill="none"
+        stroke="#b48563" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M300 1500 L700 1440 L1100 1400 L1500 1330 L1980 1260" fill="none"
+        stroke="#9c6d4b" stroke-opacity=".45" stroke-width="14" stroke-dasharray="34 26" stroke-linecap="round"/>
+  <g fill="#b48563">
+    <circle cx="700" cy="1300" r="22"/><circle cx="1100" cy="1080" r="22"/>
+    <circle cx="1500" cy="760" r="22"/><circle cx="1980" cy="480" r="26"/>
+  </g>
+  <text x="1126" y="1780" text-anchor="middle" font-family="Poppins, Helvetica, Arial, sans-serif"
+        font-size="62" font-weight="600" fill="#9c6d4b" letter-spacing="3">GRAF PŘÍPADOVÉ STUDIE</text>
+  <text x="1126" y="1860" text-anchor="middle" font-family="Poppins, Helvetica, Arial, sans-serif"
+        font-size="46" font-weight="300" fill="#9c6d4b" fill-opacity=".8">assets/img/pripadova-studie.webp</text>
+</svg>

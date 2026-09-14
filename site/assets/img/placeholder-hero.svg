@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Placeholder hero fotografie">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#4d3625"/>
+      <stop offset="38%"  stop-color="#9c6d4b"/>
+      <stop offset="66%"  stop-color="#c6a288"/>
+      <stop offset="86%"  stop-color="#eaddd4"/>
+      <stop offset="100%" stop-color="#f5f3f8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#g)"/>
+  <g fill="#ffffff" fill-opacity=".16">
+    <circle cx="800" cy="300" r="104"/>
+    <path d="M800 430c-116 0-210 82-210 184h420c0-102-94-184-210-184z"/>
+  </g>
+</svg>

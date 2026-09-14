@@ -1,0 +1,338 @@
+/* ============================================================
+   Kateřina Šalamonová — rekonstrukce podstránky tomoszek.com/katka-2/
+   Všechny hodnoty (barvy, velikosti, odsazení) pocházejí z původní
+   Divi 5.5.1 stránky ID 241938, záloha databáze tomoszek_com_wp
+   ze dne 2026-07-20.
+   ============================================================ */
+
+:root {
+  /* barvy z originálu */
+  --copper:        #b48563;   /* hlavní akcent, nadpisy h4, pozadí sekce 2 */
+  --copper-light:  #c6a288;
+  --copper-dark:   #9c6d4b;   /* nadpisy „✘“, zvýrazněné slovo */
+  --brown:         #4d3625;   /* pozadí nedokončené patičky */
+  --sand:          #eaddd4;
+  --surface:       #f5f3f8;   /* pozadí karet a sekce „Můj příběh“ */
+  --surface-rgb:   245, 243, 248;
+  --ink:           #000000;
+  --white:         #ffffff;
+  --hairline:      rgba(0, 0, 0, .1);
+
+  /* typografie z originálu */
+  --font:          'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --fs-body:       16px;
+  --fs-h1:         40px;
+  --fs-h1-hero:    50px;
+  --fs-h2:         18px;
+  --fs-h3:         30px;
+  --lh-body:       1.7em;
+  --lh-h1:         1.4em;
+  --lh-h3:         1.5em;
+
+  /* mřížka — Divi výchozí řádek: šířka 80 %, max 1080px */
+  --row-w:         80%;
+  --row-max:       1080px;
+  --gutter:        30px;
+
+  /* spodní přechod hera */
+  --hero-fade-h:   46%;       /* jak vysoko přechod sahá */
+  --hero-blur:     10px;      /* rozostření u spodní hrany */
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  font-size: var(--fs-body);
+  font-weight: 300;
+  line-height: var(--lh-body);
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+h1, h2, h3, h4, h5 { margin: 0 0 .4em; font-family: var(--font); }
+h1 { font-size: var(--fs-h1); font-weight: 700; line-height: var(--lh-h1); }
+h2 { font-size: var(--fs-h2); font-weight: 600; }
+h3 { font-weight: 700; line-height: var(--lh-h3); }
+h4 { font-size: var(--fs-body); font-weight: 700; line-height: var(--lh-body); color: var(--copper); }
+h5 { font-size: var(--fs-body); font-weight: 700; color: var(--copper); }
+p  { margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+strong { font-weight: 600; }
+
+/* seznamy — v originálu weight 500, line-height 2.3em */
+ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
+
+.c        { text-align: center; }
+.c--upper { text-transform: uppercase; }
+
+
+/* ---------- mřížka ---------------------------------------- */
+
+.s   { position: relative; padding: 4% 0; }
+.row {
+  width: var(--row-w);
+  max-width: var(--row-max);
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: nowrap;
+}
+.row--2 > .col { flex: 1 1 50%; min-width: 0; }
+.row--gap      { gap: var(--gutter); }
+.row--tesne    { padding: 0; }
+.row--bottom   { align-items: flex-end; }
+.row--stred    { align-items: center; }
+.col           { flex: 1 1 100%; min-width: 0; }
+
+.txt--pt80 { padding-top: 80px; }
+
+
+/* ---------- sekce 1 — hero -------------------------------- */
+
+.s--hero {
+  /* první vrstva je skutečná fotka; když soubor chybí, prosvitne placeholder */
+  background-image: url('../assets/img/katka-hero.webp'),
+                    url('../assets/img/placeholder-hero.svg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-top: 37%;
+}
+.s--hero .txt--hero-head { padding-top: 80px; }
+.s--hero h2 { text-align: center; }
+.s--hero h1 { font-size: var(--fs-h1-hero); text-align: center; }
+.s--hero p  { text-align: center; }
+/* Originál měl hvězdičky bílé — počítal s tmavším hero snímkem.
+   Na současné fotce (světlé studiové pozadí) by zanikly, proto měděná. */
+.stars { color: var(--copper); }
+
+/* ---- spodní přechod hera: rozostření + gradient do pozadí ---- */
+
+.s--hero .row { position: relative; z-index: 1; }
+
+.hero-fade {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: var(--hero-fade-h);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Pět vrstev postupného rozostření. Každá má backdrop-filter a masku,
+   která ji odkrývá o kus níž — rozostření se tak sčítá směrem dolů
+   od 0 px nahoře po zhruba --hero-blur dole. */
+.hero-fade span {
+  position: absolute;
+  inset: 0;
+}
+.hero-fade span:nth-child(1) {
+  -webkit-backdrop-filter: blur(calc(var(--hero-blur) / 16));
+          backdrop-filter: blur(calc(var(--hero-blur) / 16));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 20%, #000 100%);
+}
+.hero-fade span:nth-child(2) {
+  -webkit-backdrop-filter: blur(calc(var(--hero-blur) / 8));
+          backdrop-filter: blur(calc(var(--hero-blur) / 8));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 20%, #000 40%, #000 100%);
+          mask-image: linear-gradient(to bottom, transparent 20%, #000 40%, #000 100%);
+}
+.hero-fade span:nth-child(3) {
+  -webkit-backdrop-filter: blur(calc(var(--hero-blur) / 4));
+          backdrop-filter: blur(calc(var(--hero-blur) / 4));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 40%, #000 60%, #000 100%);
+          mask-image: linear-gradient(to bottom, transparent 40%, #000 60%, #000 100%);
+}
+.hero-fade span:nth-child(4) {
+  -webkit-backdrop-filter: blur(calc(var(--hero-blur) / 2));
+          backdrop-filter: blur(calc(var(--hero-blur) / 2));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 60%, #000 80%, #000 100%);
+          mask-image: linear-gradient(to bottom, transparent 60%, #000 80%, #000 100%);
+}
+.hero-fade span:nth-child(5) {
+  -webkit-backdrop-filter: blur(var(--hero-blur));
+          backdrop-filter: blur(var(--hero-blur));
+  -webkit-mask-image: linear-gradient(to bottom, transparent 80%, #000 100%);
+          mask-image: linear-gradient(to bottom, transparent 80%, #000 100%);
+}
+
+/* Barevný přechod navrch — nahoře průhledný, dole plná barva pozadí. */
+.hero-fade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+              rgba(var(--surface-rgb), 0) 0%,
+              rgba(var(--surface-rgb), .55) 55%,
+              rgba(var(--surface-rgb), 1) 100%);
+}
+
+/* Prohlížeče bez backdrop-filter (starší Firefox) dostanou aspoň gradient. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .hero-fade span { display: none; }
+}
+
+
+/* ---------- sekce 2 — filozofie --------------------------- */
+
+.s--filozofie {
+  background: var(--copper);
+  padding: 6% 0;
+  color: var(--white);
+}
+.s--filozofie h3 { font-size: var(--fs-h3); color: var(--white); }
+.s--filozofie p  { color: var(--white); }
+
+
+/* ---------- sekce 3 — pilíře ------------------------------ */
+
+/* originál: nastaven jen spodní padding 100px, horní zůstal na výchozích 4 % */
+.s--pilire { padding-bottom: 100px; }
+.s--pilire .row--gap { margin-top: var(--gutter); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+}
+.card--pilir { padding: 49px 40px 40px; }
+.card--pilir h3 { margin-bottom: .5em; }
+.card--pilir .txt + .txt { margin-top: 1em; }
+
+.blurb { margin-bottom: 1.4em; }
+.blurb__title { margin: 0; }
+
+.ikona {
+  display: inline-flex;
+  width: 44px; height: 44px;
+  margin-bottom: 14px;
+  color: var(--copper);
+}
+.ikona svg { width: 100%; height: 100%; }
+.ikona--sm { width: 30px; height: 30px; margin-bottom: 8px; }
+
+
+/* ---------- sekce 4 — můj příběh -------------------------- */
+
+/* originál: spodní padding 0, horní výchozí 4 % */
+.s--pribeh { background: var(--surface); padding-bottom: 0; }
+.s--pribeh .row--2 { gap: var(--gutter); }
+.podpis { margin: 26px 0 60px; width: 172px; height: auto; opacity: .85; }
+.col--portret { align-self: flex-end; }
+.portret { width: 100%; height: auto; }
+
+
+/* ---------- sekce 5 — milníky a certifikace --------------- */
+
+/* originál: žádné vlastní odsazení — výchozích 4 % nahoře i dole */
+.s--milniky { padding-bottom: 60px; }
+.s--milniky .row--2 { gap: var(--gutter); }
+
+.milnik { display: flex; gap: 16px; margin-top: 30px; }
+.milnik .ikona--sm { flex: 0 0 auto; margin-bottom: 0; }
+.milnik__body p { margin-bottom: .3em; }
+.milnik__body p:last-child { margin-bottom: 0; }
+
+.card--cert {
+  border-radius: 14px;
+  padding: 25px 20px;
+  text-align: center;
+}
+.card--cert .ikona--sm { margin: 0 auto 8px; }
+.s--milniky .row--tesne + .row--tesne { margin-top: var(--gutter); }
+.s--milniky .row--tesne:first-of-type { margin-top: var(--gutter); }
+
+
+/* ---------- sekce 6 a 7 — studie / reference -------------- */
+
+/* originál: obě sekce jen margin-bottom 50px, padding výchozích 4 % */
+.s--studie, .s--reference { margin-bottom: 50px; }
+.row--studie {
+  row-gap: 21px;
+  column-gap: 0;
+  padding: 20px 0;
+}
+.col--p40 { padding: 40px; }
+.txt--vysledek { padding: 20px; margin-top: 10px; }
+.txt--vysledek h4 { margin-bottom: .3em; }
+.txt--vysledek p  { font-weight: 400; }
+.studie-img { width: 100%; border-radius: 12px; }
+
+
+/* ---------- sekce 8 — co u mě nenajdete ------------------- */
+
+.s--nenajdete { border-top: 1px solid var(--hairline); padding: 100px 0; }
+.row--nenajdete .col--uzky   { flex: 0 0 25%; }
+.row--nenajdete .col--siroky { flex: 0 0 75%; }
+.zvyraznene { color: var(--copper-dark); }
+.podnadpis  { margin-top: 1em; }
+.zapor { color: var(--copper-dark); }
+
+.card--siroka, .card--zapor { border-radius: 14px; padding: 25px 20px; }
+.card--siroka { border-radius: 18px; }
+.s--nenajdete .row--gap { margin-top: var(--gutter); }
+
+
+/* ---------- sekce 9 — nedokončená patička ----------------- */
+
+.s--paticka { background: var(--brown); padding: 60px 0; }
+.row--mrizka {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+}
+.row--mrizka .col { min-height: 1px; }
+
+
+/* ============================================================
+   Responzivita — breakpointy podle Divi
+   (tablet ≤ 980px, telefon ≤ 767px)
+   ============================================================ */
+
+@media (max-width: 980px) {
+  :root { --row-w: 90%; }
+
+  .row--2, .row--nenajdete { flex-wrap: wrap; }
+  .row--2 > .col,
+  .row--nenajdete > .col { flex: 1 1 100%; }
+
+  .row--nenajdete .col--uzky,
+  .row--nenajdete .col--siroky { flex: 1 1 100%; }
+
+  .col--prazdny { display: none; }
+  .col--p40 { padding: 24px 0; }
+
+  .s--hero h1 { font-size: 40px; }
+  .s--filozofie h3 { font-size: 26px; }
+}
+
+@media (max-width: 767px) {
+  :root { --fs-h1: 32px; --fs-h1-hero: 34px; --fs-h3: 24px; }
+
+  .s--hero { padding-top: 113%; }
+  .s--hero .txt--hero-head { padding-top: 40px; }
+  .s--filozofie { padding: 14% 0; }
+  .s--nenajdete { padding: 60px 0; }
+  .s--pilire { padding-bottom: 60px; }
+  .txt--pt80 { padding-top: 48px; }
+  .card--pilir { padding: 32px 24px; }
+  .row--mrizka { grid-template-columns: 1fr; }
+  .podpis { margin-bottom: 40px; }
+
+  /* Originál měl v těchto odstavcích ruční <br> pro desktopové zalomení.
+     Na mobilu tvoří roztrhaný text, proto je tu potlačujeme.
+     Zlomy v nadpisech, v seznamech a na certifikačních kartách zůstávají. */
+  .s--hero p br,
+  .card--zapor p br,
+  .milnik__body p br { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

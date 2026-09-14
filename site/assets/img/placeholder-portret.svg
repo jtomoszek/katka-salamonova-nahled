@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2039 2500" width="2039" height="2500" role="img" aria-label="Placeholder – portrét">
+  <rect width="2039" height="2500" fill="#eaddd4"/>
+  <g fill="#b48563" fill-opacity=".45">
+    <circle cx="1019" cy="960" r="300"/>
+    <path d="M1019 1340c-332 0-600 236-600 527v333h1200v-333c0-291-268-527-600-527z"/>
+  </g>
+  <text x="1019" y="2270" text-anchor="middle" font-family="Poppins, Helvetica, Arial, sans-serif"
+        font-size="66" font-weight="600" fill="#9c6d4b" letter-spacing="3">PORTRÉT</text>
+  <text x="1019" y="2360" text-anchor="middle" font-family="Poppins, Helvetica, Arial, sans-serif"
+        font-size="48" font-weight="300" fill="#9c6d4b" fill-opacity=".8">assets/img/katka-portret.webp</text>
+</svg>
