@@ -3,6 +3,23 @@
 Statický web bez závislostí (HTML + CSS + vanilla JS), věrná rekonstrukce
 původní WordPress podstránky postavené v Divi 5.5.1.
 
+## Náhled pro klientku
+
+**https://jtomoszek.github.io/katka-salamonova-nahled/**
+
+Repo: https://github.com/jtomoszek/katka-salamonova-nahled — větev `main`
+má celý projekt, větev `gh-pages` jen obsah `site/`.
+
+Aktualizace náhledu po změnách:
+
+```bash
+git add -A && git commit -m "update" && git push
+git subtree split --prefix site -b gh-pages -f && git push -f origin gh-pages
+```
+
+`robots.txt` má `Disallow: /`, takže se stránka nebude objevovat ve vyhledávání.
+Odkaz je ale veřejný — kdokoli, kdo ho zná, si web otevře.
+
 ## Odkud obsah pochází
 
 Původní web už není na hostingu (Seonet hlásí „Webhosting pozastaven“),
