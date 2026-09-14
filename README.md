@@ -136,7 +136,11 @@ Zachováno 1:1, protože takhle stránka v databázi opravdu vypadala:
    **Kontaktní údaje chybí** — v podkladech nikde nejsou, takže nejsou
    vymyšlené: v `index.html` je připravený zakomentovaný blok „Kontakt“,
    stačí odkomentovat a doplnit e-mail, telefon a LinkedIn.
-3. **Pravý sloupec u profesních milníků** — prázdný, počítalo se tu s fotkou.
+3. **Pravý sloupec u profesních milníků** — v originálu prázdný (počítalo se
+   tu s fotkou) a certifikační karty visely pod ním přes celou šířku. Karty
+   jsou teď v tom sloupci ve mřížce 2×2, sekce je tím výrazně kratší.
+   Podobně první karta v sekci 8 („Unifikované produkty“) sedí vedle nadpisu
+   místo pod ním.
 4. **Sekce 3, karta „Ochrana majetku“** — tři odrážky jsou zapsané jako
    jediná položka seznamu oddělená `<br>•`.
 
@@ -195,6 +199,11 @@ Osa Y je **dosažitelná měsíční renta**, osa X věk od 42 do 72. Dvě křiv
 (architektura / původní nastavení), vodorovná cílová linka a body v místech,
 kde ji každá cesta protne. Po najetí na graf naskočí vodicí čára a hodnoty
 pro daný věk; funguje i tahem prstem.
+
+Odečet pod grafem má pevnou mřížku — hlavička na jednom řádku (nezalamuje se)
+a pod ní obě cesty, každá s názvem a hodnotou pod sebou. Bez toho se legenda
+při najetí myší lámala jinak a celá karta poskakovala do jiné výšky; ověřeno
+na devíti šířkách od 390 do 1440 px, že se výška nemění.
 
 Dva posuvníky si nastaví návštěvník sám: měsíční investice a cílová renta.
 Výchozí portfolio je konstanta (10 mil. Kč, v `M.pocatek`) — jako třetí
