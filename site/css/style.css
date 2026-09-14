@@ -40,6 +40,10 @@
 
   /* paralax fotky v heru */
   --parallax-range: 170px;    /* o kolik se fotka celkem posune */
+
+  /* plovoucí navigace a horizont, na kterém se zastavují skládané karty */
+  --nav-vyska:  64px;
+  --stoh-top:   clamp(96px, 11vw, 130px);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -94,6 +98,99 @@ ul { margin: 0; padding-left: 1.15em; font-weight: 500; line-height: 2.3em; }
 .col           { flex: 1 1 100%; min-width: 0; }
 
 .txt--pt80 { padding-top: 80px; }
+
+
+/* ---------- plovoucí navigace (glass) --------------------- */
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  /* Sklo: rozostří se to, co pod lištou projíždí. Poloprůhledné pozadí
+     je nutné — přes plně krycí barvu by nebylo co rozostřit. */
+  background: rgba(255, 255, 255, .55);
+  -webkit-backdrop-filter: blur(16px) saturate(1.6);
+          backdrop-filter: blur(16px) saturate(1.6);
+  border-bottom: 1px solid rgba(0, 0, 0, .06);
+  transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+/* Po odscrollování o kousek víc krytí, ať text pod lištou neruší. */
+.nav.je-odscrollovano {
+  background: rgba(255, 255, 255, .78);
+  border-bottom-color: rgba(0, 0, 0, .1);
+  box-shadow: 0 8px 30px -18px rgba(77, 54, 37, .5);
+}
+
+.nav__vnitrek {
+  width: var(--row-w);
+  max-width: var(--row-max);
+  min-height: var(--nav-vyska);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.nav__znacka {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav__odkazy { display: flex; align-items: center; gap: 28px; }
+.nav__odkazy a {
+  position: relative;
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 6px 0;
+  transition: color .2s ease;
+}
+.nav__odkazy a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1.5px;
+  background: var(--copper);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .25s ease;
+}
+.nav__odkazy a:hover,
+.nav__odkazy a:focus-visible { color: var(--copper-dark); }
+.nav__odkazy a:hover::after,
+.nav__odkazy a:focus-visible::after { transform: scaleX(1); }
+
+/* Tlačítko menu — jen na úzkém displeji */
+.nav__prepinac {
+  display: none;
+  width: 40px; height: 40px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  position: relative;
+}
+.nav__cara {
+  position: absolute;
+  left: 9px; right: 9px;
+  height: 1.5px;
+  background: var(--ink);
+  transition: transform .25s ease, opacity .2s ease;
+}
+.nav__cara:nth-child(1) { top: 16px; }
+.nav__cara:nth-child(2) { top: 23px; }
+.nav__prepinac[aria-expanded="true"] .nav__cara:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+.nav__prepinac[aria-expanded="true"] .nav__cara:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+
+/* Obsah nesmí zmizet pod lištou při skoku na kotvu. */
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-vyska) + 16px); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 
 /* ---------- sekce 1 — hero -------------------------------- */
@@ -546,16 +643,103 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 /* ---------- sekce 8 — co u mě nenajdete ------------------- */
 
 .s--nenajdete { border-top: 1px solid var(--hairline); padding: 100px 0; }
-/* Vlevo nadpis, vpravo první karta. Poměr je štědřejší k nadpisu než
-   původních 25/75 — ten se ve čtvrtinové šířce lámal na tři řádky. */
-.row--nenajdete .col--uzky   { flex: 0 0 38%; align-self: center; }
-.row--nenajdete .col--siroky { flex: 1 1 auto; }
-.zvyraznene { color: var(--copper-dark); }
-.podnadpis  { margin-top: 1em; }
-.zapor { color: var(--copper-dark); }
 
-.card--zapor { border-radius: 14px; padding: 25px 20px; }
-.s--nenajdete .row--gap { margin-top: var(--gutter); }
+/* Nadpis se drží na místě, karty se pod ním skládají na sebe.
+   align-items: start je nutné — roztažená položka by neměla kam přilnout. */
+.nenajdete {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+}
+.nenajdete__intro { position: sticky; top: var(--stoh-top); }
+.zvyraznene { color: var(--copper-dark); }
+.podnadpis   { margin-top: 1em; }
+
+.nenajdete__karty {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 26px);
+  /* Prostor navíc pod kartami — o tolik déle zůstane hotový stoh
+     přilepený, než ho konec kontejneru vytlačí pryč. Není vidět,
+     leží za nalepenými kartami. */
+  padding-bottom: clamp(40px, 14vh, 150px);
+}
+
+.stoh {
+  position: sticky;
+  /* každá další se zastaví o kousek níž, aby byl vidět okraj té pod ní */
+  top: calc(var(--stoh-top) + var(--i) * 16px);
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  box-shadow: 0 26px 60px -34px rgba(77, 54, 37, .55);
+  padding: clamp(26px, 3vw, 38px);
+}
+.stoh__poradi {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  color: var(--copper);
+}
+.stoh h3 { margin-bottom: .5em; }
+.stoh p  { line-height: var(--lh-body); }
+.zapor   { color: var(--copper-dark); }
+
+
+/* ---------- sekce 7 — reference --------------------------- */
+
+.s--reference { padding-bottom: 90px; }
+.reference__mrizka {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+  margin-top: 46px;
+}
+.reference {
+  margin: 0;
+  padding: 30px 28px;
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.reference__text {
+  margin: 0;
+  flex: 1 1 auto;
+  font-size: 15px;
+  line-height: 1.7;
+}
+.reference__text::before {
+  content: "„";
+  color: var(--copper);
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 0;
+  vertical-align: -6px;
+  margin-right: 2px;
+}
+.reference__autor {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--copper-dark);
+}
+.reference__autor span {
+  display: block;
+  font-weight: 300;
+  color: rgba(0, 0, 0, .5);
+}
+
+/* Zástupné citace — ať je na první pohled jasné, že nejde o skutečné
+   reference. Po doplnění reálného textu atribut data-zastupne smažte. */
+[data-zastupne] {
+  color: rgba(0, 0, 0, .45);
+  font-style: italic;
+}
 
 
 /* ---------- sekce 9 — nedokončená patička ----------------- */
@@ -652,16 +836,52 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 @media (max-width: 980px) {
   :root { --row-w: 90%; }
 
-  .row--2, .row--nenajdete { flex-wrap: wrap; }
-  .row--2 > .col,
-  .row--nenajdete > .col { flex: 1 1 100%; }
+  .row--2 { flex-wrap: wrap; }
+  .row--2 > .col { flex: 1 1 100%; }
 
-  .row--nenajdete .col--uzky,
-  .row--nenajdete .col--siroky { flex: 1 1 100%; }
+  /* Menu se schová pod tlačítko a rozbaluje se dolů. */
+  .nav__prepinac { display: block; }
+  .nav__odkazy {
+    position: absolute;
+    left: 0; right: 0;
+    top: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0 max((100% - var(--row-max)) / 2, 5%);
+    background: rgba(255, 255, 255, .9);
+    -webkit-backdrop-filter: blur(16px) saturate(1.6);
+            backdrop-filter: blur(16px) saturate(1.6);
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    /* Zavřené menu se nedá tabovat ani číst odečítačem. */
+    visibility: hidden;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity .2s ease, max-height .3s ease, visibility .3s;
+  }
+  .nav.je-otevrena .nav__odkazy {
+    visibility: visible;
+    opacity: 1;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .nav__odkazy a {
+    width: 100%;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .07);
+  }
+  .nav__odkazy a:last-child { border-bottom: 0; }
+  .nav__odkazy a::after { display: none; }
+
+  /* Na úzkém displeji se nic nelepí — karty jdou prostě za sebou. */
+  .nenajdete { grid-template-columns: 1fr; }
+  .nenajdete__intro,
+  .stoh { position: static; }
+  .reference__mrizka { grid-template-columns: 1fr; }
 
   .col--prazdny { display: none; }
   .row--mrizka { grid-template-columns: 1fr 1fr; }
-  .row--nenajdete .col--uzky { flex: 1 1 100%; }
   .col--p40 { padding: 24px 0; }
 
   /* Po zalomení do jednoho sloupce už fotka nemá k čemu se přizpůsobovat,
@@ -697,7 +917,7 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
      Na mobilu tvoří roztrhaný text, proto je tu potlačujeme.
      Zlomy v nadpisech, v seznamech a na certifikačních kartách zůstávají. */
   .s--hero p br,
-  .card--zapor p br,
+  .stoh p br,
   .milnik__body p br { display: none; }
 }
 

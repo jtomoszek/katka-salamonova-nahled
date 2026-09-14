@@ -119,7 +119,53 @@ function nastavPrijezdy() {
   window.addEventListener('load', zkontroluj, { once: true });
 }
 
+/* Plovoucí navigace: rozbalování na úzkém displeji a přitmavení skla,
+   jakmile pod lištou začne projíždět obsah. */
+function nastavNavigaci() {
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+
+  var prepinac = nav.querySelector('.nav__prepinac');
+  var odkazy = nav.querySelector('.nav__odkazy');
+
+  if (prepinac && odkazy) {
+    prepinac.addEventListener('click', function () {
+      var otevreno = prepinac.getAttribute('aria-expanded') === 'true';
+      prepinac.setAttribute('aria-expanded', String(!otevreno));
+      prepinac.setAttribute('aria-label', otevreno ? 'Otevřít menu' : 'Zavřít menu');
+      nav.classList.toggle('je-otevrena', !otevreno);
+    });
+
+    // Po kliknutí na odkaz nemá smysl nechat menu roztažené přes obsah.
+    odkazy.addEventListener('click', function (e) {
+      if (e.target.tagName !== 'A') return;
+      prepinac.setAttribute('aria-expanded', 'false');
+      prepinac.setAttribute('aria-label', 'Otevřít menu');
+      nav.classList.remove('je-otevrena');
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || !nav.classList.contains('je-otevrena')) return;
+      prepinac.setAttribute('aria-expanded', 'false');
+      prepinac.setAttribute('aria-label', 'Otevřít menu');
+      nav.classList.remove('je-otevrena');
+      prepinac.focus();
+    });
+  }
+
+  var odscrollovano = false;
+  function podleScrollu() {
+    var ted = window.scrollY > 12;
+    if (ted === odscrollovano) return;
+    odscrollovano = ted;
+    nav.classList.toggle('je-odscrollovano', ted);
+  }
+  window.addEventListener('scroll', podleScrollu, { passive: true });
+  podleScrollu();
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+  nastavNavigaci();
   nastavNahradyObrazku();
   nastavParalax();
   nastavPrijezdy();

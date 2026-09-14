@@ -126,10 +126,12 @@ cwebp -q 82 -m 6 /tmp/x.jpg -o site/assets/img/katka-hero.webp
 
 Zachováno 1:1, protože takhle stránka v databázi opravdu vypadala:
 
-1. **Sekce 7 „Co o mě říkají klienti“** — pod nadpisem byl omylem zkopírovaný
-   obsah sekce 6 a skutečné reference chybí. V náhledu pro klientku by to
-   působilo jako chyba, proto je sekce **zakomentovaná** v `index.html`.
-   Až budou reference k dispozici, stačí komentář odebrat a obsah vyměnit.
+1. **Reference** — v databázi měla sekce pod nadpisem omylem zkopírovanou
+   případovou studii. Teď je přestavěná na tři citace a přesunutá pod
+   „Co u mě nenajdete“. **Citace jsou zástupné** — skutečné reference
+   v podkladech nejsou a vymyslet je nelze, jde o výroky konkrétních lidí.
+   V HTML jsou označené atributem `data-zastupne` (kurzíva, ztlumená barva);
+   po doplnění reálného textu atribut smažte.
 2. **Sekce 9 (patička)** — v databázi jen hnědé pozadí `#4d3625` a prázdná
    mřížka. Barva i rozvržení zůstaly, obsah je **doplněný** z toho, co
    stránka sama uvádí (odbornost, spolupráce, právní doložka).
@@ -254,6 +256,30 @@ Svislou linku kreslí každý milník sám jako spojnici ke svému následníkov
 nahoře začínala až pod prvním uzlem a pod posledním by visela do prázdna —
 uzly totiž nesedí na krajích kontejneru.
 
+## Navigace
+
+Plovoucí lišta se skleněným efektem — `backdrop-filter: blur(16px) saturate(1.6)`
+nad poloprůhledným pozadím. Plně krycí barva by efekt zabila, není co rozostřit.
+Po odscrollování o 12 px se krytí zvedne (`.je-odscrollovano`), ať text pod
+lištou neruší.
+
+Odkazy míří na kotvy sekcí; `scroll-padding-top` drží nadpis pod lištou.
+Na displejích do 980 px se menu schová pod tlačítko — zavřené je `visibility:
+hidden`, takže se nedá tabovat ani přečíst odečítačem. Zavírá se kliknutím na
+odkaz i klávesou Escape.
+
+## Skládané karty v „Co u mě nenajdete“
+
+Stejný princip jako na kardea.cz: nadpis je `position: sticky` a karty se pod
+ním skládají na sebe — každá se zastaví o 16 px níž (`--i` na prvku), takže je
+vidět okraj té předchozí. Kontejner má dole `padding-bottom`, o který zůstane
+hotový stoh přilepený déle, než ho konec vytlačí pryč; není vidět, leží za
+nalepenými kartami.
+
+Nutné podmínky: `align-items: start` na mřížce (roztažená položka by neměla
+kam přilnout) a krycí pozadí karet. Pod 980 px se nic nelepí, karty jdou
+prostě za sebou.
+
 ## Design systém
 
 Barvy i typografie jsou převzaté přímo z Divi nastavení stránky:
@@ -285,5 +311,7 @@ Vědomé a jediné:
   (Divi mělo `parallax: off`), obojí doplněno na přání (viz výš).
 - **Časová osa a příjezd milníků** — v originálu to byly statické blurby.
 - **Interaktivní graf** — v originálu statický obrázek, který se nedochoval.
+- **Navigace** — v originálu na stránce žádná nebyla.
+- **Skládané karty a přesun referencí pod ně** — doplněno na přání.
 - **Poppins z Google Fonts** — na rozdíl od ostatních projektů zatím není lokální.
   Fonty nemáš na disku; kdykoli je můžu stáhnout jako woff2 do `assets/fonts/`.

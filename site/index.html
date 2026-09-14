@@ -20,6 +20,30 @@
 <body>
 
 <!-- ============================================================
+     Navigace — plovoucí lišta se skleněným efektem (backdrop-filter).
+     Odkazy míří na kotvy sekcí, na mobilu se rozbaluje tlačítkem.
+     ============================================================ -->
+<header class="nav" id="nahoru">
+  <div class="nav__vnitrek">
+    <a class="nav__znacka" href="#nahoru">Kateřina&nbsp;Šalamonová</a>
+
+    <nav class="nav__odkazy" id="nav-odkazy" aria-label="Hlavní navigace">
+      <a href="#filozofie">Filozofie</a>
+      <a href="#pilire">Pilíře</a>
+      <a href="#pribeh">O mně</a>
+      <a href="#studie">Případové studie</a>
+      <a href="#reference">Reference</a>
+    </nav>
+
+    <button class="nav__prepinac" type="button"
+            aria-expanded="false" aria-controls="nav-odkazy" aria-label="Otevřít menu">
+      <span class="nav__cara" aria-hidden="true"></span>
+      <span class="nav__cara" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<!-- ============================================================
      SEKCE 1 — Hero
      Původní Divi: pozadí Katka-Salamonova-scaled.webp (center top),
      padding-top 37 % (mobil 113 %). Nadpis h1 50px/700.
@@ -54,7 +78,7 @@
 <!-- ============================================================
      SEKCE 2 — Filozofie (pozadí #b48563, bílý text)
      ============================================================ -->
-<section class="s s--filozofie">
+<section class="s s--filozofie" id="filozofie">
   <div class="row row--2">
     <div class="col">
       <div class="txt">
@@ -75,7 +99,7 @@
 <!-- ============================================================
      SEKCE 3 — Pilíře prosperity (4 karty #f5f3f8, radius 12px)
      ============================================================ -->
-<section class="s s--pilire">
+<section class="s s--pilire" id="pilire">
   <div class="row">
     <div class="col">
       <div class="txt txt--pt80">
@@ -177,7 +201,7 @@
 <!-- ============================================================
      SEKCE 4 — Můj příběh (pozadí #f5f3f8, sloupce zarovnané dolů)
      ============================================================ -->
-<section class="s s--pribeh">
+<section class="s s--pribeh" id="pribeh">
   <div class="row row--2 row--bottom">
     <div class="col">
       <div class="txt txt--pt80">
@@ -306,7 +330,7 @@
 <!-- ============================================================
      SEKCE 6 — Případové studie
      ============================================================ -->
-<section class="s s--studie">
+<section class="s s--studie" id="studie">
   <div class="row">
     <div class="col">
       <div class="txt txt--pt80">
@@ -358,80 +382,75 @@
 
 
 <!-- ============================================================
-     SEKCE 7 — Reference — DOČASNĚ SKRYTÁ
-     ============================================================
-     V původní databázi je tahle sekce nedodělaná: pod nadpisem
-     „Co o mě říkají klienti“ je omylem zkopírovaný obsah sekce 6
-     a skutečné reference chybí. V náhledu pro klientku by to působilo
-     jako chyba, proto je zakomentovaná.
+     SEKCE 8 — Co u mě nenajdete (horní linka 1px)
+     ============================================================ -->
+<section class="s s--nenajdete" id="nenajdete">
+  <div class="row nenajdete">
 
-     Až budou reference k dispozici, odeberte tenhle komentář
-     (řádek s otevřením a řádek se zavřením níž) a vyměňte obsah.
-     ============================================================
+    <!-- Nadpis se při scrollu drží na místě, karty se pod ním skládají
+         na sebe — každá o kousek níž, aby byl vidět okraj té předchozí.
+         Na úzkém displeji se nic nelepí, karty jdou prostě za sebou. -->
+    <div class="nenajdete__intro">
+      <h1>Co u mě <span class="zvyraznene">nenajdete</span></h1>
+      <p class="podnadpis">Vztah postavený na důvěře vyžaduje jasně vymezené hranice. Toto je můj strategický filtr a závazek vůči vám.</p>
+    </div>
 
-<section class="s s--reference">
+    <div class="nenajdete__karty">
+      <article class="stoh" style="--i: 0">
+        <span class="stoh__poradi">01</span>
+        <h3 class="zapor">✘ Unifikované produkty</h3>
+        <p>Každá rodina je unikát. Odmítám balíčky, které instituce hromadně tlačí všem klientům bez rozdílu. Vytvářím řešení výhradně na míru vašim možnostem a cílům.</p>
+      </article>
+
+      <article class="stoh" style="--i: 1">
+        <span class="stoh__poradi">02</span>
+        <h3 class="zapor">✘ Nátlak na podpis</h3>
+        <p>Vážná životní rozhodnutí vyžadují čas. U mě nečekejte akční nabídky platné do dnešní půlnoci. Rozhodujeme se racionálně, ne pod tlakem.</p>
+      </article>
+
+      <article class="stoh" style="--i: 2">
+        <span class="stoh__poradi">03</span>
+        <h3 class="zapor">✘ Skryté kličky</h3>
+        <p>Vše, co spolu vytvoříme, vám vysvětlím lidskou řečí. Bez drobného písma a bez nepřehledných tabulek. Transparentnost je můj základ.</p>
+      </article>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     SEKCE 7 — Reference
+     POZOR: citace jsou ZÁSTUPNÉ. Skutečné reference v podkladech
+     nejsou a vymyslet je nelze — jde o výroky konkrétních lidí.
+     Nahraďte je reálnými (text, jméno, případně roli) dřív, než web
+     půjde ven.
+     ============================================================ -->
+<section class="s s--reference" id="reference">
   <div class="row">
     <div class="col">
       <div class="txt">
         <h4 class="c c--upper">Reference</h4>
-        <h1 class="c">Co o mě říkají klienti</h1>
+        <h1 class="c">Co o mně říkají klienti</h1>
       </div>
     </div>
   </div>
 
-  <div class="row row--2 row--stred row--studie">
-    <div class="col col--p40">
-      <div class="txt"><h3>Transformace 10 produktů<br>v jeden funkční ekosystém</h3></div>
-      <div class="txt"><p>Klient ve věku 42 let měl roztříštěné portfolio, které požírala inflace a vysoké poplatky. Standardní trh mu prodal produkty, ale nedal mu strategii. Mým cílem bylo nastavit jasnou trajektorii k rentě 60 000 Kč měsíčně od 50 let věku.</p></div>
-      <div class="txt txt--vysledek">
-        <h4>VÝSLEDEK ARCHITEKTURY</h4>
-        <p>Klient přesně ví, v jakém bodě cesty se nachází. Investuje efektivněji a získá svobodu o dekádu dříve než při původním nastavení.</p>
-      </div>
-    </div>
-    <div class="col col--p40">
-      <img class="studie-img" src="assets/img/pripadova-studie.webp" data-fallback="assets/img/placeholder-studie.svg"
-           alt="Případová studie" width="2253" height="1918">
-    </div>
-  </div>
-</section>
+  <div class="row reference__mrizka">
+    <blockquote class="reference">
+      <p class="reference__text" data-zastupne>Sem patří reference klienta — vlastními slovy, ideálně konkrétně: s čím přišel, co se změnilo.</p>
+      <footer class="reference__autor">Jméno klienta<span>role nebo obor</span></footer>
+    </blockquote>
 
-     ============================================================ -->
+    <blockquote class="reference">
+      <p class="reference__text" data-zastupne>Druhá reference. Nejlépe od někoho v jiné životní situaci, ať je vidět šíře záběru.</p>
+      <footer class="reference__autor">Jméno klienta<span>role nebo obor</span></footer>
+    </blockquote>
 
-
-<!-- ============================================================
-     SEKCE 8 — Co u mě nenajdete (horní linka 1px)
-     ============================================================ -->
-<section class="s s--nenajdete">
-  <div class="row row--nenajdete row--gap">
-    <div class="col col--uzky">
-      <div class="txt">
-        <h1>Co u mě <span class="zvyraznene">nenajdete</span></h1>
-        <p class="podnadpis">Vztah postavený na důvěře vyžaduje jasně vymezené hranice. Toto je můj strategický filtr a závazek vůči vám.</p>
-      </div>
-    </div>
-    <!-- První karta sedí vedle nadpisu, ne pod ním — pravý sloupec byl
-         v originálu prázdný a karta se táhla přes celou šířku. -->
-    <div class="col col--siroky card card--zapor">
-      <div class="txt">
-        <h3 class="zapor">✘ Unifikované produkty</h3>
-        <p>Každá rodina je unikát. Odmítám balíčky, které instituce hromadně tlačí všem klientům bez rozdílu. Vytvářím řešení výhradně na míru vašim možnostem a cílům.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="row row--2 row--gap row--tesne">
-    <div class="col card card--zapor">
-      <div class="txt">
-        <h3 class="zapor">✘ Nátlak na podpis</h3>
-        <p>Vážná životní rozhodnutí vyžadují čas. <br>U mě nečekejte akční nabídky platné <br>do dnešní půlnoci. Rozhodujeme se <br>racionálně, ne pod tlakem.</p>
-      </div>
-    </div>
-    <div class="col card card--zapor">
-      <div class="txt">
-        <h3 class="zapor">✘ Skryté kličky</h3>
-        <p>Vše, co spolu vytvoříme, vám vysvětlím lidskou řečí. Bez drobného písma a bez nepřehledných tabulek. <br>Transparentnost je můj základ.</p>
-      </div>
-    </div>
+    <blockquote class="reference">
+      <p class="reference__text" data-zastupne>Třetí reference. Krátká a konkrétní působí věrohodněji než dlouhá chvála.</p>
+      <footer class="reference__autor">Jméno klienta<span>role nebo obor</span></footer>
+    </blockquote>
   </div>
 </section>
 
@@ -472,7 +491,6 @@
       <ul class="paticka__seznam">
         <li>Fines group s.r.o.</li>
         <li>EFEKTA brokerpool a.s.</li>
-        <li>ZPF Akademie</li>
       </ul>
     </div>
 
