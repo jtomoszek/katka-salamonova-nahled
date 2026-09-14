@@ -25,6 +25,10 @@
      padding-top 37 % (mobil 113 %). Nadpis h1 50px/700.
      ============================================================ -->
 <section class="s s--hero">
+  <!-- Fotka je samostatná vrstva, aby s ní šlo při scrollu hýbat
+       (paralax). Je vyšší než sekce, takže se posunem neodkryje okraj. -->
+  <div class="hero-bg" aria-hidden="true"></div>
+
   <!-- Spodní přechod: postupné rozostření (0 → 10 px) plus gradient
        z průhledné do barvy pozadí. Vrstvy se skládají, každá rozmazává
        to, co je pod ní — proto ta postupnost. Čistě dekorativní. -->
