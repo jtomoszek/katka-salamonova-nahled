@@ -102,23 +102,22 @@ Původní tři soubory z WordPressu se nedochovaly — jediná záloha s `upload
 je WPvivid z 13. 5. 2026 a fotky byly nahrané až po tomto datu.
 Nahrazené jsou fotkami z focení 29. 3. 2025 ze složky `salamonova/`:
 
-| soubor v `site/assets/img/` | zdroj | kde |
-|---|---|---|
-| `katka-hero.webp` | `20260902_portrety_katka/_JZ_8400-Edit.jpg` | pozadí hero sekce |
-| `katka-portret.webp` | `salamonova/press/…_JZ_5007-Edit.jpg` | sekce „Můj příběh“ |
+Obě jsou z focení **2. 9. 2026** (`20260902_portrety_katka/`), takže mají
+stejné šedé studiové pozadí i stejné olivové šaty:
 
-Převedeno přes `cwebp` (hero 2400 px šířky / q82 → 163 kB,
-portrét 2000 px výšky / q84 → 42 kB).
+| soubor v `site/assets/img/` | zdroj | rozměr | kde |
+|---|---|---|---|
+| `katka-hero.webp` | `_JZ_8400-Edit.jpg` | 2400 × 1600, 163 kB | pozadí hero sekce |
+| `katka-portret.webp` | `_JZ_8436-Edit.jpg` | 1006 × 2000, 73 kB | sekce „Můj příběh“ |
 
-Pozor: hero je z focení 2. 9. 2026 (šedé pozadí, olivové šaty), portrét
-ještě z 29. 3. 2025 (bílé pozadí, camel top). Pokud má web působit jednotně,
-stojí za zvážení vzít obě fotky ze stejného focení.
+Převedeno přes `cwebp` (hero 2400 px šířky / q82, portrét 2000 px výšky / q84).
 
-Jiný výběr z focení? Ve složce `salamonova/press/` jsou čtyři fotky
-(`náhledy/` má dalších 51). Stačí převést a přepsat soubor stejného názvu:
+Jiný výběr? `20260902_portrety_katka/` má čtyři vybrané snímky a v `náhledy/`
+další desítky; starší focení je v `salamonova/`. Stačí převést a přepsat soubor
+stejného názvu — u portrétu pak srovnat `width`/`height` v `index.html`:
 
 ```bash
-sips -Z 2400 salamonova/press/JMENO.jpg --out /tmp/x.jpg
+sips -Z 2400 20260902_portrety_katka/JMENO.jpg --out /tmp/x.jpg
 cwebp -q 82 -m 6 /tmp/x.jpg -o site/assets/img/katka-hero.webp
 ```
 
