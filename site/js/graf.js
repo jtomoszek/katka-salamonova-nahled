@@ -220,7 +220,7 @@
         veta = 'S těmito vstupy se cíl do ' + M.vekMax + ' let nepodaří naplnit ani jednou cestou. '
              + 'Zkuste vyšší měsíční investici nebo nižší cílovou rentu.';
       } else if (p === null) {
-        veta = 'Architektura dosáhne cíle v ' + let_(a - M.vekStart) + ', tedy ve věku '
+        veta = 'Architektura dosáhne cíle za ' + let_(a - M.vekStart) + ', tedy ve věku '
              + Math.round(a) + '. Původní nastavení se k němu do ' + M.vekMax + ' let nedostane vůbec.';
       } else {
         veta = 'Architektura dosáhne cíle ve věku ' + Math.round(a) + ', původní nastavení až ve '
