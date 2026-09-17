@@ -33,6 +33,7 @@
       <a href="#pribeh">O mně</a>
       <a href="#studie">Případové studie</a>
       <a href="#reference">Reference</a>
+      <a href="#novinky">Novinky</a>
     </nav>
 
     <button class="nav__prepinac" type="button"
@@ -456,6 +457,47 @@
 
 
 <!-- ============================================================
+     Přihlášení k odběru novinek
+     Odesílá js/newsletter.js na /api/newsletter/prihlasit (Cloudflare
+     Worker). Přihlášení platí až po potvrzení odkazu z e-mailu.
+     ============================================================ -->
+<section class="s s--novinky" id="novinky">
+  <div class="row novinky">
+    <div class="novinky__uvod">
+      <h4>NOVINKY ZE SVĚTA FINANCÍ</h4>
+      <h2 class="novinky__nadpis">Chci dostávat novinky ze&nbsp;světa financí</h2>
+      <p>Změny u hypoték, investic a pojištění, které se vás mohou týkat — srozumitelně a jen tehdy, když je co říct. Žádný spam.</p>
+    </div>
+
+    <form class="novinky__formular" id="formular-novinky" method="post" action="/api/newsletter/prihlasit" novalidate>
+      <div class="novinky__pole">
+        <label for="novinky-jmeno">Jméno <span class="novinky__nepovinne">(nepovinné)</span></label>
+        <input id="novinky-jmeno" name="jmeno" type="text" autocomplete="given-name" maxlength="80">
+      </div>
+      <div class="novinky__pole">
+        <label for="novinky-email">E-mail</label>
+        <input id="novinky-email" name="email" type="email" autocomplete="email" required maxlength="254">
+      </div>
+
+      <!-- Past na roboty: člověk pole nevidí a nevyplní ho. -->
+      <div class="novinky__past" aria-hidden="true">
+        <label for="novinky-web">Nevyplňujte</label>
+        <input id="novinky-web" name="web" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <label class="novinky__souhlas">
+        <input type="checkbox" name="souhlas" required>
+        <span>Souhlasím, aby mi Kateřina Šalamonová posílala na tento e-mail novinky ze světa financí. Souhlas můžu kdykoli odvolat odkazem v každém e-mailu.</span>
+      </label>
+
+      <button type="submit" class="novinky__tlacitko">Chci dostávat novinky</button>
+      <p class="novinky__zprava" role="status" aria-live="polite" hidden></p>
+    </form>
+  </div>
+</section>
+
+
+<!-- ============================================================
      SEKCE 9 — patička
      V původní databázi byla prázdná: jen hnědé pozadí #4d3625 a mřížka
      tří sloupců. Barva i rozvržení zůstaly, obsah je doplněný z toho,
@@ -515,5 +557,6 @@
 
 <script src="js/main.js"></script>
 <script src="js/graf.js"></script>
+<script src="js/newsletter.js"></script>
 </body>
 </html>
