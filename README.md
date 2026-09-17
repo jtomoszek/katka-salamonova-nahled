@@ -14,7 +14,7 @@ Aktualizace náhledu po změnách:
 
 ```bash
 git add -A && git commit -m "update" && git push
-git subtree split --prefix site -b gh-pages -f && git push -f origin gh-pages
+git branch -D gh-pages; git subtree split --prefix site -b gh-pages && git push -f origin gh-pages
 ```
 
 `robots.txt` má `Disallow: /`, takže se stránka nebude objevovat ve vyhledávání.
