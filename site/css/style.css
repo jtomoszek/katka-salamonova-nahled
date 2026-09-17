@@ -742,6 +742,100 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 }
 
 
+/* ---------- přihlášení k odběru novinek --------------------- */
+
+.s--novinky {
+  padding: 90px 0;
+  background: var(--surface);
+  border-top: 1px solid var(--hairline);
+}
+.novinky {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(32px, 5vw, 80px);
+  align-items: center;
+}
+.novinky__nadpis {
+  font-size: var(--fs-h1);
+  font-weight: 700;
+  line-height: var(--lh-h1);
+  margin: .1em 0 .5em;
+}
+.novinky__uvod p { max-width: 34em; }
+
+.novinky__formular {
+  display: grid;
+  gap: 16px;
+  padding: clamp(24px, 3vw, 36px);
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-top: 4px solid var(--copper);
+  border-radius: 18px;
+  box-shadow: 0 26px 60px -34px rgba(77, 54, 37, .45);
+}
+.novinky__pole { display: grid; gap: 6px; }
+.novinky__pole label { font-size: 14px; font-weight: 500; }
+.novinky__nepovinne { font-weight: 300; color: rgba(0, 0, 0, .5); }
+.novinky__pole input {
+  width: 100%;
+  min-height: 48px;
+  padding: 10px 14px;
+  border: 1px solid rgba(0, 0, 0, .18);
+  border-radius: 10px;
+  font: 400 16px var(--font);
+  color: var(--ink);
+  background: var(--white);
+}
+.novinky__pole input:focus {
+  outline: none;
+  border-color: var(--copper-dark);
+  box-shadow: 0 0 0 3px rgba(156, 109, 75, .2);
+}
+
+/* Past na roboty — mimo obrazovku, ale ne display:none, to by roboti poznali. */
+.novinky__past { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.novinky__souhlas {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(0, 0, 0, .7);
+  cursor: pointer;
+}
+.novinky__souhlas input {
+  flex: 0 0 auto;
+  width: 18px; height: 18px;
+  margin: 1px 0 0;
+  accent-color: var(--copper-dark);
+}
+
+.novinky__tlacitko {
+  min-height: 50px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--copper-dark);
+  color: var(--white);
+  font: 600 16px var(--font);
+  cursor: pointer;
+  transition: background .2s ease;
+}
+.novinky__tlacitko:hover { background: var(--brown); }
+.novinky__tlacitko:focus-visible { outline: 2px solid var(--brown); outline-offset: 3px; }
+.novinky__tlacitko:disabled { opacity: .7; cursor: progress; }
+
+.novinky__zprava {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.novinky__zprava--ok { background: #e4f2e8; color: #2f7a4d; }
+.novinky__zprava--chyba { background: #fbe7e5; color: #b3261e; }
+
+
 /* ---------- sekce 9 — nedokončená patička ----------------- */
 
 .s--paticka {
@@ -834,6 +928,7 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
    ============================================================ */
 
 @media (max-width: 980px) {
+  .novinky { grid-template-columns: 1fr; }
   :root { --row-w: 90%; }
 
   .row--2 { flex-wrap: wrap; }
@@ -898,6 +993,7 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 }
 
 @media (max-width: 767px) {
+  .s--novinky { padding: 60px 0; }
   :root { --fs-h1: 32px; --fs-h1-hero: 34px; --fs-h3: 24px; }
 
   .s--hero { padding-top: 113%; }

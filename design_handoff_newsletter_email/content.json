@@ -1,0 +1,15 @@
+{
+  "subject": "Přestaňte odkládat. Začněte budovat.",
+  "preheader": "Čtyři pilíře prosperity, jedna případová studie a tři věci, které u mě nikdy nenajdete.",
+  "pillars": [
+    {"num": "01", "label": "Zázemí & Domov", "title": "Financování s přesahem", "text": "Domov není jen výdaj, je to kotva. Financování nastavuji tak, aby nezatěžovalo budoucí investice."},
+    {"num": "02", "label": "Růst a svoboda", "title": "Kapitál pro vaši svobodu", "text": "Investice jako motor, který po zajištění zázemí začne generovat vaši nezávislost."},
+    {"num": "03", "label": "Ochrana majetku", "title": "Štít pro vaši životní úroveň", "text": "Pojistka proti zastavení plánu. I v krizi zůstanou investice nedotčeny."},
+    {"num": "04", "label": "Odkaz a generace", "title": "Budoucnost dalších generací", "text": "Bezpečný přenos bohatství a nejlepší start pro vaše děti bez ohrožení vlastní renty."}
+  ],
+  "nots": [
+    {"title": "Unifikované produkty", "text": "Každá rodina je unikát. Řešení tvořím výhradně na míru vašim možnostem a cílům."},
+    {"title": "Nátlak na podpis", "text": "Žádné akční nabídky do půlnoci. Rozhodujeme se racionálně, ne pod tlakem."},
+    {"title": "Skryté kličky", "text": "Vše vysvětlím lidskou řečí. Bez drobného písma a nepřehledných tabulek."}
+  ]
+}

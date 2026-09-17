@@ -1,0 +1,56 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "katka-salamonova",
+  "main": "worker/index.js",
+  "compatibility_date": "2026-09-01",
+
+  // Statický web. Worker se spouští jen pro API a administraci,
+  // všechno ostatní servíruje Cloudflare rovnou ze site/.
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/admin", "/admin/*"]
+  },
+
+  // Databáze: kontakty, štítky, uživatelé, historie rozesílek.
+  // database_id doplňte výstupem z `npx wrangler d1 create katka-salamonova`.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "katka-salamonova",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // Přílohy e-mailů. Bucket je soukromý, soubory se nikde veřejně nezobrazují.
+  "r2_buckets": [
+    { "binding": "PRILOHY", "bucket_name": "katka-salamonova-prilohy" }
+  ],
+
+  // Každou minutu odejde další dávka e-mailů z fronty.
+  "triggers": { "crons": ["* * * * *"] },
+
+  "vars": {
+    // Veřejná adresa webu — z ní se skládají odkazy v e-mailech.
+    "WEB_URL": "https://DOPLNIT-DOMENU.cz",
+    // Odesílatel musí být na doméně ověřené u Resendu.
+    "ODESILATEL": "Kateřina Šalamonová <novinky@DOPLNIT-DOMENU.cz>",
+    "ODPOVEDI_NA": "",
+    // Poštovní adresa odesílatele do patičky newsletteru (hromadná obchodní
+    // sdělení ji mají obsahovat), např. "Fines group s.r.o., Ulice 1, 110 00 Praha"
+    "ADRESA": "",
+    // Kam vede tlačítko „Domluvit nezávaznou konzultaci“ (prázdné = úvod webu)
+    "ODKAZ_KONZULTACE": "",
+    "POSTA": "resend",
+    // E-mailů na jedno spuštění (Free tarif Workers: nejvýš ~45)
+    "DAVKA": "40",
+    // Požadavků na Resend za sekundu (výchozí limit Resendu je 2)
+    "RYCHLOST": "2"
+  },
+  // Tajné hodnoty se nastavují mimo repozitář:
+  //   npx wrangler secret put RESEND_API_KEY
+  //   npx wrangler secret put ZAKLADACI_TOKEN
+
+  "observability": { "enabled": true }
+}

@@ -18,3 +18,11 @@ podklady/
 
 # lokální konfigurace náhledu (cesta platí jen na tomhle stroji)
 .claude/
+
+# Node a Wrangler (složky jsou navíc vyřazené ze synchronizace iCloudu)
+node_modules/
+.wrangler/
+
+# lokální tajné hodnoty
+.dev.vars
+*.zip

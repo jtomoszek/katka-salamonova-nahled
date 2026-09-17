@@ -315,3 +315,89 @@ Vědomé a jediné:
 - **Skládané karty a přesun referencí pod ně** — doplněno na přání.
 - **Poppins z Google Fonts** — na rozdíl od ostatních projektů zatím není lokální.
   Fonty nemáš na disku; kdykoli je můžu stáhnout jako woff2 do `assets/fonts/`.
+
+## Newsletter a administrace (Cloudflare)
+
+Web i administrace běží jako jeden **Cloudflare Worker**: statické soubory
+ze `site/` servíruje Workers Assets, cesty `/api/*` a `/admin/*` obsluhuje
+kód ve `worker/`. GitHub Pages náhled žádné API nemá — formulář „Novinky“
+tam nefunguje.
+
+| část | kde |
+|---|---|
+| databáze (kontakty, štítky, rozesílky, uživatelé) | D1, `migrations/` |
+| přílohy e-mailů | R2 bucket `katka-salamonova-prilohy` |
+| odesílání | Resend (HTTP API), fronta po dávkách, cron každou minutu |
+| administrace | `site/admin/` (vanilla JS), adresa `/admin/` |
+| přihlášení k odběru na webu | sekce `#novinky`, `site/js/newsletter.js` |
+| šablona e-mailu | `worker/lib/sablona.js`, pevné texty v `worker/lib/obsah-newsletteru.js` |
+
+### Co umí
+
+- **Přehled** — počty kontaktů, odeslané rozesílky, přihlášení za 30 dní.
+- **Kontakty** — hledání, filtr podle stavu a štítku, hromadné štítkování,
+  import z CSV (i Windows-1250 z českého Excelu), export, smazání podle GDPR.
+- **Štítky** — podle nich se vybírají příjemci (všem / aspoň jeden štítek /
+  všechny štítky).
+- **Napsat e-mail** — předmět, text do bloku „Osobní slovo“, přílohy (10 MB,
+  celkem 15 MB), zapnutí bloků *Pilíře prosperity* a *Případová studie*,
+  náhled, zkušební e-mail sobě, odeslání. Koncept se ukládá v prohlížeči.
+- **Odeslané** — stav fronty, doručené/neúspěšné adresy, opakování, webová verze.
+- **Uživatelé** — admin zakládá účty pozvánkou (odkaz platí 7 dní), role
+  admin/editor. Editor nemůže spravovat uživatele.
+
+Přihlášení z webu je **double opt-in** (potvrzovací e-mail), každý e-mail má
+odhlašovací odkaz i hlavičku pro odhlášení jedním klikem (Gmail/Yahoo to
+vyžadují). Odhlášeného nejde znovu přihlásit importem.
+
+### Design e-mailu
+
+Podle `design_handoff_newsletter_email/`. Každé vydání obsahuje hlavičku
+(„Newsletter · měsíc rok“), úvod s tlačítkem, **Osobní slovo** (portrét,
+text z administrace, podpis), citát, „Co u mě nenajdete“ a patičku.
+Pilíře a případová studie se zapínají u každého e-mailu zvlášť.
+Obrázky se načítají z `WEB_URL` (`/assets/email/katka-portret.jpg`,
+`/assets/img/podpis.png`), web proto musí běžet dřív, než odejde první e-mail.
+
+### Nasazení
+
+```bash
+npm install
+npx wrangler login
+npx wrangler d1 create katka-salamonova          # vypsané database_id → wrangler.jsonc
+npx wrangler r2 bucket create katka-salamonova-prilohy
+npx wrangler d1 migrations apply katka-salamonova --remote
+npx wrangler secret put RESEND_API_KEY
+npx wrangler secret put ZAKLADACI_TOKEN          # libovolný dlouhý náhodný řetězec
+npm run deploy
+```
+
+Před nasazením v `wrangler.jsonc` doplnit `WEB_URL`, `ODESILATEL`,
+`ADRESA` (poštovní adresa do patičky) a případně `ODKAZ_KONZULTACE`.
+Doménu je potřeba přidat do Resendu a nastavit DNS záznamy SPF, DKIM
+a DMARC — jinak e-maily skončí ve spamu nebo neodejdou vůbec.
+Vlastní doménu pro Worker nastavíte v Cloudflare → Workers → Settings → Domains.
+
+První účet: otevřít `https://DOMENA/admin/`, zadat `ZAKLADACI_TOKEN`,
+e-mail, jméno a heslo. Pak už zakládací formulář nejde použít znovu.
+
+### Lokální vývoj
+
+`.dev.vars` (není v gitu):
+
+```
+WEB_URL=http://localhost:8787
+POSTA=log
+ODESILATEL=Kateřina Šalamonová <novinky@example.test>
+ZAKLADACI_TOKEN=nejaky-dlouhy-token
+```
+
+```bash
+npm run db:migrate:local
+npm run dev                   # http://localhost:8787, e-maily se jen vypisují do konzole
+LOG=cesta/k/logu node --test test/*.test.js
+```
+
+`POSTA=log` nic neodesílá, text e-mailů vypisuje do výstupu `wrangler dev`.
+E2E testy (`test/api.test.js`) běží proti spuštěnému dev serveru, **smažou
+lokální databázi** a e-maily čtou z logu, jehož cestu dostanou v `LOG`.
