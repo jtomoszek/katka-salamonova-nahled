@@ -4,6 +4,7 @@
  * statický soubor a server nemusí znát jednotlivé stránky. */
 
 import { ziskej, posli } from './api.js';
+import { prostredi } from './prostredi.js';
 import { h, vycisti, oznam, oznamChybu, pole, sPrubehem } from './ui.js';
 
 import { stranka as prehled } from './stranky/prehled.js';
@@ -295,6 +296,7 @@ async function start() {
   try {
     const stav = await ziskej('/api/ucet/stav', { tise401: true });
     prihlaseny = stav.uzivatel;
+    prostredi.prilohyZapnute = stav.prilohyZapnute !== false;
     obsah = null;
     if (prihlaseny) return zobraz();
     if (stav.potrebaNastaveni) return obrazovkaNastaveni();

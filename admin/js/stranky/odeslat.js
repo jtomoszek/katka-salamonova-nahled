@@ -5,6 +5,7 @@
  * obnovení stránky ani odhlášení. */
 
 import { ziskej, posli, smaz } from '../api.js';
+import { prostredi } from '../prostredi.js';
 import {
   h, vycisti, cislo, velikost, stitek, oznam, oznamChybu, dialog, potvrdit, sPrubehem, zpozdene, sklonuj, zaskrtavatko,
 } from '../ui.js';
@@ -291,13 +292,13 @@ export async function stranka(obsah) {
             ),
           ),
         ),
-        h('div', { class: 'pole' },
+        prostredi.prilohyZapnute ? h('div', { class: 'pole' },
           h('span', { class: 'pole__popisek', text: 'Přílohy' }),
           seznamPriloh,
           vstupPrilohy,
           h('label', { class: 'tlacitko tlacitko--male', for: 'prilohy-vstup' }, '+ Přiložit soubor'),
           h('p', { class: 'pole__napoveda', text: 'Nejvýš 10 MB na soubor, 15 MB celkem. Velké přílohy snižují šanci, že e-mail neskončí ve spamu.' }),
-        ),
+        ) : null,
       ),
 
       h('aside', { class: 'psani__bok' },
