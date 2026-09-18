@@ -109,9 +109,16 @@ stejné šedé studiové pozadí i stejné olivové šaty:
 | soubor v `site/assets/img/` | zdroj | rozměr | kde |
 |---|---|---|---|
 | `katka-hero.webp` | `_JZ_8400-Edit.jpg` | 2400 × 1600, 163 kB | pozadí hero sekce |
+| `katka-hero-mobil.webp` | `_JZ_8400-Edit.jpg` | 1200 × 1600, 227 kB | totéž pod 767 px (svislý výřez) |
 | `katka-portret.webp` | `_JZ_8436-Edit.jpg` | 1006 × 2000, 73 kB | sekce „Můj příběh“ |
 
 Převedeno přes `cwebp` (hero 2400 px šířky / q82, portrét 2000 px výšky / q84).
+
+Hero fotka je v titulce vidět **celá** (`background-size: contain`), ne
+přiblížená na obličej — pod ní pokračuje barva studiového pozadí `#9d9e9e`,
+kterou spodní přechod rozpustí do `--surface`. Na úzkém displeji by se
+fotka na šířku smrskla do proužku, proto tam nastupuje svislý výřez
+`katka-hero-mobil.webp`.
 
 Jiný výběr? `20260902_portrety_katka/` má čtyři vybrané snímky a v `náhledy/`
 další desítky; starší focení je v `salamonova/`. Stačí převést a přepsat soubor
