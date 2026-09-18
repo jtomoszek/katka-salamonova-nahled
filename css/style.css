@@ -212,9 +212,15 @@ html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-vyska) + 16px
   /* první vrstva je skutečná fotka; když soubor chybí, prosvitne placeholder */
   background-image: url('../assets/img/katka-hero.webp'),
                     url('../assets/img/placeholder-hero.svg');
-  background-position: center top;
+  /* svisle posunuto o parallax-range: vrstva začíná o tolik výš než sekce,
+     bez posunu by se fotce uřízl vrchol hlavy */
+  background-position: center var(--parallax-range);
   background-repeat: no-repeat;
-  background-size: cover;
+  /* contain, ne cover: titulní fotka má být vidět celá. Cover by ji při
+     vysokém heru ořízl po stranách a přiblížil na obličej. Pod fotkou
+     pokračuje barva studiového pozadí, spodní přechod ji rozpustí. */
+  background-size: contain;
+  background-color: #9d9e9e;
   will-change: transform;
 }
 .s--hero .txt--hero-head { padding-top: 80px; }
@@ -998,6 +1004,12 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 
   .s--hero { padding-top: 113%; }
   .s--hero .txt--hero-head { padding-top: 40px; }
+  /* Na úzkém displeji je hero mnohem vyšší než široký, na šířku ležící
+     fotka by v něm byla jen proužek — proto svislý výřez téže fotografie. */
+  .hero-bg {
+    background-image: url('../assets/img/katka-hero-mobil.webp'),
+                      url('../assets/img/placeholder-hero.svg');
+  }
   .s--filozofie { padding: 14% 0; }
   .s--nenajdete { padding: 60px 0; }
   .s--pilire { padding-bottom: 60px; }
