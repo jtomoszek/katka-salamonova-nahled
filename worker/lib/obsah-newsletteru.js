@@ -10,7 +10,7 @@ export const HERO = {
 
 export const FILOZOFIE = {
   citat: ['Jiní prodávají smlouvy.', 'Já řeším vaši svobodu.'],
-  text: 'Moje filozofie stojí na radikální upřímnosti: pokud něco nedává smysl pro vás, nedává to smysl ani pro mě.',
+  text: 'Moje filozofie stojí na radikální upřímnosti: co nedává smysl pro vás, vám nikdy nenabídnu.',
 };
 
 export const PILIRE = {
