@@ -5,7 +5,7 @@
 
 import { ziskej, posli } from './api.js';
 import { prostredi } from './prostredi.js';
-import { h, vycisti, oznam, oznamChybu, pole, sPrubehem } from './ui.js';
+import { h, vycisti, oznam, oznamChybu, pole, sPrubehem, zaskrtavatko } from './ui.js';
 
 import { stranka as prehled } from './stranky/prehled.js';
 import { stranka as kontakty } from './stranky/kontakty.js';
@@ -113,9 +113,14 @@ function formularHesla({ tlacitkoText, odeslat }) {
   const heslo = pole({ popisek: 'Heslo', type: 'password', autocomplete: 'new-password', required: true, minlength: 10, napoveda: 'Aspoň 10 znaků.' });
   const znovu = pole({ popisek: 'Heslo znovu', type: 'password', autocomplete: 'new-password', required: true });
   const chyba = chybaFormulare();
+  // Skryté heslo se snadno překlepne a pak „se neshodují“ — ať jde zobrazit.
+  const zobrazit = zaskrtavatko({
+    popisek: 'Zobrazit hesla',
+    onchange: (e) => { heslo.prvek.type = znovu.prvek.type = e.target.checked ? 'text' : 'password'; },
+  });
   const tlacitko = h('button', { type: 'submit', class: 'tlacitko tlacitko--hlavni tlacitko--plne' }, tlacitkoText);
   return {
-    pole: [heslo.obal, znovu.obal, chyba, tlacitko],
+    pole: [heslo.obal, znovu.obal, zobrazit.obal, chyba, tlacitko],
     onsubmit: (e) => {
       e.preventDefault();
       chyba.hidden = true;
