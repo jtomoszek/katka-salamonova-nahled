@@ -382,6 +382,16 @@ Co ještě nefunguje a proč:
 | přílohy e-mailů | v účtu není zapnuté R2 (dashboard → R2 → Enable), binding je proto v `wrangler.jsonc` zakomentovaný a administrace tlačítko „Přiložit soubor“ nezobrazuje |
 | adresa odesílatele v patičce | prázdná proměnná `ADRESA` |
 
+### Ukázková data
+
+V databázi je 14 smyšlených kontaktů (doména `example.com`, v poznámce
+„UKÁZKA“), pět štítků a jedna „odeslaná“ rozesílka, aby administrace při
+ukázce klientce nebyla prázdná. Před ostrým provozem je smaže:
+
+```bash
+npx wrangler d1 execute katka-salamonova --remote --file skripty/smazat-ukazkova-data.sql
+```
+
 ### Nasazení
 
 ```bash
