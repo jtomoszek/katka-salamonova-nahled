@@ -4,7 +4,7 @@
 export const HERO = {
   nadtitulek: 'Architektka rodinné prosperity',
   nadpis: ['Přestaňte odkládat.', 'Začněte budovat.'],
-  text: 'Spoření tady, hypotéka tam, investice jinde — každý produkt hraje sám za sebe. Já je sladím do jednoho orchestru, ve kterém vám dohromady vydělají víc než každý zvlášť.',
+  text: 'Spoření, hypotéku i investice už možná máte — každé zvlášť jsou to jen produkty. Já z nich stavím jednu finanční architekturu, ve které se navzájem podporují a vydělávají víc než každý sám.',
   tlacitko: 'Domluvit nezávaznou konzultaci',
 };
 
