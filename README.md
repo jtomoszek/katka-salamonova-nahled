@@ -359,6 +359,22 @@ Pilíře a případová studie se zapínají u každého e-mailu zvlášť.
 Obrázky se načítají z `WEB_URL` (`/assets/email/katka-portret.jpg`,
 `/assets/img/podpis.png`), web proto musí běžet dřív, než odejde první e-mail.
 
+### Kde to běží
+
+**https://katka-salamonova.jtomoszek.workers.dev** — Worker
+`katka-salamonova` v účtu jtomoszek@gmail.com, databáze D1 `katka-salamonova`.
+Tohle je pořád jen náhled (`robots.txt` má `Disallow: /`); vlastní doména
+se nastaví v Cloudflare → Workers → Settings → Domains a pak se musí přepsat
+`WEB_URL`.
+
+Co ještě nefunguje a proč:
+
+| | důvod |
+|---|---|
+| odesílání e-mailů (i přihlášení k odběru vrací 503) | chybí `RESEND_API_KEY` a odesílací doména ověřená u Resendu |
+| přílohy e-mailů | v účtu není zapnuté R2 (dashboard → R2 → Enable), binding je proto v `wrangler.jsonc` zakomentovaný a administrace tlačítko „Přiložit soubor“ nezobrazuje |
+| adresa odesílatele v patičce | prázdná proměnná `ADRESA` |
+
 ### Nasazení
 
 ```bash

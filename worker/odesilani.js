@@ -41,6 +41,7 @@ export function hlavickyOdhlaseni(zaklad, token) {
 }
 
 export async function nactiPrilohy(env, kampanId) {
+  if (!env.PRILOHY) return [];
   const { results } = await env.DB.prepare(
     'SELECT r2_klic, nazev FROM prilohy WHERE kampan_id = ? ORDER BY id',
   ).bind(kampanId).all();
@@ -174,6 +175,7 @@ export async function uklid(env) {
     env.DB.prepare('DELETE FROM omezeni WHERE zacatek_okna < ?').bind(ted - 24 * 60 * 60 * 1000),
   ]);
 
+  if (!env.PRILOHY) return;
   const { results } = await env.DB.prepare(
     'SELECT id, r2_klic FROM prilohy WHERE kampan_id IS NULL AND vytvoreno < ? LIMIT 50',
   ).bind(ted - 7 * 24 * 60 * 60 * 1000).all();

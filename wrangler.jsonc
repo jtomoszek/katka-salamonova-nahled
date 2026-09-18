@@ -18,22 +18,26 @@
     {
       "binding": "DB",
       "database_name": "katka-salamonova",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "078851e5-8ec0-4158-898d-051ba3908ca9",
       "migrations_dir": "migrations"
     }
   ],
 
   // Přílohy e-mailů. Bucket je soukromý, soubory se nikde veřejně nezobrazují.
-  "r2_buckets": [
-    { "binding": "PRILOHY", "bucket_name": "katka-salamonova-prilohy" }
-  ],
+  // R2 zatím v účtu není zapnuté (Cloudflare dashboard → R2 → Enable), takže
+  // administrace přílohy nenabízí. Po zapnutí stačí:
+  //   npx wrangler r2 bucket create katka-salamonova-prilohy
+  // odkomentovat blok níž a znovu nasadit (npm run deploy).
+  // "r2_buckets": [
+  //   { "binding": "PRILOHY", "bucket_name": "katka-salamonova-prilohy" }
+  // ],
 
   // Každou minutu odejde další dávka e-mailů z fronty.
   "triggers": { "crons": ["* * * * *"] },
 
   "vars": {
     // Veřejná adresa webu — z ní se skládají odkazy v e-mailech.
-    "WEB_URL": "https://DOPLNIT-DOMENU.cz",
+    "WEB_URL": "https://katka-salamonova.jtomoszek.workers.dev",
     // Odesílatel musí být na doméně ověřené u Resendu.
     "ODESILATEL": "Kateřina Šalamonová <novinky@DOPLNIT-DOMENU.cz>",
     "ODPOVEDI_NA": "",

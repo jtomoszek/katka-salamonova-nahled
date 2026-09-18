@@ -17,7 +17,8 @@ async function pocetUzivatelu(env) {
 export async function stav(request, env) {
   const uzivatel = await prihlasenyUzivatel(request, env);
   const potrebaNastaveni = uzivatel ? false : (await pocetUzivatelu(env)) === 0;
-  return json({ uzivatel, potrebaNastaveni });
+  // Bez R2 (úložiště příloh) administrace tlačítko na přílohy nenabízí.
+  return json({ uzivatel, potrebaNastaveni, prilohyZapnute: Boolean(env.PRILOHY) });
 }
 
 /* POST /api/ucet/nastaveni — založení prvního administrátora.

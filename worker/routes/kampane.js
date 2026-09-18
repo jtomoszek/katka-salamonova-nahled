@@ -29,6 +29,7 @@ function bezpecnyNazev(nazev) {
 /* POST /api/prilohy — multipart/form-data s polem „soubor“. */
 export async function nahratPrilohu(request, env) {
   const uzivatel = await vyzadujUzivatele(request, env);
+  if (!env.PRILOHY) throw new Chyba(503, 'Přílohy nejsou zapnuté — chybí úložiště R2.');
   const delka = Number(request.headers.get('Content-Length') || 0);
   if (delka > MAX_PRILOHA + 64 * 1024) throw new Chyba(413, 'Příloha může mít nejvýš 10 MB.');
 
