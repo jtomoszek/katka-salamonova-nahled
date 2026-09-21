@@ -97,6 +97,9 @@ Co si z šablony bere:
 - **přepínač SVOBODA** — jak sekce projíždí, cvakne a s ním se vymění celý
   velký nadpis („Jiní prodávají smlouvy.“ → „Já řeším vaši svobodu.“, obojí
   je text filozofie z první verze) i pozadí z mědi na světlé,
+- **pilíře a můj příběh ve stejném jazyce**: velká dvoubarevná hlava, úvod
+  vpravo a stojící křivky na pozadí. Pilíře už nejsou barevné karty, ale
+  čtyři bloky oddělené vlasovou linkou s tichou ikonou,
 - **reference ve stejném jazyce**: velká dvoubarevná hlava, stojící křivky
   na pozadí a citace pod sebou oddělené vlasovou linkou — bez karet, nese to
   typografie (`.sekce--citace`),

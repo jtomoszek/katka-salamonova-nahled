@@ -118,14 +118,26 @@
 
 
 <!-- ============================================================
-     Pilíře prosperity — čtyři karty ve dvou řadách.
+     Pilíře prosperity — stejný jazyk jako zbytek: velká dvoubarevná
+     hlava, stojící křivky na pozadí a čtyři bloky oddělené linkou.
      ============================================================ -->
-<section class="sekce" id="pilire">
+<section class="sekce sekce--pilire" id="pilire">
+  <div class="krivky" aria-hidden="true">
+    <svg class="krivky__plocha" focusable="false" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <path d="M -60 210 C 180 120 320 380 520 360 S 840 160 1260 300" />
+      <path d="M -40 620 C 220 700 340 460 560 470 S 900 660 1260 540" />
+      <path d="M 980 240 C 1080 380 1000 520 890 490 S 820 300 920 220 S 1020 160 980 240" />
+      <path d="M 220 430 C 120 570 200 710 310 680 S 380 490 280 410 S 180 350 220 430" />
+    </svg>
+  </div>
+
   <div class="obal">
-    <div class="sekce__hlava sekce__hlava--stred odkryv">
-      <span class="stitek">Služby jako hodnota</span>
-      <h2 class="display">Pilíře prosperity</h2>
-      <p>Stavím finanční architekturu, kde se jednotlivé části doplňují a chrání jedna druhou. <strong>Neřešíme jen jednu část</strong>, navrhuji celistvý plán, ve kterém každý pilíř podporuje vaši dlouhodobou stabilitu a růst.</p>
+    <div class="hlava-sekce odkryv">
+      <div>
+        <span class="stitek">Služby jako hodnota</span>
+        <h2 class="display hlava-sekce__nadpis">Pilíře <em>prosperity</em></h2>
+      </div>
+      <p class="hlava-sekce__uvod">Stavím finanční architekturu, kde se jednotlivé části doplňují a chrání jedna druhou. <strong>Neřešíme jen jednu část</strong>, navrhuji celistvý plán, ve kterém každý pilíř podporuje vaši dlouhodobou stabilitu a růst.</p>
     </div>
 
     <div class="pilire">
@@ -136,46 +148,43 @@
           </svg>
         </span>
         <p class="pilir__stitek">Zázemí &amp; Domov</p>
-        <h3>Financování s přesahem</h3>
+        <h3 class="display">Financování s přesahem</h3>
         <p class="pilir__text">V rámci mého komplexního plánu není domov jen výdaj. Je to kotva. Navrhuji strukturu financování tak, aby nezatěžovala vaše budoucí investice a tvořila základ pro generační bohatství.</p>
         <ul class="pilir__body">
           <li>Optimalizace dluhu s ohledem na cashflow</li>
           <li>Strategická příprava na refixace</li>
           <li>Provázanost s investičním portfoliem</li>
-        </ul>
-      </article>
+        </ul></article>
 
-      <article class="pilir pilir--med odkryv" style="--poradi: 1">
+      <article class="pilir odkryv" style="--poradi: 1">
         <span class="pilir__ikona" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 17.5 9 11l4 4 7.5-7.5"/><path d="M15 7.5h5.5V13"/>
           </svg>
         </span>
         <p class="pilir__stitek">Růst a svoboda</p>
-        <h3>Kapitál pro vaši svobodu</h3>
+        <h3 class="display">Kapitál pro vaši svobodu</h3>
         <p class="pilir__text">Investice v mém systému slouží k postupnému uvolnění vašeho času. Nejsou to izolované produkty, ale motor, který po zajištění zázemí začne generovat vaši budoucí nezávislost.</p>
         <ul class="pilir__body">
           <li>Strategické budování renty</li>
           <li>Globální diverzifikace napříč třídami aktiv</li>
           <li>Daňově efektivní správa majetku</li>
-        </ul>
-      </article>
+        </ul></article>
 
-      <article class="pilir pilir--hneda odkryv" style="--poradi: 0">
+      <article class="pilir odkryv" style="--poradi: 0">
         <span class="pilir__ikona" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 3 4.5 6v6c0 4.5 3.2 7.9 7.5 9 4.3-1.1 7.5-4.5 7.5-9V6L12 3Z"/><path d="m9 12 2.2 2.2L15.5 10"/>
           </svg>
         </span>
         <p class="pilir__stitek">Ochrana majetku</p>
-        <h3>Štít pro vaši životní úroveň</h3>
+        <h3 class="display">Štít pro vaši životní úroveň</h3>
         <p class="pilir__text">Zajištění je v rámci mého celku pojistkou proti zastavení plánu. Hlídám, aby i v krizových momentech zůstaly investice nedotčeny a vaše rodina si udržela svůj standard bez kompromisů.</p>
         <ul class="pilir__body">
           <li>Ochrana klíčových příjmů rodiny</li>
           <li>Zajištění majetku a firemní kontinuity</li>
           <li>Eliminace rizik ohrožujících dlouhodobý plán</li>
-        </ul>
-      </article>
+        </ul></article>
 
       <article class="pilir odkryv" style="--poradi: 1">
         <span class="pilir__ikona" aria-hidden="true">
@@ -185,14 +194,13 @@
           </svg>
         </span>
         <p class="pilir__stitek">Odkaz a generace</p>
-        <h3>Budoucnost dalších generací</h3>
+        <h3 class="display">Budoucnost dalších generací</h3>
         <p class="pilir__text">To je vrchol mé architektury. Plánuji, jak vybudované bohatství bezpečně předat dál a zajistit nejlepší možný start pro vaše děti, aniž byste ohrozili svou vlastní rentu.</p>
         <ul class="pilir__body">
           <li>Příprava generačního transferu majetku</li>
           <li>Kapitál pro start a vzdělání dětí</li>
           <li>Zachování životní úrovně bez ohledu na věk</li>
-        </ul>
-      </article>
+        </ul></article>
     </div>
   </div>
 </section>
@@ -201,12 +209,20 @@
 <!-- ============================================================
      Můj příběh — text, podpis a dvojice fotek přes sebe.
      ============================================================ -->
-<section class="sekce sekce--surface" id="pribeh">
+<section class="sekce sekce--surface sekce--pribeh" id="pribeh">
+  <div class="krivky" aria-hidden="true">
+    <svg class="krivky__plocha" focusable="false" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <path d="M -60 520 C 160 380 300 620 500 560 S 860 300 1260 420" />
+      <path d="M -40 180 C 240 260 380 100 620 170 S 980 380 1260 250" />
+      <path d="M 430 640 C 330 760 410 860 520 830 S 590 660 490 600 S 390 560 430 640" />
+    </svg>
+  </div>
+
   <div class="obal pribeh">
     <div class="pribeh__text odkryv">
       <span class="stitek">Můj příběh</span>
-      <h2 class="display" style="font-size: clamp(32px, 4.4vw, 56px)">Kateřina Šalamonová</h2>
-      <p style="margin-top: 24px">Finanční svět pro mě má specifický půvab. Fascinuje mě den co den hledat v číslech a tabulkách nová řešení, která zachovávají rovnováhu mezi vašimi požadavky a pravidly trhu.</p>
+      <h2 class="display pribeh__nadpis">Kateřina Šalamonová</h2>
+      <p>Finanční svět pro mě má specifický půvab. Fascinuje mě den co den hledat v číslech a tabulkách nová řešení, která zachovávají rovnováhu mezi vašimi požadavky a pravidly trhu.</p>
       <p>Věřím, že deset procent spokojenosti určují vnější okolnosti a celých čtyřicet procent záleží čistě na nás samotných. To je dost na to, abychom byli zodpovědní za každé své rozhodnutí. Ve financích to platí dvojnásob, protože peníze jsou stále až na prvním místě.</p>
       <p>To, co dělám, beru jako práci, která mě už 20 let baví. Podařilo se mi zařadit se ke šťastlivcům, kteří si umí užít byznys a přitom dávat své práci smysl, profesionalitu a hlavně individuální přístup ke každému z vás. Díky vzájemné důvěře a otevřenosti se dostaví úspěch zachycený v číslech.</p>
       <img class="pribeh__podpis" src="../assets/img/podpis.png" alt="" width="172" height="67">

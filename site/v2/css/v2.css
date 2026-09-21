@@ -583,64 +583,60 @@ a { color: inherit; }
 
 /* ---------- pilíře ---------------------------------------- */
 
+/* Bez karet — čtyři bloky oddělené vlasovou linkou, stejně jako
+   reference. Ikona zůstává jako tichý orientační bod. */
+.sekce--pilire { position: relative; overflow: clip; }
+
 .pilire {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(14px, 1.8vw, 24px);
+  gap: 0 clamp(28px, 6vw, 90px);
 }
 .pilir {
   display: flex;
   flex-direction: column;
-  min-height: 380px;
-  padding: clamp(26px, 3vw, 40px);
-  border-radius: 20px;
-  background: var(--white);
-  box-shadow: inset 0 0 0 1px var(--hairline);
+  padding: clamp(28px, 4vh, 48px) 0;
+  border-top: 1px solid rgba(77, 54, 37, .16);
 }
-/* Šachovnice barev: dvě karty světlé, dvě v barvách značky. */
-.pilir--med   { background: var(--copper);  color: var(--white); box-shadow: none; }
-.pilir--hneda { background: var(--brown);   color: var(--white); box-shadow: none; }
 
 .pilir__ikona {
-  width: 44px; height: 44px;
-  margin-bottom: auto;
-  color: var(--copper-dark);
+  width: 34px; height: 34px;
+  margin-bottom: 22px;
+  color: var(--copper);
 }
-.pilir--med .pilir__ikona,
-.pilir--hneda .pilir__ikona { color: var(--sand); }
 .pilir__ikona svg { width: 100%; height: 100%; }
 
 .pilir__stitek {
-  margin: 28px 0 10px;
+  margin: 0 0 10px;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: .16em;
   text-transform: uppercase;
   color: var(--copper-dark);
 }
-.pilir--med .pilir__stitek,
-.pilir--hneda .pilir__stitek { color: rgba(255, 255, 255, .72); }
-
-.pilir h3 { font-family: var(--font-display); font-size: clamp(26px, 2.6vw, 34px); line-height: 1.15; }
-.pilir__text { margin: 14px 0 0; font-size: 14.5px; line-height: 1.7; color: var(--tlumeny); }
-.pilir--med .pilir__text,
-.pilir--hneda .pilir__text { color: rgba(255, 255, 255, .86); }
-
+.pilir h3 {
+  font-size: clamp(26px, 2.8vw, 38px);
+  line-height: 1.14;
+  color: var(--brown);
+}
+.pilir__text {
+  margin: 16px 0 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--tlumeny);
+}
 .pilir__body {
-  margin: 20px 0 0;
-  padding: 18px 0 0;
-  border-top: 1px solid var(--hairline);
+  margin: 22px 0 0;
+  padding: 0;
   list-style: none;
   font-size: 13.5px;
   line-height: 1.6;
   display: grid;
-  gap: 8px;
+  gap: 9px;
 }
-.pilir--med .pilir__body,
-.pilir--hneda .pilir__body { border-top-color: rgba(255, 255, 255, .24); }
 .pilir__body li { position: relative; padding-left: 18px; color: var(--tlumeny); }
-.pilir--med .pilir__body li,
-.pilir--hneda .pilir__body li { color: rgba(255, 255, 255, .82); }
 .pilir__body li::before {
   content: "";
   position: absolute;
@@ -649,20 +645,26 @@ a { color: inherit; }
   border-radius: 50%;
   background: var(--copper);
 }
-.pilir--med .pilir__body li::before,
-.pilir--hneda .pilir__body li::before { background: var(--sand); }
 
 
 /* ---------- můj příběh ------------------------------------ */
 
+.sekce--pribeh { position: relative; overflow: clip; }
+
 .pribeh {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: clamp(28px, 5vw, 72px);
+  gap: clamp(28px, 5vw, 80px);
   align-items: center;
 }
-.pribeh__text p { font-size: 15.5px; color: var(--tlumeny); }
-.pribeh__podpis { margin-top: 28px; width: 150px; opacity: .85; }
+.pribeh__nadpis {
+  font-size: clamp(38px, 5.6vw, 76px);
+  margin-bottom: 26px;
+}
+.pribeh__text p { font-size: 15.5px; color: var(--tlumeny); max-width: 46ch; }
+.pribeh__podpis { margin-top: 30px; width: 150px; opacity: .85; }
 
 /* Dvě fotky přes sebe — stejný motiv jako v šabloně. */
 .pribeh__fotky { position: relative; padding: 0 0 48px 48px; }
@@ -682,10 +684,9 @@ a { color: inherit; }
   width: 46%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border: 6px solid var(--papir);
+  border: 6px solid var(--surface);
   box-shadow: 0 20px 50px -30px rgba(77, 54, 37, .7);
 }
-.sekce--surface .pribeh__vedlejsi { border-color: var(--surface); }
 
 
 /* ---------- milníky (velké číslice) ----------------------- */
@@ -1085,7 +1086,6 @@ a { color: inherit; }
 @media (max-width: 700px) {
   :root { --oblouk: 11vw; }
   .pilire { grid-template-columns: 1fr; }
-  .pilir { min-height: 0; }
   .prepinac { height: 190vh; }
   .hero__hodnoceni { margin-bottom: 12px; }
   .paticka__mrizka { grid-template-columns: 1fr; }
