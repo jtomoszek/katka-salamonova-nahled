@@ -69,6 +69,34 @@ nahled.sh                    # server nad site/ pro prohlížeč
 sync-nahled.sh               # kopie mimo iCloud pro vestavěný náhled
 ```
 
+## Druhá verze webu (`site/v2/`)
+
+Stejný obsah i barvy, jiné rozvržení a pohyb — podle šablony
+[ClearPath](https://clearpath-template.framer.website/). Běží vedle první
+verze na adrese **/v2/**, první verze zůstává beze změny na `/`.
+
+Co si z šablony bere:
+
+- **titulní fotka zůstane stát** a sekce „Filozofie“ na ni najede obloukem,
+  který se při scrollu narovnává (`--oblouk`, počítá `v2.js`),
+- **přepínač SVOBODA** — jak sekce projíždí, cvakne a s ním se změní pozadí
+  z mědi na světlou i zvýrazněný řádek: „Jiní prodávají smlouvy.“ →
+  „Já řeším vaši svobodu.“ (obojí je text filozofie z první verze),
+- patkový displej **Crimson Text** proti drobnému Poppins v textu,
+- menu schované pod tlačítkem i na velkém displeji,
+- velké číslice u profesních milníků, karty pilířů v barvách značky.
+
+```
+site/v2/
+├─ index.html        # stejné texty jako site/index.html, jiná struktura
+├─ css/v2.css        # vlastní design systém (barvy jsou sdílené)
+└─ js/v2.js          # oblouk, přepínač, barva lišty, nájezdy, menu
+```
+
+Graf případové studie i přihlášení k odběru jsou sdílené: `css/graf.css`,
+`js/graf.js` a `js/newsletter.js` používají obě verze. Reference jsou i tady
+zástupné.
+
 ## Lokální náhled
 
 ```bash

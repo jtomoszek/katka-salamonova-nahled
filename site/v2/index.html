@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kateřina Šalamonová — Přestaňte odkládat. Začněte budovat.</title>
+<meta name="description" content="Spoření, hypotéku i investice už možná máte — každé zvlášť jsou to jen produkty. Já z nich stavím jednu finanční architekturu, ve které se navzájem podporují a vydělávají víc než každý sám.">
+<meta name="robots" content="noindex, nofollow">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="cs_CZ">
+<meta property="og:title" content="Kateřina Šalamonová — Přestaňte odkládat. Začněte budovat.">
+<meta property="og:description" content="Spoření, hypotéku i investice už možná máte — každé zvlášť jsou to jen produkty. Já z nich stavím jednu finanční architekturu, ve které se navzájem podporují a vydělávají víc než každý sám.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/graf.css">
+<link rel="stylesheet" href="css/v2.css">
+</head>
+<body>
+
+<!-- ============================================================
+     Lišta a menu. Menu je schované pod tlačítkem i na velkém
+     displeji — stejně jako v šabloně. Barvu textu lišty přepíná
+     js/v2.js podle toho, co je zrovna pod ní.
+     ============================================================ -->
+<header class="lista" id="nahoru">
+  <a class="lista__znacka" href="#nahoru">Kateřina&nbsp;Šalamonová</a>
+  <button class="lista__tlacitko" type="button" data-menu-otevrit aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+
+<nav class="menu" id="menu" aria-label="Hlavní navigace" hidden>
+  <button class="menu__zavrit" type="button" data-menu-zavrit>Zavřít</button>
+  <ul class="menu__seznam">
+    <li><a href="#filozofie">Filozofie</a></li>
+    <li><a href="#pilire">Pilíře</a></li>
+    <li><a href="#pribeh">O mně</a></li>
+    <li><a href="#studie">Případové studie</a></li>
+    <li><a href="#reference">Reference</a></li>
+    <li><a href="#novinky">Novinky</a></li>
+  </ul>
+  <p class="menu__pata">Architektka rodinné prosperity · Regulovaný subjekt ČNB</p>
+</nav>
+
+
+<!-- ============================================================
+     Titulní sekce. Zůstává stát, další sekce na ni najede obloukem.
+     ============================================================ -->
+<div class="uvod">
+<section class="hero">
+  <img class="hero__foto" src="../assets/img/katka-hero.webp" alt="Kateřina Šalamonová" width="2400" height="1600" fetchpriority="high">
+  <div class="hero__zavoj" aria-hidden="true"></div>
+
+  <div class="hero__obsah">
+    <div>
+      <p class="hero__hodnoceni"><span class="hero__hvezdy" aria-hidden="true">★★★★★</span> 4,9 / 5 hodnocení</p>
+      <h1 class="display">Přestaňte odkládat.<br>Začněte budovat.</h1>
+    </div>
+
+    <div class="hero__vedle">
+      <p class="hero__text">Spoření, hypotéku i investice už možná máte — každé zvlášť jsou to jen produkty. Já z nich stavím jednu finanční architekturu, ve které se navzájem podporují a vydělávají víc než každý sám.</p>
+      <a class="pilulka pilulka--svetla" href="#pilire">Pilíře prosperity</a>
+    </div>
+  </div>
+
+  <p class="hero__dolu" aria-hidden="true">Posuňte se ↓</p>
+</section>
+
+
+<!-- ============================================================
+     Filozofie jako přepínač. Panel drží na výšku okna a během
+     projíždění se přehodí: pozadí z mědi do světlé, text z prvního
+     řádku na druhý. Obsah je stejný jako v první verzi.
+     ============================================================ -->
+<section class="prepinac" id="filozofie" data-prepinac>
+  <div class="prepinac__panel">
+    <div class="prepinac__vnitrek">
+
+      <div class="spinac" aria-hidden="true">
+        <span class="spinac__popis">Svoboda</span>
+        <span class="spinac__telo"><span class="spinac__knoflik"></span></span>
+      </div>
+
+      <h2 class="display">
+        <span class="prepinac__radek--prvni">Jiní prodávají smlouvy.</span>
+        <span class="prepinac__radek--druhy">Já řeším vaši svobodu.</span>
+      </h2>
+
+      <div class="prepinac__texty">
+        <p>Finanční trh je přesycen složitými produkty a sliby, kterým je těžké rozumět. Moje filozofie stojí na radikální upřímnosti: co nedává smysl pro vás, vám nikdy nenabídnu.</p>
+        <p>Pracuji s daty, analýzami a dlouhodobými trendy. Odmítám rychlá řešení, která neřeší podstatu. Stavím na partnerství, kde já dodávám odbornost a vy získáváte kontrolu.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+</div><!-- /uvod -->
+
+
+<!-- ============================================================
+     Pilíře prosperity — čtyři karty ve dvou řadách.
+     ============================================================ -->
+<section class="sekce" id="pilire">
+  <div class="obal">
+    <div class="sekce__hlava sekce__hlava--stred odkryv">
+      <span class="stitek">Služby jako hodnota</span>
+      <h2 class="display">Pilíře prosperity</h2>
+      <p>Stavím finanční architekturu, kde se jednotlivé části doplňují a chrání jedna druhou. <strong>Neřešíme jen jednu část</strong>, navrhuji celistvý plán, ve kterém každý pilíř podporuje vaši dlouhodobou stabilitu a růst.</p>
+    </div>
+
+    <div class="pilire">
+      <article class="pilir odkryv" style="--poradi: 0">
+        <span class="pilir__ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 10.5 12 3l9 7.5"/><path d="M5.5 9.5V20a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9.5"/><path d="M9.5 21v-6h5v6"/>
+          </svg>
+        </span>
+        <p class="pilir__stitek">Zázemí &amp; Domov</p>
+        <h3>Financování s přesahem</h3>
+        <p class="pilir__text">V rámci mého komplexního plánu není domov jen výdaj. Je to kotva. Navrhuji strukturu financování tak, aby nezatěžovala vaše budoucí investice a tvořila základ pro generační bohatství.</p>
+        <ul class="pilir__body">
+          <li>Optimalizace dluhu s ohledem na cashflow</li>
+          <li>Strategická příprava na refixace</li>
+          <li>Provázanost s investičním portfoliem</li>
+        </ul>
+      </article>
+
+      <article class="pilir pilir--med odkryv" style="--poradi: 1">
+        <span class="pilir__ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 17.5 9 11l4 4 7.5-7.5"/><path d="M15 7.5h5.5V13"/>
+          </svg>
+        </span>
+        <p class="pilir__stitek">Růst a svoboda</p>
+        <h3>Kapitál pro vaši svobodu</h3>
+        <p class="pilir__text">Investice v mém systému slouží k postupnému uvolnění vašeho času. Nejsou to izolované produkty, ale motor, který po zajištění zázemí začne generovat vaši budoucí nezávislost.</p>
+        <ul class="pilir__body">
+          <li>Strategické budování renty</li>
+          <li>Globální diverzifikace napříč třídami aktiv</li>
+          <li>Daňově efektivní správa majetku</li>
+        </ul>
+      </article>
+
+      <article class="pilir pilir--hneda odkryv" style="--poradi: 0">
+        <span class="pilir__ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3 4.5 6v6c0 4.5 3.2 7.9 7.5 9 4.3-1.1 7.5-4.5 7.5-9V6L12 3Z"/><path d="m9 12 2.2 2.2L15.5 10"/>
+          </svg>
+        </span>
+        <p class="pilir__stitek">Ochrana majetku</p>
+        <h3>Štít pro vaši životní úroveň</h3>
+        <p class="pilir__text">Zajištění je v rámci mého celku pojistkou proti zastavení plánu. Hlídám, aby i v krizových momentech zůstaly investice nedotčeny a vaše rodina si udržela svůj standard bez kompromisů.</p>
+        <ul class="pilir__body">
+          <li>Ochrana klíčových příjmů rodiny</li>
+          <li>Zajištění majetku a firemní kontinuity</li>
+          <li>Eliminace rizik ohrožujících dlouhodobý plán</li>
+        </ul>
+      </article>
+
+      <article class="pilir odkryv" style="--poradi: 1">
+        <span class="pilir__ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="8" r="3"/><circle cx="17" cy="10.5" r="2.25"/>
+            <path d="M2.5 20c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M14.5 20c0-2.4 1.2-4 3-4s3 1.6 3 4"/>
+          </svg>
+        </span>
+        <p class="pilir__stitek">Odkaz a generace</p>
+        <h3>Budoucnost dalších generací</h3>
+        <p class="pilir__text">To je vrchol mé architektury. Plánuji, jak vybudované bohatství bezpečně předat dál a zajistit nejlepší možný start pro vaše děti, aniž byste ohrozili svou vlastní rentu.</p>
+        <ul class="pilir__body">
+          <li>Příprava generačního transferu majetku</li>
+          <li>Kapitál pro start a vzdělání dětí</li>
+          <li>Zachování životní úrovně bez ohledu na věk</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Můj příběh — text, podpis a dvojice fotek přes sebe.
+     ============================================================ -->
+<section class="sekce sekce--surface" id="pribeh">
+  <div class="obal pribeh">
+    <div class="pribeh__text odkryv">
+      <span class="stitek">Můj příběh</span>
+      <h2 class="display" style="font-size: clamp(32px, 4.4vw, 56px)">Kateřina Šalamonová</h2>
+      <p style="margin-top: 24px">Finanční svět pro mě má specifický půvab. Fascinuje mě den co den hledat v číslech a tabulkách nová řešení, která zachovávají rovnováhu mezi vašimi požadavky a pravidly trhu.</p>
+      <p>Věřím, že deset procent spokojenosti určují vnější okolnosti a celých čtyřicet procent záleží čistě na nás samotných. To je dost na to, abychom byli zodpovědní za každé své rozhodnutí. Ve financích to platí dvojnásob, protože peníze jsou stále až na prvním místě.</p>
+      <p>To, co dělám, beru jako práci, která mě už 20 let baví. Podařilo se mi zařadit se ke šťastlivcům, kteří si umí užít byznys a přitom dávat své práci smysl, profesionalitu a hlavně individuální přístup ke každému z vás. Díky vzájemné důvěře a otevřenosti se dostaví úspěch zachycený v číslech.</p>
+      <img class="pribeh__podpis" src="../assets/img/podpis.png" alt="" width="172" height="67">
+    </div>
+
+    <div class="pribeh__fotky odkryv" style="--poradi: 1">
+      <img class="pribeh__hlavni" src="../assets/img/katka-portret.webp" alt="Kateřina Šalamonová" width="1006" height="2000">
+      <img class="pribeh__vedlejsi" src="../assets/img/katka-hero.webp" alt="" width="2400" height="1600">
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Profesní milníky s velkými číslicemi + certifikace.
+     ============================================================ -->
+<section class="sekce">
+  <div class="obal">
+    <div class="sekce__hlava odkryv">
+      <span class="stitek">Profesní milníky</span>
+      <h2 class="display">Cesta k architektuře</h2>
+    </div>
+
+    <div class="milnik odkryv">
+      <div>
+        <span class="milnik__rok">2024</span>
+        <h3>Spoluzakladatelka Fines group s.r.o.</h3>
+        <p>Zahájení strategické spolupráce se společností EFEKTA brokerpool a.s.</p>
+      </div>
+      <p class="milnik__cislo display" aria-hidden="true">01</p>
+    </div>
+
+    <div class="milnik odkryv">
+      <div>
+        <span class="milnik__rok">Od roku 2008</span>
+        <h3>PFP Certifikace a Lektorství</h3>
+        <p>Lektorka přednášek v ZPF Akademii. Získání prestižní certifikace Poradce finančního plánování od EFPA.</p>
+      </div>
+      <p class="milnik__cislo display" aria-hidden="true">02</p>
+    </div>
+
+    <div class="milnik odkryv">
+      <div>
+        <span class="milnik__rok">2005</span>
+        <h3>Plné nasazení v osobních financích</h3>
+        <p>Zápis do registru ČNB a budování vlastního týmu pro komplexní péči o klienty.</p>
+      </div>
+      <p class="milnik__cislo display" aria-hidden="true">03</p>
+    </div>
+
+    <div class="certifikace">
+      <div class="cert odkryv" style="--poradi: 0">
+        <span class="cert__ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="9.5" r="5.5"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.4 14.4 7 21l5-2.4L17 21l-1.4-6.6"/>
+          </svg>
+        </span>
+        <h3>EFPA</h3>
+        <p>Poradce finančního<br>plánování (PFP)</p>
+      </div>
+      <div class="cert odkryv" style="--poradi: 1">
+        <span class="cert__ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="9.5" r="5.5"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.4 14.4 7 21l5-2.4L17 21l-1.4-6.6"/>
+          </svg>
+        </span>
+        <h3>ČNB</h3>
+        <p>Regulovaný subjekt<br>finančního trhu</p>
+      </div>
+      <div class="cert odkryv" style="--poradi: 2">
+        <span class="cert__ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="9.5" r="5.5"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.4 14.4 7 21l5-2.4L17 21l-1.4-6.6"/>
+          </svg>
+        </span>
+        <h3>DIP</h3>
+        <p>Investiční<br>akademie</p>
+      </div>
+      <div class="cert odkryv" style="--poradi: 3">
+        <span class="cert__ikona" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="9.5" r="5.5"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.4 14.4 7 21l5-2.4L17 21l-1.4-6.6"/>
+          </svg>
+        </span>
+        <h3>20 let</h3>
+        <p>Více než praxe<br>v oboru</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Případová studie s interaktivním grafem (js/graf.js sdílí
+     obě verze, styly grafu jsou v css/graf.css).
+     ============================================================ -->
+<section class="sekce sekce--surface" id="studie">
+  <div class="obal">
+    <div class="sekce__hlava sekce__hlava--stred odkryv">
+      <span class="stitek">Důkaz místo slibů</span>
+      <h2 class="display">Případové studie</h2>
+    </div>
+
+    <div class="studie">
+      <div class="odkryv">
+        <h3>Transformace 10 produktů<br>v jeden funkční ekosystém</h3>
+        <p class="studie__text">Klient ve věku 42 let měl roztříštěné portfolio, které požírala inflace a vysoké poplatky. Standardní trh mu prodal produkty, ale nedal mu strategii. Mým cílem bylo nastavit jasnou trajektorii k rentě 60 000 Kč měsíčně od 50 let věku.</p>
+        <div class="studie__vysledek">
+          <h4>Výsledek architektury</h4>
+          <p>Klient přesně ví, v jakém bodě cesty se nachází. Investuje efektivněji a získá svobodu o dekádu dříve než při původním nastavení.</p>
+        </div>
+      </div>
+
+      <div class="odkryv" style="--poradi: 1">
+        <div class="graf" data-graf>
+          <p class="graf__nadpis">Kdy vám portfolio začne platit rentu?</p>
+
+          <svg class="graf__plocha" viewBox="0 0 520 196" role="img"
+               aria-labelledby="graf-popis" preserveAspectRatio="xMidYMid meet"></svg>
+          <p class="graf__popis vizualne-skryte" id="graf-popis"></p>
+
+          <p class="graf__odecet"></p>
+
+          <div class="graf__ovladace">
+            <label class="graf__ovladac">
+              <span class="graf__stitek">Měsíčně investuji <b data-vypis="mesicne"></b></span>
+              <input type="range" data-vstup="mesicne" min="5000" max="80000" step="1000" value="35000">
+            </label>
+            <label class="graf__ovladac">
+              <span class="graf__stitek">Cílová renta <b data-vypis="cil"></b></span>
+              <input type="range" data-vstup="cil" min="20000" max="120000" step="5000" value="60000">
+            </label>
+          </div>
+
+          <p class="graf__shrnuti"></p>
+
+          <p class="graf__poznamka">Ilustrativní model, ne příslib výnosu. Výchozí portfolio 10 mil. Kč, reálný výnos 5,5 % p.a.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Co u mě nenajdete
+     ============================================================ -->
+<section class="sekce" id="nenajdete">
+  <div class="obal">
+    <div class="sekce__hlava odkryv">
+      <span class="stitek">Hranice spolupráce</span>
+      <h2 class="display">Co u mě nenajdete</h2>
+      <p>Vztah postavený na důvěře vyžaduje jasně vymezené hranice. Toto je můj strategický filtr a závazek vůči vám.</p>
+    </div>
+
+    <div class="nenajdete">
+      <article class="nenajdete__karta odkryv" style="--poradi: 0">
+        <span class="nenajdete__poradi display">01</span>
+        <h3><i aria-hidden="true">✘</i>Unifikované produkty</h3>
+        <p>Každá rodina je unikát. Odmítám balíčky, které instituce hromadně tlačí všem klientům bez rozdílu. Vytvářím řešení výhradně na míru vašim možnostem a cílům.</p>
+      </article>
+
+      <article class="nenajdete__karta odkryv" style="--poradi: 1">
+        <span class="nenajdete__poradi display">02</span>
+        <h3><i aria-hidden="true">✘</i>Nátlak na podpis</h3>
+        <p>Vážná životní rozhodnutí vyžadují čas. U mě nečekejte akční nabídky platné do dnešní půlnoci. Rozhodujeme se racionálně, ne pod tlakem.</p>
+      </article>
+
+      <article class="nenajdete__karta odkryv" style="--poradi: 2">
+        <span class="nenajdete__poradi display">03</span>
+        <h3><i aria-hidden="true">✘</i>Skryté kličky</h3>
+        <p>Vše, co spolu vytvoříme, vám vysvětlím lidskou řečí. Bez drobného písma a bez nepřehledných tabulek. Transparentnost je můj základ.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Reference — POZOR: citace jsou ZÁSTUPNÉ, stejně jako v první
+     verzi. Nahraďte je skutečnými a smažte atribut data-zastupne.
+     ============================================================ -->
+<section class="sekce sekce--sand" id="reference">
+  <div class="obal">
+    <div class="sekce__hlava sekce__hlava--stred odkryv">
+      <span class="stitek">Reference</span>
+      <h2 class="display">Co o mně říkají klienti</h2>
+    </div>
+
+    <div class="reference">
+      <blockquote class="citace odkryv" style="--poradi: 0">
+        <p class="citace__text" data-zastupne>Sem patří reference klienta — vlastními slovy, ideálně konkrétně: s čím přišel, co se změnilo.</p>
+        <footer class="citace__autor">Jméno klienta<span>role nebo obor</span></footer>
+      </blockquote>
+
+      <blockquote class="citace odkryv" style="--poradi: 1">
+        <p class="citace__text" data-zastupne>Druhá reference. Nejlépe od někoho v jiné životní situaci, ať je vidět šíře záběru.</p>
+        <footer class="citace__autor">Jméno klienta<span>role nebo obor</span></footer>
+      </blockquote>
+
+      <blockquote class="citace odkryv" style="--poradi: 2">
+        <p class="citace__text" data-zastupne>Třetí reference. Krátká a konkrétní působí věrohodněji než dlouhá chvála.</p>
+        <footer class="citace__autor">Jméno klienta<span>role nebo obor</span></footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Přihlášení k odběru novinek — stejné API i skript jako první
+     verze (js/newsletter.js → /api/newsletter/prihlasit).
+     ============================================================ -->
+<section class="sekce" id="novinky">
+  <div class="obal novinky">
+    <div class="novinky__uvod odkryv">
+      <span class="stitek">Novinky ze světa financí</span>
+      <h2 class="display">Chci dostávat novinky ze&nbsp;světa financí</h2>
+      <p>Změny u hypoték, investic a pojištění, které se vás mohou týkat — srozumitelně a jen tehdy, když je co říct. Žádný spam.</p>
+    </div>
+
+    <form class="novinky__formular odkryv" style="--poradi: 1" id="formular-novinky" method="post" action="/api/newsletter/prihlasit" novalidate>
+      <div class="novinky__pole">
+        <label for="novinky-jmeno">Jméno <span class="novinky__nepovinne">(nepovinné)</span></label>
+        <input id="novinky-jmeno" name="jmeno" type="text" autocomplete="given-name" maxlength="80">
+      </div>
+      <div class="novinky__pole">
+        <label for="novinky-email">E-mail</label>
+        <input id="novinky-email" name="email" type="email" autocomplete="email" required maxlength="254">
+      </div>
+
+      <!-- Past na roboty: člověk pole nevidí a nevyplní ho. -->
+      <div class="novinky__past" aria-hidden="true">
+        <label for="novinky-web">Nevyplňujte</label>
+        <input id="novinky-web" name="web" type="text" tabindex="-1" autocomplete="off">
+      </div>
+
+      <label class="novinky__souhlas">
+        <input type="checkbox" name="souhlas" required>
+        <span>Souhlasím, aby mi Kateřina Šalamonová posílala na tento e-mail novinky ze světa financí. Souhlas můžu kdykoli odvolat odkazem v každém e-mailu.</span>
+      </label>
+
+      <button type="submit" class="novinky__tlacitko">Chci dostávat novinky</button>
+      <p class="novinky__zprava" role="status" aria-live="polite" hidden></p>
+    </form>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Patička. Kontaktní údaje zatím chybí i tady — až budou,
+     odkomentujte blok „Kontakt“.
+     ============================================================ -->
+<footer class="paticka">
+  <div class="obal">
+    <div class="paticka__mrizka">
+      <div>
+        <p class="paticka__jmeno display">Kateřina Šalamonová</p>
+        <p class="paticka__tagline">Architektka rodinné prosperity</p>
+        <p class="paticka__text">Z izolovaných produktů stavím jednu finanční architekturu, ve které se navzájem podporují a chrání.</p>
+      </div>
+
+      <div>
+        <h2>Odbornost</h2>
+        <ul>
+          <li>Poradce finančního plánování&nbsp;(PFP), EFPA</li>
+          <li>Regulovaný subjekt finančního trhu</li>
+          <li>Investiční akademie DIP</li>
+          <li>Více než 20 let praxe v oboru</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2>Spolupráce</h2>
+        <ul>
+          <li>Fines group s.r.o.</li>
+          <li>EFEKTA brokerpool a.s.</li>
+        </ul>
+      </div>
+
+      <!-- Kontakt — odkomentovat a doplnit skutečné údaje.
+      <div>
+        <h2>Kontakt</h2>
+        <ul>
+          <li><a href="mailto:DOPLNIT">DOPLNIT@example.cz</a></li>
+          <li><a href="tel:DOPLNIT">+420 DOPLNIT</a></li>
+          <li><a href="https://www.linkedin.com/in/DOPLNIT" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+      -->
+    </div>
+
+    <div class="paticka__spodek">
+      <p>&copy; 2026 Kateřina Šalamonová</p>
+      <p>Zapsána v registru ČNB. Uvedené modely jsou ilustrativní, nejde o příslib výnosu.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/v2.js"></script>
+<script src="../js/graf.js"></script>
+<script src="../js/newsletter.js"></script>
+</body>
+</html>
