@@ -116,6 +116,27 @@ site/v2/
 └─ js/v2.js          # oblouk, přepínač, barva lišty, nájezdy, menu
 ```
 
+### Kalkulačky (`site/v2/kalkulacky/`)
+
+Podstránka `/v2/kalkulacky/` se šesti orientačními výpočty ve stejném
+designu: hypotéka, investice, renta v důchodu, penzijní spoření (DPS),
+stavební spoření a cíl úspor. Předloha byla sada kalkulaček na
+fines.cz — u hypotéky, investic a cíle úspor sedí výsledky na korunu.
+
+Každá sekce má `data-kalkulacka="<název>"`, posuvníky `data-vstup`,
+popisky `data-vypis` a výsledky `data-vystup`; `js/kalkulacky.js` drží
+pro každý název dvojici `popisky` (formátování hodnot u posuvníků)
+a `spocitej` (samotný výpočet). Přidat kalkulačku znamená přidat sekci
+v HTML a jeden záznam v `KALKULACKY`.
+
+Použité vzorce: anuitní splátka, budoucí hodnota pravidelného vkladu
+při měsíčním připisování, bezpečný výběr 4 % ročně u renty a roční
+připisování státní podpory u stavebního spoření.
+
+**Zákonné parametry** (státní příspěvek u DPS, daňový odpočet, státní
+podpora u stavebního spoření) jsou konstanty v `kalkulacky.js` označené
+komentářem — při změně zákona je potřeba je upravit.
+
 Graf případové studie i přihlášení k odběru jsou sdílené: `css/graf.css`,
 `js/graf.js` a `js/newsletter.js` používají obě verze. Reference jsou i tady
 zástupné.

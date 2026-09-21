@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finanční kalkulačky — Kateřina Šalamonová</title>
+<meta name="description" content="Hypotéka, investice, renta, penzijní spoření, stavební spoření a cíl úspor. Šest orientačních výpočtů, které ukážou, jak se čísla chovají v čase.">
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/v2.css">
+<link rel="stylesheet" href="css/kalkulacky.css">
+</head>
+<body class="stranka-kalkulacky">
+
+<header class="lista je-tmava" id="nahoru">
+  <a class="lista__znacka" href="../">Kateřina&nbsp;Šalamonová</a>
+  <button class="lista__tlacitko" type="button" data-menu-otevrit aria-expanded="false" aria-controls="menu">Menu</button>
+</header>
+
+<nav class="menu" id="menu" aria-label="Hlavní navigace" hidden>
+  <button class="menu__zavrit" type="button" data-menu-zavrit>Zavřít</button>
+  <ul class="menu__seznam">
+    <li><a href="../">Úvod</a></li>
+    <li><a href="../#pilire">Pilíře</a></li>
+    <li><a href="../#pribeh">O mně</a></li>
+    <li><a href="../#studie">Případové studie</a></li>
+    <li><a href="./">Kalkulačky</a></li>
+    <li><a href="../#novinky">Novinky</a></li>
+  </ul>
+  <p class="menu__pata">Architektka rodinné prosperity · Regulovaný subjekt ČNB</p>
+</nav>
+
+
+<!-- ============================================================
+     Hlava stránky a rozcestník
+     ============================================================ -->
+<section class="sekce sekce--hlava-kalk">
+  <div class="krivky" aria-hidden="true">
+    <svg class="krivky__plocha" focusable="false" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <path d="M -120.0 520.0 C -53.3 506.7 13.3 479.3 80.0 452.0 C 146.7 424.7 226.7 392.0 300.0 392.0 C 373.3 392.0 440.0 415.3 520.0 430.0 C 600.0 444.7 670.0 490.0 700.0 520.0 C 730.0 550.0 820.0 566.0 880.0 566.0 C 940.0 566.0 1003.3 552.7 1060.0 520.0 C 1116.7 487.3 1233.3 445.7 1320.0 404.0" />
+    </svg>
+  </div>
+
+  <div class="obal">
+    <div class="hlava-sekce hlava-sekce--sama odkryv">
+      <div>
+        <span class="stitek">Spočítejte si to</span>
+        <h2 class="display hlava-sekce__nadpis">Finanční <em>kalkulačky</em></h2>
+        <p class="hlava-sekce__uvod">Šest výpočtů, na kterých je vidět, jak se peníze chovají v čase. Posuňte posuvníkem a čísla se přepočítají. Všechno je orientační — skutečná nabídka i výnos se liší podle produktu a vaší situace.</p>
+      </div>
+    </div>
+
+    <nav class="rozcestnik odkryv" style="--poradi: 1" aria-label="Seznam kalkulaček">
+      <a href="#hypoteka"><span>01</span>Hypotéka</a>
+      <a href="#investice"><span>02</span>Investice</a>
+      <a href="#renta"><span>03</span>Renta v důchodu</a>
+      <a href="#penzijni"><span>04</span>Penzijní spoření</a>
+      <a href="#stavebni"><span>05</span>Stavební spoření</a>
+      <a href="#cil"><span>06</span>Cíl úspor</a>
+    </nav>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     01 — Hypoteční kalkulačka
+     ============================================================ -->
+<section class="sekce kalkulacka" id="hypoteka" data-kalkulacka="hypoteka">
+  <div class="obal kalk">
+    <div class="kalk__uvod odkryv">
+      <span class="stitek">01 · Hypotéka</span>
+      <h3 class="display">Kolik budu splácet</h3>
+      <p>Anuitní splátka, tedy ta, která se po celou dobu fixace nemění. Vedle splátky je důležité i druhé číslo: kolik za úvěr zaplatíte navíc.</p>
+    </div>
+
+    <div class="kalk__panel odkryv" style="--poradi: 1">
+      <div class="kalk__vstupy">
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Výše úvěru <b data-vypis="uver"></b></span>
+          <input type="range" data-vstup="uver" min="500000" max="15000000" step="50000" value="3000000">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Úroková sazba <b data-vypis="sazba"></b></span>
+          <input type="range" data-vstup="sazba" min="1" max="10" step="0.1" value="4.5">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Doba splácení <b data-vypis="roky"></b></span>
+          <input type="range" data-vstup="roky" min="5" max="30" step="1" value="25">
+        </label>
+      </div>
+
+      <div class="kalk__vysledky">
+        <p class="vysledek vysledek--hlavni">
+          <span>Měsíční splátka</span><b data-vystup="splatka"></b>
+        </p>
+        <p class="vysledek"><span>Celkem zaplatíte</span><b data-vystup="celkem"></b></p>
+        <p class="vysledek"><span>Z toho úroky</span><b data-vystup="uroky"></b></p>
+        <p class="vysledek"><span>Přeplacení</span><b data-vystup="preplaceni"></b></p>
+      </div>
+    </div>
+
+    <p class="kalk__poznamka odkryv">Orientační výpočet bez poplatků a pojištění. Banka posuzuje i vaše příjmy a výdaje (ukazatele DTI a DSTI), takže schválená částka může být nižší.</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     02 — Investiční kalkulačka
+     ============================================================ -->
+<section class="sekce sekce--surface kalkulacka" id="investice" data-kalkulacka="investice">
+  <div class="obal kalk">
+    <div class="kalk__uvod odkryv">
+      <span class="stitek">02 · Investice</span>
+      <h3 class="display">Jak roste pravidelná investice</h3>
+      <p>Složené úročení znamená, že výnos začne sám vydělávat. Na dlouhém horizontu tvoří větší část výsledku než vaše vklady.</p>
+    </div>
+
+    <div class="kalk__panel odkryv" style="--poradi: 1">
+      <div class="kalk__vstupy">
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Jednorázová investice <b data-vypis="jednorazove"></b></span>
+          <input type="range" data-vstup="jednorazove" min="0" max="1000000" step="10000" value="50000">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Měsíčně investuji <b data-vypis="mesicne"></b></span>
+          <input type="range" data-vstup="mesicne" min="500" max="50000" step="500" value="3000">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Předpokládaný roční výnos <b data-vypis="vynos"></b></span>
+          <input type="range" data-vstup="vynos" min="2" max="15" step="0.5" value="7">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Investiční horizont <b data-vypis="roky"></b></span>
+          <input type="range" data-vstup="roky" min="3" max="40" step="1" value="20">
+        </label>
+      </div>
+
+      <div class="kalk__vysledky">
+        <p class="vysledek vysledek--hlavni">
+          <span>Hodnota portfolia</span><b data-vystup="hodnota"></b>
+        </p>
+        <p class="vysledek"><span>Vloženo celkem</span><b data-vystup="vlozeno"></b></p>
+        <p class="vysledek"><span>Výnos</span><b data-vystup="vynosCelkem"></b></p>
+        <p class="vysledek"><span>Zhodnocení</span><b data-vystup="zhodnoceni"></b></p>
+      </div>
+    </div>
+
+    <p class="kalk__poznamka odkryv">Orientační výpočet v nominálních hodnotách, bez poplatků a daní. Výnos není zaručený a kolísá — čím kratší horizont, tím víc na kolísání záleží.</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     03 — Renta v důchodu
+     ============================================================ -->
+<section class="sekce kalkulacka" id="renta" data-kalkulacka="renta">
+  <div class="obal kalk">
+    <div class="kalk__uvod odkryv">
+      <span class="stitek">03 · Renta</span>
+      <h3 class="display">Jakou rentu si vytvořím</h3>
+      <p>Kolik kapitálu vám do důchodu vznikne a kolik si z něj můžete měsíčně vybírat, aniž by se vyčerpal příliš brzy.</p>
+    </div>
+
+    <div class="kalk__panel odkryv" style="--poradi: 1">
+      <div class="kalk__vstupy">
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Je mi <b data-vypis="vek"></b></span>
+          <input type="range" data-vstup="vek" min="20" max="64" step="1" value="40">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Chci přestat pracovat v <b data-vypis="odchod"></b></span>
+          <input type="range" data-vstup="odchod" min="50" max="70" step="1" value="65">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Už mám naspořeno <b data-vypis="uspory"></b></span>
+          <input type="range" data-vstup="uspory" min="0" max="10000000" step="100000" value="500000">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Měsíčně odkládám <b data-vypis="mesicne"></b></span>
+          <input type="range" data-vstup="mesicne" min="0" max="50000" step="500" value="5000">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Reálný výnos po inflaci <b data-vypis="vynos"></b></span>
+          <input type="range" data-vstup="vynos" min="0" max="8" step="0.5" value="5">
+        </label>
+      </div>
+
+      <div class="kalk__vysledky">
+        <p class="vysledek vysledek--hlavni">
+          <span>Měsíční renta</span><b data-vystup="renta"></b>
+        </p>
+        <p class="vysledek"><span>Kapitál při odchodu</span><b data-vystup="kapital"></b></p>
+        <p class="vysledek"><span>Z toho vaše vklady</span><b data-vystup="vklady"></b></p>
+        <p class="vysledek"><span>Renta vydrží</span><b data-vystup="vydrzi"></b></p>
+      </div>
+    </div>
+
+    <p class="kalk__poznamka odkryv">Renta počítá s bezpečným výběrem 4 % kapitálu ročně. Výnos zadávejte reálný, tedy po inflaci — výsledek je pak v dnešních penězích a dá se s ním srovnat dnešní životní úroveň.</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     04 — Penzijní spoření (DPS)
+     ============================================================ -->
+<section class="sekce sekce--surface kalkulacka" id="penzijni" data-kalkulacka="penzijni">
+  <div class="obal kalk">
+    <div class="kalk__uvod odkryv">
+      <span class="stitek">04 · Penzijní spoření</span>
+      <h3 class="display">Doplňkové penzijní spoření</h3>
+      <p>Stát přidává k vašemu vkladu příspěvek a část vkladů si můžete odečíst z daní. Obojí se počítá zvlášť od výnosu fondu.</p>
+    </div>
+
+    <div class="kalk__panel odkryv" style="--poradi: 1">
+      <div class="kalk__vstupy">
+        <div class="prepinace" role="radiogroup" aria-label="Typ fondu">
+          <label><input type="radio" name="fond" data-vstup="fond" value="4" checked><span>Účastnický fond (DPS)</span></label>
+          <label><input type="radio" name="fond" data-vstup="fond" value="1.5"><span>Transformovaný fond</span></label>
+        </div>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Můj měsíční vklad <b data-vypis="vklad"></b></span>
+          <input type="range" data-vstup="vklad" min="100" max="10000" step="100" value="1700">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Příspěvek zaměstnavatele <b data-vypis="zamestnavatel"></b></span>
+          <input type="range" data-vstup="zamestnavatel" min="0" max="5000" step="100" value="0">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Je mi <b data-vypis="vek"></b></span>
+          <input type="range" data-vstup="vek" min="18" max="60" step="1" value="35">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Spořím do <b data-vypis="odchod"></b></span>
+          <input type="range" data-vstup="odchod" min="60" max="70" step="1" value="65">
+        </label>
+      </div>
+
+      <div class="kalk__vysledky">
+        <p class="vysledek vysledek--hlavni">
+          <span>Naspořeno celkem</span><b data-vystup="nasporeno"></b>
+        </p>
+        <p class="vysledek"><span>Vaše vklady</span><b data-vystup="vklady"></b></p>
+        <p class="vysledek"><span>Od zaměstnavatele</span><b data-vystup="odZamestnavatele"></b></p>
+        <p class="vysledek"><span>Státní příspěvky</span><b data-vystup="stat"></b></p>
+        <p class="vysledek"><span>Zhodnocení</span><b data-vystup="zhodnoceni"></b></p>
+        <p class="vysledek vysledek--vedlejsi"><span>Státní příspěvek měsíčně</span><b data-vystup="statMesicne"></b></p>
+        <p class="vysledek vysledek--vedlejsi"><span>Roční úspora na dani</span><b data-vystup="dan"></b></p>
+      </div>
+    </div>
+
+    <p class="kalk__poznamka odkryv">Počítáno podle pravidel platných pro rok 2026: státní příspěvek 20 % z vlastního vkladu (od 500 Kč, nejvýš 340 Kč měsíčně), daňový odpočet z části vkladu nad 1 700 Kč do ročního limitu 48 000 Kč při 15% sazbě. <strong>Parametry si u Katky ověřte</strong> — mění se zákonem.</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     05 — Stavební spoření
+     ============================================================ -->
+<section class="sekce kalkulacka" id="stavebni" data-kalkulacka="stavebni">
+  <div class="obal kalk">
+    <div class="kalk__uvod odkryv">
+      <span class="stitek">05 · Stavební spoření</span>
+      <h3 class="display">Stavební spoření</h3>
+      <p>Konzervativní nástroj s garantovaným úrokem a státní podporou. Podmínkou podpory je šestiletá vázací lhůta.</p>
+    </div>
+
+    <div class="kalk__panel odkryv" style="--poradi: 1">
+      <div class="kalk__vstupy">
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Měsíční vklad <b data-vypis="vklad"></b></span>
+          <input type="range" data-vstup="vklad" min="200" max="5000" step="100" value="1700">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Doba spoření <b data-vypis="roky"></b></span>
+          <input type="range" data-vstup="roky" min="6" max="20" step="1" value="6">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Úroková sazba <b data-vypis="sazba"></b></span>
+          <input type="range" data-vstup="sazba" min="0.5" max="4" step="0.1" value="2">
+        </label>
+      </div>
+
+      <div class="kalk__vysledky">
+        <p class="vysledek vysledek--hlavni">
+          <span>Naspořeno celkem</span><b data-vystup="nasporeno"></b>
+        </p>
+        <p class="vysledek"><span>Vaše vklady</span><b data-vystup="vklady"></b></p>
+        <p class="vysledek"><span>Státní podpora</span><b data-vystup="podpora"></b></p>
+        <p class="vysledek"><span>Úroky</span><b data-vystup="uroky"></b></p>
+      </div>
+    </div>
+
+    <p class="kalk__poznamka odkryv">Státní podpora se počítá jako 5 % z ročního vkladu, nejvýš 1 000 Kč ročně (maxima dosáhnete vkladem 20 000 Kč za rok). Při výběru dřív než po šesti letech na podporu nárok zaniká. <strong>Parametry si u Katky ověřte</strong> — mění se zákonem.</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     06 — Cíl úspor
+     ============================================================ -->
+<section class="sekce sekce--surface kalkulacka" id="cil" data-kalkulacka="cil">
+  <div class="obal kalk">
+    <div class="kalk__uvod odkryv">
+      <span class="stitek">06 · Cíl úspor</span>
+      <h3 class="display">Kolik musím odkládat</h3>
+      <p>Opačný pohled: řeknete cílovou částku a termín, kalkulačka dopočítá měsíční částku. Je to nejrychlejší způsob, jak zjistit, jestli je cíl reálný.</p>
+    </div>
+
+    <div class="kalk__panel odkryv" style="--poradi: 1">
+      <div class="kalk__vstupy">
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Cílová částka <b data-vypis="cil"></b></span>
+          <input type="range" data-vstup="cil" min="10000" max="2000000" step="10000" value="200000">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Za jak dlouho <b data-vypis="mesice"></b></span>
+          <input type="range" data-vstup="mesice" min="6" max="120" step="1" value="36">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Předpokládaný roční výnos <b data-vypis="vynos"></b></span>
+          <input type="range" data-vstup="vynos" min="0" max="10" step="0.5" value="4">
+        </label>
+      </div>
+
+      <div class="kalk__vysledky">
+        <p class="vysledek vysledek--hlavni">
+          <span>Měsíčně odkládat</span><b data-vystup="mesicne"></b>
+        </p>
+        <p class="vysledek"><span>Vložíte celkem</span><b data-vystup="vlozeno"></b></p>
+        <p class="vysledek"><span>Přidá výnos</span><b data-vystup="vynosCelkem"></b></p>
+        <p class="vysledek"><span>Cílová částka</span><b data-vystup="cilVysledek"></b></p>
+      </div>
+    </div>
+
+    <p class="kalk__poznamka odkryv">Při nulovém výnosu jde o prosté dělení — tak vypadá spoření na běžném účtu. Každé procento navíc ubere z toho, co musíte odložit vy.</p>
+  </div>
+</section>
+
+
+<!-- ============================================================
+     Výzva k rozhovoru
+     ============================================================ -->
+<section class="sekce sekce--sand zaver">
+  <div class="obal zaver__vnitrek odkryv">
+    <div>
+      <span class="stitek">Co dál</span>
+      <h2 class="display">Čísla jsou začátek, ne plán</h2>
+      <p>Kalkulačka spočítá jeden produkt. Otázka ale je, jak do sebe zapadají dohromady — kolik nechat v rezervě, kolik v hypotéce, kolik v investicích a co se stane, když přijde nečekaná změna. Přesně to spolu projdeme.</p>
+    </div>
+    <div class="zaver__akce">
+      <a class="pilulka" href="../#novinky">Chci dostávat novinky</a>
+      <a class="pilulka pilulka--obrys" href="../#pilire">Pilíře prosperity</a>
+    </div>
+  </div>
+</section>
+
+
+<footer class="paticka">
+  <div class="obal">
+    <div class="paticka__mrizka">
+      <div>
+        <p class="paticka__jmeno display">Kateřina Šalamonová</p>
+        <p class="paticka__tagline">Architektka rodinné prosperity</p>
+        <p class="paticka__text">Z izolovaných produktů stavím jednu finanční architekturu, ve které se navzájem podporují a chrání.</p>
+      </div>
+      <div>
+        <h2>Odbornost</h2>
+        <ul>
+          <li>Poradce finančního plánování&nbsp;(PFP), EFPA</li>
+          <li>Regulovaný subjekt finančního trhu</li>
+          <li>Investiční akademie DIP</li>
+          <li>Více než 20 let praxe v oboru</li>
+        </ul>
+      </div>
+      <div>
+        <h2>Spolupráce</h2>
+        <ul>
+          <li>Fines group s.r.o.</li>
+          <li>EFEKTA brokerpool a.s.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="paticka__spodek">
+      <p>&copy; 2026 Kateřina Šalamonová</p>
+      <p>Zapsána v registru ČNB. Uvedené výpočty jsou ilustrativní, nejde o příslib výnosu ani o nabídku produktu.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/v2.js"></script>
+<script src="js/kalkulacky.js"></script>
+</body>
+</html>
