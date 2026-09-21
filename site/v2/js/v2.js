@@ -1,8 +1,9 @@
 /* Pohyb druhé verze webu.
  *
- *  1) světelná linka se při scrollu vykresluje: obloukem přes titulní
- *     fotku, pak sjede dolů a skončí přesně na knoflíku přepínače —
- *     ten se v tu chvíli rozsvítí a doroste (--zrod),
+ *  1) dvě světelné stuhy se jedním tahem kreslí od začátku stránky:
+ *     propletou se kolem hlavy a bez přerušení skončí na knoflíku
+ *     přepínače — ten se v tu chvíli rozsvítí a doroste (--zrod),
+ *     titulní fotka přitom z ostré měkne a lehce se přibližuje,
  *  2) přepínač SVOBODA cvakne, jakmile sekce projede zhruba do půlky;
  *     s ním se mění pozadí i zvýrazněný řádek (--zapnuto),
  *  3) oblouk, kterým sekce najíždí na fotku, se narovnává (--oblouk),
@@ -56,36 +57,21 @@
   var lista = document.querySelector('.lista');
   var koren = document.documentElement;
 
-  var linkaHero = document.querySelector('.linka--hero');
-  var prsteny = [].slice.call(document.querySelectorAll('.linka__prstenec'));
-  var linkaPanel = document.querySelector('.linka--panel');
+  var plochaStuh = document.querySelector('.stuhy__plocha');
+  var stuhy = [].slice.call(document.querySelectorAll('.stuha'));
 
   var ZLOM = 0.45;        // v jaké části sekce přepínač cvakne
   var KONEC_KRESBY = 0.3; // kdy linka dojede ke knoflíku
 
   function omez(h, min, max) { return h < min ? min : (h > max ? max : h); }
 
-  /* ---------- tvar linky ---------- */
+  /* ---------- tvar stuh ---------- */
 
-  /* Připraví SVG: viewBox v pixelech prvku a linku schová do dashoffsetu. */
-  function nastavLinku(svg, d) {
-    if (!svg) return 0;
-    var cesta = svg.querySelector('path');
-    var r = svg.getBoundingClientRect();
-    if (!r.width || !r.height) return 0;
-    svg.setAttribute('viewBox', '0 0 ' + Math.round(r.width) + ' ' + Math.round(r.height));
-    cesta.setAttribute('d', d);
-    var delka = cesta.getTotalLength();
-    cesta.style.strokeDasharray = delka;
-    cesta.style.strokeDashoffset = omezitPohyb ? 0 : delka;
-    return delka;
-  }
+  var delkyStuh = [];
 
-  var delkaPanel = 0;
-  var stredPrstence = null;
-
-  /* Střed knoflíku v souřadnicích panelu. Měří se ve stavu „před zrodem“,
-     kdy je dráha přepínače nejužší — přesně tam má linka skončit. */
+  /* Střed knoflíku. Měří se ve stavu „před zrodem“, kdy je dráha přepínače
+     nejužší — přesně tam mají stuhy skončit. Panel je v té chvíli přilepený
+     k horní hraně, takže jeho souřadnice odpovídají souřadnicím v okně. */
   function stredKnofliku() {
     if (!knoflik || !panel || !prepinac) return null;
     var puvodni = prepinac.style.getPropertyValue('--zrod');
@@ -97,35 +83,53 @@
     return { x: k.left - p.left + k.width / 2, y: k.top - p.top + k.height / 2 };
   }
 
-  function prepocitejLinky() {
-    // Prstenec kolem hlavy: velikost podle sekce, natočení řeší prekresli().
-    if (hero && linkaHero && prsteny.length) {
-      var h = hero.getBoundingClientRect();
-      linkaHero.setAttribute('viewBox', '0 0 ' + Math.round(h.width) + ' ' + Math.round(h.height));
-      var uzky = h.width < 700;
-      stredPrstence = {
-        x: h.width * 0.5,
-        y: h.height * (uzky ? 0.33 : 0.36),
-        rx: h.width * (uzky ? 0.36 : 0.19),
-        ry: h.height * (uzky ? 0.3 : 0.34)
-      };
-    }
+  /* Dvojice stuh podle videa: obě vycházejí ze stejného bodu nad
+     obrazovkou, cestou se rozevřou do úzké čočky, u poloviny se zkříží
+     a společně doputují na knoflík přepínače. Druhá stuha je jen ta
+     samá páteř posunutá na opačnou stranu, proto drží pohromadě.
 
-    if (panel && linkaPanel) {
-      var p = panel.getBoundingClientRect();
-      var k = stredKnofliku();
-      if (k) {
-        var W = p.width, H = p.height;
-        // sjezd shora: navazuje na oblouk v heru a končí na knoflíku
-        delkaPanel = nastavLinku(linkaPanel,
-          'M ' + (k.x + W * 0.46).toFixed(1) + ' ' + (-H * 0.55).toFixed(1) +
-          ' C ' + (k.x + W * 0.30).toFixed(1) + ' ' + (-H * 0.04).toFixed(1) +
-          ' ' + (k.x - W * 0.34).toFixed(1) + ' ' + (H * 0.02).toFixed(1) +
-          ' ' + (k.x - W * 0.20).toFixed(1) + ' ' + (k.y - H * 0.20).toFixed(1) +
-          ' S ' + (k.x - W * 0.03).toFixed(1) + ' ' + (k.y - H * 0.02).toFixed(1) +
-          ' ' + k.x.toFixed(1) + ' ' + k.y.toFixed(1));
-      }
-    }
+     strana = +1 / -1 určuje, na kterou stranu se stuha vyklene. */
+  function tvarStuhy(W, H, k, strana) {
+    // páteř: shora zprava obloukem přes hlavu, dolů doleva a zpět ke knoflíku
+    var P0 = [W * 0.8, -H * 0.3];
+    var C1 = [W * 0.94, H * 0.1];
+    var C2 = [W * 0.32, H * 0.08];
+    var M  = [W * 0.27, H * 0.4];    // spodní bod smyčky vlevo
+    var C3 = [W * 0.21, H * 0.62];
+    var C4 = [W * 0.88, H * 0.38];
+    var K  = [k.x, k.y];
+
+    // Kolmice k tětivě úseku — o ni se řídicí body odsunou a vznikne čočka.
+    var kolmo = function (a, b, d) {
+      var dx = b[0] - a[0], dy = b[1] - a[1];
+      var delka = Math.sqrt(dx * dx + dy * dy) || 1;
+      return [-dy / delka * d, dx / delka * d];
+    };
+    var pos = function (bod, o) { return [bod[0] + o[0], bod[1] + o[1]]; };
+    var z = function (bod) { return bod[0].toFixed(1) + ' ' + bod[1].toFixed(1); };
+
+    var n1 = kolmo(P0, M, strana * W * 0.028);
+    var n2 = kolmo(M, K, -strana * W * 0.022);   // opačně = zkřížení v bodě M
+
+    return 'M ' + z(P0) +
+      ' C ' + z(pos(C1, n1)) + ' ' + z(pos(C2, n1)) + ' ' + z(M) +
+      ' C ' + z(pos(C3, n2)) + ' ' + z(pos(C4, n2)) + ' ' + z(K);
+  }
+
+  function prepocitejLinky() {
+    if (!plochaStuh || !stuhy.length) return;
+    var k = stredKnofliku();
+    var r = plochaStuh.getBoundingClientRect();
+    if (!k || !r.width || !r.height) return;
+
+    plochaStuh.setAttribute('viewBox', '0 0 ' + Math.round(r.width) + ' ' + Math.round(r.height));
+    delkyStuh = stuhy.map(function (cesta, i) {
+      cesta.setAttribute('d', tvarStuhy(r.width, r.height, k, i === 0 ? 1 : -1));
+      var delka = cesta.getTotalLength();
+      cesta.style.strokeDasharray = delka;
+      cesta.style.strokeDashoffset = omezitPohyb ? 0 : delka;
+      return delka;
+    });
   }
 
   /* ---------- scroll ---------- */
@@ -140,25 +144,10 @@
   function prekresli() {
     var oknoVyska = window.innerHeight;
 
-    // 1) prstenec kolem hlavy se scrollem otáčí a staví se na hranu
-    if (stredPrstence && !omezitPohyb) {
-      var p1 = omez(window.scrollY / (oknoVyska * 1.1), 0, 1);
-      var s1 = stredPrstence;
-      // rx se zmenšuje = prstenec se natáčí k nám hranou
-      var rx = s1.rx * (1 - 0.62 * p1);
-      var uhel = -26 + 30 * p1;
-      prsteny.forEach(function (e, i) {
-        var o = i === 0 ? 1 : 0.88;   // druhá smyčka je o kus menší
-        e.setAttribute('cx', s1.x.toFixed(1));
-        e.setAttribute('cy', s1.y.toFixed(1));
-        e.setAttribute('rx', Math.max(2, rx * o).toFixed(1));
-        e.setAttribute('ry', (s1.ry * o).toFixed(1));
-        e.setAttribute('transform', 'rotate(' + (uhel + i * 5).toFixed(1) + ' ' + s1.x.toFixed(1) + ' ' + s1.y.toFixed(1) + ')');
-        // mezera ve stuze putuje dokola, ať prstenec „teče“
-        var obvod = Math.PI * (3 * (rx * o + s1.ry * o) / 2);
-        e.style.strokeDasharray = (obvod * 0.62).toFixed(1) + ' ' + (obvod * 0.38).toFixed(1);
-        e.style.strokeDashoffset = (-obvod * (0.25 + p1 * 0.5)).toFixed(1);
-      });
+    // 1) fotka: na začátku ostrá, se scrollem měkne a lehce se přiblíží
+    if (hero) {
+      koren.style.setProperty('--mekkost',
+        omez(window.scrollY / (hero.offsetHeight * 0.85), 0, 1).toFixed(3));
     }
 
     // 2) sekce filozofie se do fotky prolne a titulní obsah se rozplyne
@@ -168,7 +157,7 @@
       koren.style.setProperty('--zmizeni', omez(najeto * 1.25, 0, 1).toFixed(3));
     }
 
-    // 3) linka v panelu, zrod přepínače a jeho přehození
+    // 3) kreslení stuh, zrod přepínače a jeho přehození
     var zapnuto = false;
     if (prepinac) {
       var drahaSticky = prepinac.offsetHeight - oknoVyska;
@@ -176,15 +165,24 @@
         ? omez(-prepinac.getBoundingClientRect().top / drahaSticky, 0, 1)
         : 0;
 
-      if (linkaPanel && delkaPanel && !omezitPohyb) {
-        var kresba = omez(postup / KONEC_KRESBY, 0, 1);
-        linkaPanel.querySelector('path').style.strokeDashoffset = delkaPanel * (1 - kresba);
-        // z tečky, kterou linka přinesla, vyroste celý přepínač
+      if (stuhy.length && delkyStuh.length && !omezitPohyb && hero) {
+        // Jeden tah od úplného začátku stránky ke knoflíku: nejdřív přes
+        // titulní fotku, pak přes sekci filozofie.
+        var draha = hero.offsetHeight + KONEC_KRESBY * drahaSticky;
+        var kresba = omez(window.scrollY / draha, 0, 1);
+        stuhy.forEach(function (cesta, i) {
+          cesta.style.strokeDashoffset = (delkyStuh[i] * (1 - kresba)).toFixed(1);
+        });
+        // celá dvojice se přitom mírně stáčí
+        koren.style.setProperty('--stoceni', (-7 + 13 * kresba).toFixed(2));
+        // z tečky, kterou stuhy přinesly, vyroste celý přepínač
         var zrod = omez((postup - KONEC_KRESBY * 0.92) / (KONEC_KRESBY * 0.5), 0, 1);
         prepinac.style.setProperty('--zrod', zrod.toFixed(3));
       }
 
       zapnuto = postup > ZLOM;
+      // po přepnutí je pozadí světlé, bílé stuhy by na něm zanikly
+      koren.style.setProperty('--stuhy', zapnuto ? 0 : 1);
       prepinac.classList.toggle('je-zapnuto', zapnuto);
       prepinac.style.setProperty('--zapnuto', zapnuto ? 1 : 0);
     }

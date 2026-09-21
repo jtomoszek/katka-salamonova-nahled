@@ -48,16 +48,21 @@
      Titulní sekce. Zůstává stát, další sekce na ni najede obloukem.
      ============================================================ -->
 <div class="uvod">
+
+<!-- Dvě světelné stuhy. Drží na místě přes titulní sekci i sekci
+     filozofie, takže se můžou kreslit jedním tahem až k přepínači.
+     Tvar počítá js/v2.js z rozměrů okna a ze změřené polohy knoflíku. -->
+<div class="stuhy" aria-hidden="true">
+  <svg class="stuhy__plocha" focusable="false">
+    <g class="stuhy__skupina">
+      <path class="stuha stuha--prvni" /><path class="stuha stuha--druha" />
+    </g>
+  </svg>
+</div>
+
 <section class="hero">
   <img class="hero__foto" src="../assets/img/katka-hero.webp" alt="Kateřina Šalamonová" width="2400" height="1600" fetchpriority="high">
   <div class="hero__zavoj" aria-hidden="true"></div>
-
-  <!-- Světelná stuha obíhající hlavu. Při scrollu se otáčí a zplošťuje,
-       jako by se prstenec stavěl na hranu. Rozměry počítá js/v2.js. -->
-  <svg class="linka linka--hero" aria-hidden="true" focusable="false">
-    <ellipse class="linka__prstenec" />
-    <ellipse class="linka__prstenec linka__prstenec--slaby" />
-  </svg>
 
   <div class="hero__obsah">
     <div>
@@ -87,10 +92,6 @@
       <circle cx="50%" cy="46%" r="26%" /><circle cx="50%" cy="46%" r="40%" /><circle cx="50%" cy="46%" r="56%" />
     </svg>
 
-    <!-- Pokračování stuhy: sjede shora a skončí přesně na knoflíku
-         přepínače, který se v tu chvíli rozsvítí. -->
-    <svg class="linka linka--panel" aria-hidden="true" focusable="false"><path /></svg>
-
     <div class="prepinac__vnitrek">
 
       <div class="spinac" aria-hidden="true">
@@ -98,9 +99,9 @@
         <span class="spinac__telo"><span class="spinac__knoflik"></span></span>
       </div>
 
-      <h2 class="display">
-        <span class="prepinac__radek--prvni">Jiní prodávají smlouvy.</span>
-        <span class="prepinac__radek--druhy">Já řeším vaši svobodu.</span>
+      <h2 class="display prepinac__nadpis">
+        <span class="prepinac__radek prepinac__radek--prvni">Jiní prodávají smlouvy.</span>
+        <span class="prepinac__radek prepinac__radek--druhy">Já řeším vaši svobodu.</span>
       </h2>
 
       <div class="prepinac__texty">
