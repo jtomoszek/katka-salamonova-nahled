@@ -352,19 +352,22 @@
 
 
 <!-- ============================================================
-     Hranice spolupráce — rozvržení podle šablony: dvoubarevný nadpis,
-     úvod vpravo, pod ním tři bloky s obří číslicí. Na pozadí plynou
-     sotva znatelné křivky (css/v2.css → .krivky).
+     Hranice spolupráce — rozvržení podle snímků: dvoubarevný nadpis,
+     úvod vpravo, pod tím tři bloky. Křivky na pozadí stojí na místě
+     (nescrollují) a vpravo drží jedno velké číslo, ve kterém se mění
+     jen druhá číslice.
      ============================================================ -->
 <section class="sekce sekce--hranice" id="nenajdete">
-  <svg class="krivky" aria-hidden="true" focusable="false" viewBox="0 0 1200 2400" preserveAspectRatio="xMidYMid slice">
-    <path d="M -90 360 C 250 150 300 760 620 690 S 1180 400 1320 700" />
-    <path d="M 1310 120 C 980 240 1120 690 820 850 S 320 1070 130 1500" />
-    <path d="M -70 1040 C 330 880 430 1440 780 1310 S 1160 960 1310 1170" />
-    <path d="M -50 1780 C 300 1620 520 2060 900 1900 S 1250 1640 1320 1830" />
-    <path d="M 420 1180 C 130 1310 170 1720 530 1760 S 990 1550 900 1270 S 630 1090 420 1180" />
-    <path d="M 250 -40 C 520 220 900 180 1050 420 S 900 900 1150 1060" />
-  </svg>
+  <!-- Křivky drží na místě po celou sekci — proto sticky s nulovou výškou. -->
+  <div class="krivky" aria-hidden="true">
+    <svg class="krivky__plocha" focusable="false" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <path d="M -60 470 C 110 300 150 90 330 120 S 560 420 700 330 S 940 120 1260 250" />
+      <path d="M -40 300 C 180 250 250 470 430 520 S 700 480 830 380 S 1120 300 1260 430" />
+      <path d="M 350 760 C 250 560 330 330 440 350 S 520 640 430 760 S 330 860 350 760" />
+      <path d="M 700 690 C 600 540 680 400 790 430 S 860 620 760 700 S 660 760 700 690" />
+      <path d="M -50 640 C 160 690 260 560 420 590 S 700 780 900 690 S 1140 560 1260 610" />
+    </svg>
+  </div>
 
   <div class="obal">
     <div class="hranice__hlava">
@@ -375,28 +378,28 @@
       <p class="hranice__uvod odkryv" style="--poradi: 1">Vztah postavený na důvěře vyžaduje jasně vymezené hranice. Toto je můj strategický filtr a závazek vůči vám.</p>
     </div>
 
-    <div class="krok odkryv">
-      <div class="krok__text">
-        <h3 class="display">&#10008; Unifikované produkty</h3>
-        <p>Každá rodina je unikát. Odmítám balíčky, které instituce hromadně tlačí všem klientům bez rozdílu. Vytvářím řešení výhradně na míru vašim možnostem a cílům.</p>
-      </div>
-      <p class="krok__cislo display" aria-hidden="true">01</p>
-    </div>
+    <div class="hranice__kroky">
+      <!-- Jedno číslo pro celou sekci: nula stojí, druhá číslice se posouvá. -->
+      <p class="hranice__cislo" aria-hidden="true">
+        <span>0</span><span class="hranice__valec"><span>1</span><span>2</span><span>3</span></span>
+      </p>
 
-    <div class="krok odkryv">
-      <div class="krok__text">
-        <h3 class="display">&#10008; Nátlak na podpis</h3>
-        <p>Vážná životní rozhodnutí vyžadují čas. U mě nečekejte akční nabídky platné do dnešní půlnoci. Rozhodujeme se racionálně, ne pod tlakem.</p>
-      </div>
-      <p class="krok__cislo display" aria-hidden="true">02</p>
-    </div>
+      <div class="hranice__texty">
+        <div class="krok odkryv">
+          <h3 class="display">&#10008; Unifikované produkty</h3>
+          <p>Každá rodina je unikát. Odmítám balíčky, které instituce hromadně tlačí všem klientům bez rozdílu. Vytvářím řešení výhradně na míru vašim možnostem a cílům.</p>
+        </div>
 
-    <div class="krok odkryv">
-      <div class="krok__text">
-        <h3 class="display">&#10008; Skryté kličky</h3>
-        <p>Vše, co spolu vytvoříme, vám vysvětlím lidskou řečí. Bez drobného písma a bez nepřehledných tabulek. Transparentnost je můj základ.</p>
+        <div class="krok odkryv">
+          <h3 class="display">&#10008; Nátlak na podpis</h3>
+          <p>Vážná životní rozhodnutí vyžadují čas. U mě nečekejte akční nabídky platné do dnešní půlnoci. Rozhodujeme se racionálně, ne pod tlakem.</p>
+        </div>
+
+        <div class="krok odkryv">
+          <h3 class="display">&#10008; Skryté kličky</h3>
+          <p>Vše, co spolu vytvoříme, vám vysvětlím lidskou řečí. Bez drobného písma a bez nepřehledných tabulek. Transparentnost je můj základ.</p>
+        </div>
       </div>
-      <p class="krok__cislo display" aria-hidden="true">03</p>
     </div>
   </div>
 </section>
