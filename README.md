@@ -98,16 +98,18 @@ Co si z šablony bere:
   velký nadpis („Jiní prodávají smlouvy.“ → „Já řeším vaši svobodu.“, obojí
   je text filozofie z první verze) i pozadí z mědi na světlé,
 - **pilíře a můj příběh ve stejném jazyce**: velká dvoubarevná hlava, úvod
-  vpravo a stojící křivky na pozadí. Pilíře už nejsou barevné karty, ale
+  vpravo a stojící linka na pozadí. Na pozadí každé sekce je jedna plynulá
+  linka (dlouhá vlna s jednou velkou a jednou malou smyčkou, v polovině
+  sekcí zrcadlená) — spleť několika křivek byla příliš rušivá. Pilíře už nejsou barevné karty, ale
   čtyři bloky oddělené vlasovou linkou s tichou ikonou,
-- **reference ve stejném jazyce**: velká dvoubarevná hlava, stojící křivky
+- **reference ve stejném jazyce**: velká dvoubarevná hlava, stojící linka
   na pozadí a citace pod sebou oddělené vlasovou linkou — bez karet, nese to
   typografie (`.sekce--citace`),
 - patkový displej **Crimson Text** proti drobnému Poppins v textu,
 - menu schované pod tlačítkem i na velkém displeji,
 - velké číslice u profesních milníků, karty pilířů v barvách značky,
 - **sekce „Hranice spolupráce“** podle snímků: dvoubarevný nadpis, úvod
-  vpravo a tři bloky vysoké skoro na obrazovku. Křivky na pozadí se nehýbou
+  vpravo a tři bloky vysoké skoro na obrazovku. Na pozadí stojí jedna plynulá linka
   (`position: sticky` s nulovou výškou), vpravo drží jedno velké číslo —
   nula stojí a druhá číslice se posouvá jako na počítadle (`--krok` nastavuje
   `v2.js` podle toho, který blok vystoupal nad 45 % okna). Sekce proto nesmí
