@@ -809,7 +809,7 @@ a { color: inherit; }
   stroke-width: 1;
 }
 
-.hranice__hlava {
+.hlava-sekce {
   position: relative;
   z-index: 1;
   display: grid;
@@ -818,9 +818,9 @@ a { color: inherit; }
   align-items: end;
   margin-bottom: clamp(48px, 9vh, 120px);
 }
-.hranice__nadpis { font-size: clamp(38px, 6.4vw, 86px); }
-.hranice__nadpis em { font-style: normal; color: var(--copper); }
-.hranice__uvod {
+.hlava-sekce__nadpis { font-size: clamp(38px, 6.4vw, 86px); }
+.hlava-sekce__nadpis em { font-style: normal; color: var(--copper); }
+.hlava-sekce__uvod {
   margin: 0;
   max-width: 46ch;
   font-size: 16px;
@@ -887,41 +887,53 @@ a { color: inherit; }
 
 /* ---------- reference ------------------------------------- */
 
-.reference {
+/* Stejný jazyk jako „Hranice spolupráce“: velká hlava, stojící křivky
+   na pozadí a citace pod sebou oddělené vlasovou linkou. Žádné karty —
+   nese to typografie. */
+.sekce--citace {
+  position: relative;
+  overflow: clip;
+}
+.hlava-sekce--sama { grid-template-columns: 1fr; }
+
+.citace-seznam {
+  position: relative;
+  z-index: 1;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(14px, 1.8vw, 24px);
 }
 .citace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: clamp(16px, 4vw, 60px);
+  align-items: end;
   margin: 0;
-  padding: clamp(24px, 2.6vw, 34px);
-  border-radius: 20px;
-  background: var(--white);
-  box-shadow: inset 0 0 0 1px var(--hairline);
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+  padding: clamp(30px, 5vh, 58px) 0;
+  border-top: 1px solid rgba(77, 54, 37, .16);
 }
+.citace:last-child { border-bottom: 1px solid rgba(77, 54, 37, .16); }
+
 .citace__text {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: clamp(19px, 1.9vw, 23px);
-  line-height: 1.4;
+  font-size: clamp(22px, 2.9vw, 38px);
+  line-height: 1.24;
+  color: var(--brown);
 }
 /* Zástupný text — po doplnění skutečné reference atribut smažte. */
-.citace__text[data-zastupne] { font-style: italic; color: rgba(31, 31, 31, .5); }
+.citace__text[data-zastupne] { font-style: italic; color: rgba(77, 54, 37, .48); }
+
 .citace__autor {
-  margin-top: auto;
+  padding-bottom: 6px;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: .04em;
+  color: var(--copper-dark);
 }
 .citace__autor span {
   display: block;
   font-weight: 300;
+  letter-spacing: 0;
   color: var(--tlumeny);
 }
-
 
 /* ---------- novinky --------------------------------------- */
 
@@ -1051,8 +1063,8 @@ a { color: inherit; }
   .pribeh, .studie, .novinky { grid-template-columns: 1fr; }
   .pribeh__fotky { order: -1; padding: 0 0 40px 40px; }
   .certifikace { grid-template-columns: repeat(2, 1fr); }
-  .reference { grid-template-columns: 1fr; }
-  .hranice__hlava { grid-template-columns: 1fr; align-items: start; }
+  .citace { grid-template-columns: 1fr; gap: 14px; align-items: start; }
+  .hlava-sekce { grid-template-columns: 1fr; align-items: start; }
   /* Na úzkém displeji stojí číslo nad texty a nelepí se — jinak by
      leželo přes ně. */
   .hranice__kroky { grid-template-columns: 1fr; }

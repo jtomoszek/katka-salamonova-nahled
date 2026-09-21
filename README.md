@@ -97,6 +97,9 @@ Co si z šablony bere:
 - **přepínač SVOBODA** — jak sekce projíždí, cvakne a s ním se vymění celý
   velký nadpis („Jiní prodávají smlouvy.“ → „Já řeším vaši svobodu.“, obojí
   je text filozofie z první verze) i pozadí z mědi na světlé,
+- **reference ve stejném jazyce**: velká dvoubarevná hlava, stojící křivky
+  na pozadí a citace pod sebou oddělené vlasovou linkou — bez karet, nese to
+  typografie (`.sekce--citace`),
 - patkový displej **Crimson Text** proti drobnému Poppins v textu,
 - menu schované pod tlačítkem i na velkém displeji,
 - velké číslice u profesních milníků, karty pilířů v barvách značky,
