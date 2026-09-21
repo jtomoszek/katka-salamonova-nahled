@@ -100,8 +100,13 @@ Co si z šablony bere:
 - menu schované pod tlačítkem i na velkém displeji,
 - velké číslice u profesních milníků, karty pilířů v barvách značky,
 - **sekce „Hranice spolupráce“** podle druhého videa: dvoubarevný nadpis,
-  úvod vpravo, tři bloky s obří číslicí u pravé hrany a na pozadí sotva
-  znatelné plynoucí křivky (SVG v `index.html`, styl `.krivky`).
+  úvod vpravo a tři bloky vysoké přes obrazovku. Obří číslice je
+  `position: sticky; bottom`, takže zůstane přilepená u spodní hrany okna,
+  dokud kolem ní projíždí její blok — pak ji vystřídá další. Sekce proto
+  nesmí mít `overflow: hidden` (udělal by z ní scrollovací kontejner a
+  lepení by přestalo fungovat), má `overflow: clip`. Na pozadí plynou sotva
+  znatelné křivky (SVG v `index.html`, styl `.krivky`); na úzkém displeji se
+  číslice nelepí a sedí nad nadpisem.
 
 ```
 site/v2/

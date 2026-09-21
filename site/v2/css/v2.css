@@ -783,7 +783,9 @@ a { color: inherit; }
    pod tím tři bloky, z nichž každý má u pravého okraje obří číslici. */
 .sekce--hranice {
   position: relative;
-  overflow: hidden;          /* číslice smí přetékat až k hraně sekce */
+  /* clip, ne hidden: hidden by ze sekce udělal scrollovací kontejner
+     a přilepené číslice by přestaly fungovat */
+  overflow: clip;
   padding-bottom: clamp(40px, 6vh, 90px);
 }
 
@@ -823,8 +825,10 @@ a { color: inherit; }
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(16px, 4vw, 60px);
   align-items: center;
-  /* bloky se o kus překrývají, aby číslice zasahovaly do dalšího */
-  padding: clamp(34px, 7vh, 96px) 0;
+  /* Každý blok je vysoký na obrazovku — tolik prostoru potřebuje
+     číslice, aby u spodní hrany vydržela po celou dobu bloku. */
+  min-height: 120vh;
+  padding: clamp(24px, 4vh, 60px) 0;
 }
 .krok__text { max-width: 44ch; }
 .krok h3 {
@@ -840,16 +844,19 @@ a { color: inherit; }
   line-height: 1.75;
   color: var(--tlumeny);
 }
-/* Obří číslice u pravého okraje — v šabloně ji spodní hrana sekce ořezává. */
+/* Obří číslice: drží u spodní hrany okna, dokud kolem ní projíždí
+   „její“ blok — a spodní hrana obrazovky ji přitom ořezává. Jakmile
+   blok skončí, číslice odjede a vystřídá ji další. */
 .krok__cislo {
+  position: sticky;
+  bottom: -.16em;
   margin: 0;
+  align-self: end;
   justify-self: end;
   font-size: clamp(120px, 22vw, 300px);
   line-height: .78;
   color: var(--copper);
   opacity: .42;
-  /* posun dolů, ať číslice zasahuje do dalšího bloku jako v šabloně */
-  transform: translateY(18%);
 }
 
 /* ---------- reference ------------------------------------- */
@@ -1020,8 +1027,10 @@ a { color: inherit; }
   .certifikace { grid-template-columns: repeat(2, 1fr); }
   .reference { grid-template-columns: 1fr; }
   .hranice__hlava { grid-template-columns: 1fr; align-items: start; }
-  .krok { grid-template-columns: 1fr; gap: 4px; }
-  .krok__cislo { justify-self: start; order: -1; transform: none; opacity: .3; }
+  .krok { grid-template-columns: 1fr; gap: 4px; min-height: 0; }
+  /* Na úzkém displeji by přilepená číslice ležela přes text, proto
+     zůstane nad nadpisem a nikam se nelepí. */
+  .krok__cislo { position: static; justify-self: start; order: -1; opacity: .3; }
   .milnik { grid-template-columns: 1fr; gap: 6px; }
   .milnik:nth-child(even) .milnik__cislo { order: 0; text-align: left; }
   .milnik__cislo { font-size: clamp(64px, 18vw, 110px); }
