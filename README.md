@@ -77,14 +77,15 @@ verze na adrese **/v2/**, první verze zůstává beze změny na `/`.
 
 Co si z šablony bere:
 
-- **dvě světelné stuhy** (podle videa předlohy): obě vycházejí ze stejného
-  bodu nad obrazovkou, cestou se rozevřou do úzké čočky, v polovině se zkříží
-  a bez přerušení skončí na změřeném středu knoflíku přepínače. Druhá stuha
-  je táž páteř s řídicími body odsunutými na opačnou stranu, proto drží
-  pohromadě. Kreslí se jedním tahem od začátku stránky přes titulku až do
-  sekce filozofie (`stroke-dashoffset`) a celá dvojice se přitom mírně stáčí.
-  Vrstva je `position: sticky` přes obě sekce — jinak by tah nešel vést přes
-  hranici sekcí,
+- **světelná linka jako laso** (podle snímků v `podklady/Scroll`): smyčka
+  kolem hlavy s ocasem, která se při scrollu proměňuje — stáčí se, zužuje,
+  stoupá z obrazovky a ocas se natahuje, až skončí přesně na změřeném středu
+  knoflíku přepínače. Tvar drží tři klíčové polohy (`KLICE` v `v2.js`) a mezi
+  nimi se plynule přechází; na začátku se linka navíc dokresluje přes
+  `stroke-dashoffset`. Vrstva je `position: sticky` přes obě sekce, jinak by
+  tah nešel vést přes hranici sekcí,
+- **text titulky odjíždí, fotka zůstává** — text leží mimo přilepenou sekci
+  a přes zápornou horní marži se posadí přes fotku,
 - **přepínač se z té tečky zrodí** — nejdřív svítící bod, pak doroste dráha
   a nakonec popisek (`--zrod`),
 - **titulní fotka je na začátku ostrá** a teprve při scrollu měkne, ztrácí

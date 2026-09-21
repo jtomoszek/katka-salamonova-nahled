@@ -36,8 +36,6 @@
   /* 0 = sekce filozofie teprve najíždí (fotka ještě prosvítá),
      1 = je plně krycí. Bez skriptu zůstane krycí. */
   --najeto:        1;
-  /* jak moc se rozplynul obsah titulní sekce (0 = celý vidět) */
-  --zmizeni:       0;
   /* Měkkost titulní fotky. Na začátku je ostrá, rozostření a mírné
      přiblížení přibývají teprve při scrollu (--mekkost 0 → 1). */
   --rozostreni:    clamp(5px, .7vw, 10px);
@@ -293,11 +291,6 @@ a { color: inherit; }
   height: 100svh;
   overflow: visible;   /* křivky smí začínat mimo obrazovku */
 }
-/* Celá dvojice se při scrollu mírně stáčí — tvar tím žije. */
-.stuhy__skupina {
-  transform: rotate(calc(var(--stoceni, 0) * 1deg));
-  transform-origin: 50% 34%;
-}
 .stuha {
   fill: none;
   stroke: rgba(255, 255, 255, .92);
@@ -306,8 +299,6 @@ a { color: inherit; }
   filter: drop-shadow(0 0 7px rgba(255, 255, 255, .55))
           drop-shadow(0 0 20px rgba(255, 255, 255, .3));
 }
-/* Druhá stuha je jen o chlup slabší — dohromady tvoří jednu stuhu. */
-.stuha--druha { stroke: rgba(255, 255, 255, .8); stroke-width: 1.2; }
 
 /* Sotva znatelné soustředné kruhy v sekci přepínače. */
 .kruhy {
@@ -371,14 +362,16 @@ a { color: inherit; }
     linear-gradient(180deg, rgba(31, 24, 18, .3) 0%, rgba(31, 24, 18, 0) 26%),
     linear-gradient(0deg, rgba(31, 24, 18, .78) 0%, rgba(31, 24, 18, .4) 40%, rgba(31, 24, 18, 0) 70%);
 }
+/* Text leží nad přilepenou fotkou, ale v běžném toku — při scrollu tedy
+   odjede pryč, zatímco fotka zůstane stát. Záporný horní okraj ho posadí
+   přes fotku, takže dohromady zabírají jednu obrazovku. */
 .hero__obsah {
   position: relative;
   z-index: 2;
-  /* při najíždění další sekce se rozplyne — řídí js/v2.js */
-  opacity: calc(1 - var(--zmizeni));
-  height: 100%;
+  height: 100svh;
+  min-height: 560px;
+  margin: -100svh auto 0;
   max-width: var(--sirka);
-  margin: 0 auto;
   padding: 0 var(--okraj) clamp(96px, 15vh, 170px);
   display: grid;
   align-content: end;
@@ -392,7 +385,10 @@ a { color: inherit; }
   letter-spacing: .04em;
   color: rgba(255, 255, 255, .85);
 }
-.hero h1 {
+.hero__obsah {
+  color: var(--white);
+}
+.hero__obsah h1 {
   font-size: clamp(44px, 7.4vw, 92px);
   text-shadow: 0 2px 30px rgba(31, 24, 18, .35);
 }
@@ -411,6 +407,7 @@ a { color: inherit; }
 .hero__dolu {
   position: absolute;
   left: 50%; bottom: 18px;
+  z-index: 2;
   transform: translateX(-50%);
   font-size: 11px;
   letter-spacing: .18em;
@@ -508,10 +505,11 @@ a { color: inherit; }
   width: 24px; height: 24px;
   border-radius: 50%;
   background: var(--white);
-  /* než se přepínač „narodí“, je to světlá tečka na konci linky */
-  opacity: clamp(0, calc(var(--zrod) * 4), 1);
+  /* Tečka je vidět od chvíle, kdy se sekce objeví — linka k ní teprve
+     doputuje. Teprve pak z ní doroste dráha a popisek. */
+  opacity: 1;
   box-shadow: 0 2px 8px rgba(0, 0, 0, .2),
-              0 0 calc((1 - var(--zrod)) * 26px) calc((1 - var(--zrod)) * 4px) rgba(255, 255, 255, .85);
+              0 0 calc((1 - var(--zrod)) * 14px) calc((1 - var(--zrod)) * 2px) rgba(255, 255, 255, .7);
   transform: translateX(calc(var(--zapnuto) * 28px));
   transition: transform .5s cubic-bezier(.3, 1.4, .5, 1);
 }
