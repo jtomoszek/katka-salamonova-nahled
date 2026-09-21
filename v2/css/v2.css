@@ -38,8 +38,10 @@
   --najeto:        1;
   /* jak moc se rozplynul obsah titulní sekce (0 = celý vidět) */
   --zmizeni:       0;
-  /* měkkost titulní fotky — snová atmosféra jako v šabloně */
-  --rozostreni:    clamp(4px, .55vw, 8px);
+  /* Měkkost titulní fotky. Na začátku je ostrá, rozostření a mírné
+     přiblížení přibývají teprve při scrollu (--mekkost 0 → 1). */
+  --rozostreni:    clamp(5px, .7vw, 10px);
+  --mekkost:       0;
   /* 0 = přepínač vypnutý, 1 = zapnutý (nastavuje js/v2.js) */
   --zapnuto:       0;
   /* 0 = přepínač ještě není, 1 = hotový; linka ho „přinese“ */
@@ -270,29 +272,42 @@ a { color: inherit; }
 }
 
 
-/* ---------- světelná linka -------------------------------- */
+/* ---------- světelné stuhy -------------------------------- */
 
-/* Tvar i délku počítá js/v2.js; tady je jen vzhled a záře.
-   stroke-dasharray/offset drží celou linku schovanou, scroll ji odkrývá. */
-.linka {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  overflow: visible;      /* křivka smí přesahovat mimo sekci */
+/* Vrstva drží na místě po celý úvod (titulka i filozofie), takže se
+   stuhy kreslí jedním tahem přes obě sekce. Nulová výška = do rozvržení
+   nezasahuje, z-index ji drží nad pozadím obou sekcí. */
+.stuhy {
+  position: sticky;
+  top: 0;
+  height: 0;
+  z-index: 2;
   pointer-events: none;
-  z-index: 1;
+  opacity: var(--stuhy, 1);
+  transition: opacity .5s ease;
 }
-.linka path,
-.linka ellipse {
+.stuhy__plocha {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100svh;
+  overflow: visible;   /* křivky smí začínat mimo obrazovku */
+}
+/* Celá dvojice se při scrollu mírně stáčí — tvar tím žije. */
+.stuhy__skupina {
+  transform: rotate(calc(var(--stoceni, 0) * 1deg));
+  transform-origin: 50% 34%;
+}
+.stuha {
   fill: none;
-  stroke: rgba(255, 255, 255, .9);
+  stroke: rgba(255, 255, 255, .92);
   stroke-width: 1.4;
   stroke-linecap: round;
   filter: drop-shadow(0 0 7px rgba(255, 255, 255, .55))
           drop-shadow(0 0 20px rgba(255, 255, 255, .3));
 }
-/* druhá, slabší smyčka — prstenec tím působí jako stuha, ne drát */
-.linka__prstenec--slaby { stroke: rgba(255, 255, 255, .45); stroke-width: 1; }
+/* Druhá stuha je jen o chlup slabší — dohromady tvoří jednu stuhu. */
+.stuha--druha { stroke: rgba(255, 255, 255, .8); stroke-width: 1.2; }
 
 /* Sotva znatelné soustředné kruhy v sekci přepínače. */
 .kruhy {
@@ -309,8 +324,8 @@ a { color: inherit; }
   stroke-width: 1;
 }
 .prepinac.je-zapnuto .kruhy circle { stroke: rgba(77, 54, 37, .07); transition: stroke .6s ease; }
-/* Na světlém pozadí po přepnutí by bílá linka zmizela — ať radši odejde. */
-.prepinac.je-zapnuto .linka path { opacity: 0; transition: opacity .5s ease; }
+/* Na světlém pozadí po přepnutí by bílé stuhy zmizely — ať radši odejdou
+   (viditelnost řídí --stuhy z js/v2.js). */
 
 
 /* ---------- titulní sekce --------------------------------- */
@@ -332,18 +347,27 @@ a { color: inherit; }
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: center 18%;
-  /* Snová titulka: rozostření, nižší kontrast a méně syté barvy.
-     Zvětšení o 8 % schová měkké okraje, které rozostření vytvoří. */
-  filter: blur(var(--rozostreni)) saturate(.8) contrast(.86) brightness(1.06);
-  transform: scale(1.08);
+  /* Na začátku ostrá a plná barev. Se scrollem (--mekkost) změkne,
+     ztratí kontrast a lehce se přiblíží — přiblížení zároveň schová
+     měkké okraje, které rozostření vytvoří. */
+  filter:
+    blur(calc(var(--mekkost) * var(--rozostreni)))
+    saturate(calc(1 - var(--mekkost) * .2))
+    contrast(calc(1 - var(--mekkost) * .14))
+    brightness(calc(1 + var(--mekkost) * .06));
+  transform: scale(calc(1 + var(--mekkost) * .09));
 }
 /* Ztmavení u spodní hrany, aby byl bílý nadpis čitelný. */
 .hero__zavoj {
   position: absolute;
   inset: 0;
   background:
-    /* teplý nádech v barvách značky — stejná role jako zelený závoj v šabloně */
-    linear-gradient(155deg, rgba(180, 133, 99, .2) 0%, rgba(198, 162, 136, .12) 45%, rgba(77, 54, 37, .16) 100%),
+    /* teplý nádech v barvách značky — stejná role jako zelený závoj
+       v šabloně. Na začátku je průhledný, přibývá se scrollem. */
+    linear-gradient(155deg,
+      rgba(180, 133, 99, calc(var(--mekkost) * .2)) 0%,
+      rgba(198, 162, 136, calc(var(--mekkost) * .12)) 45%,
+      rgba(77, 54, 37, calc(var(--mekkost) * .16)) 100%),
     linear-gradient(180deg, rgba(31, 24, 18, .3) 0%, rgba(31, 24, 18, 0) 26%),
     linear-gradient(0deg, rgba(31, 24, 18, .78) 0%, rgba(31, 24, 18, .4) 40%, rgba(31, 24, 18, 0) 70%);
 }
@@ -492,13 +516,17 @@ a { color: inherit; }
   transition: transform .5s cubic-bezier(.3, 1.4, .5, 1);
 }
 
-.prepinac h2 {
-  font-size: clamp(28px, 4.4vw, 54px);
-  line-height: 1.2;
+.prepinac__nadpis {
+  display: grid;
+  font-size: clamp(30px, 5vw, 62px);
+  line-height: 1.16;
 }
-.prepinac h2 span { display: block; transition: color .6s ease, opacity .6s ease; }
-/* Neaktivní řádek je ztlumený — pozornost drží ten právě platný. */
-.prepinac__radek--druhy { color: rgba(255, 255, 255, .5); }
+/* Obě věty leží na sobě, vidět je vždy jen ta platná. */
+.prepinac__radek {
+  grid-area: 1 / 1;
+  transition: opacity .55s ease, transform .55s cubic-bezier(.22, .8, .3, 1);
+}
+.prepinac__radek--druhy { opacity: 0; transform: translateY(16px); color: var(--copper-dark); }
 
 .prepinac__texty {
   display: grid;
@@ -516,9 +544,9 @@ a { color: inherit; }
 /* zapnutý stav — světlé pozadí, tmavý text */
 .prepinac.je-zapnuto .spinac__telo   { background: var(--copper-dark); }
 .prepinac.je-zapnuto .spinac__popis  { color: var(--copper-dark); }
-.prepinac.je-zapnuto h2              { color: var(--brown); }
-.prepinac.je-zapnuto .prepinac__radek--prvni { color: rgba(77, 54, 37, .38); }
-.prepinac.je-zapnuto .prepinac__radek--druhy { color: var(--copper-dark); }
+.prepinac.je-zapnuto .prepinac__nadpis       { color: var(--brown); }
+.prepinac.je-zapnuto .prepinac__radek--prvni { opacity: 0; transform: translateY(-16px); }
+.prepinac.je-zapnuto .prepinac__radek--druhy { opacity: 1; transform: none; }
 .prepinac.je-zapnuto .prepinac__texty p:first-child { color: var(--tlumeny); }
 .prepinac.je-zapnuto .prepinac__texty p:last-child  { color: #1f1f1f; }
 
@@ -969,6 +997,7 @@ a { color: inherit; }
   .prijezdy .odkryv { opacity: 1; transform: none; transition: none; }
   .hero__dolu { animation: none; }
   .spinac__knoflik, .prepinac::before, .prepinac h2 span { transition-duration: .01ms; }
-  /* linka se nekreslí, rovnou je celá vidět */
-  .linka path { stroke-dashoffset: 0 !important; }
+  /* stuhy se nekreslí, rovnou jsou celé vidět */
+  .stuha { stroke-dashoffset: 0 !important; }
+  .prepinac__radek { transition: none; }
 }
