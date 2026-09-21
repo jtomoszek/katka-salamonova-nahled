@@ -77,15 +77,6 @@ verze na adrese **/v2/**, první verze zůstává beze změny na `/`.
 
 Co si z šablony bere:
 
-- **světelná linka jako laso** (podle snímků v `podklady/Scroll`): smyčka
-  kolem hlavy s ocasem, která se při scrollu proměňuje — stáčí se, zužuje,
-  stoupá z obrazovky a ocas se natahuje, až skončí přesně na změřeném středu
-  knoflíku přepínače. Tvar drží tři klíčové polohy (`KLICE` v `v2.js`) a mezi
-  nimi se plynule přechází; na začátku se linka navíc dokresluje přes
-  `stroke-dashoffset`. Vrstva je `position: sticky` přes obě sekce, jinak by
-  tah nešel vést přes hranici sekcí,
-- **text titulky odjíždí, fotka zůstává** — text leží mimo přilepenou sekci
-  a přes zápornou horní marži se posadí přes fotku,
 - **přepínač se z té tečky zrodí** — nejdřív svítící bod, pak doroste dráha
   a nakonec popisek (`--zrod`),
 - **titulní fotka je na začátku ostrá** a teprve při scrollu měkne, ztrácí
@@ -99,8 +90,7 @@ Co si z šablony bere:
   je text filozofie z první verze) i pozadí z mědi na světlé,
 - **pilíře a můj příběh ve stejném jazyce**: velká dvoubarevná hlava, úvod
   vpravo a stojící linka na pozadí. Na pozadí každé sekce je jedna plynulá
-  linka (dlouhá vlna s jednou velkou a jednou malou smyčkou, v polovině
-  sekcí zrcadlená) — spleť několika křivek byla příliš rušivá. Počítá se
+  linka (dlouhá vlna, v polovině sekcí zrcadlená) — spleť několika křivek byla příliš rušivá. Počítá se
   jako Catmull-Rom spline procházející body, takže na sebe tečny navazují
   a nikde nevzniká ostrý roh; při scrollu se postupně dokresluje
   (`stroke-dashoffset` podle toho, jak sekce projíždí). Pilíře už nejsou barevné karty, ale
