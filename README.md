@@ -100,7 +100,10 @@ Co si z šablony bere:
 - **pilíře a můj příběh ve stejném jazyce**: velká dvoubarevná hlava, úvod
   vpravo a stojící linka na pozadí. Na pozadí každé sekce je jedna plynulá
   linka (dlouhá vlna s jednou velkou a jednou malou smyčkou, v polovině
-  sekcí zrcadlená) — spleť několika křivek byla příliš rušivá. Pilíře už nejsou barevné karty, ale
+  sekcí zrcadlená) — spleť několika křivek byla příliš rušivá. Počítá se
+  jako Catmull-Rom spline procházející body, takže na sebe tečny navazují
+  a nikde nevzniká ostrý roh; při scrollu se postupně dokresluje
+  (`stroke-dashoffset` podle toho, jak sekce projíždí). Pilíře už nejsou barevné karty, ale
   čtyři bloky oddělené vlasovou linkou s tichou ikonou,
 - **reference ve stejném jazyce**: velká dvoubarevná hlava, stojící linka
   na pozadí a citace pod sebou oddělené vlasovou linkou — bez karet, nese to

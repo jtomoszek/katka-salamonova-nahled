@@ -60,6 +60,11 @@
   var valec = document.querySelector('.hranice__valec');
   var kroky = [].slice.call(document.querySelectorAll('.hranice__texty .krok'));
 
+  // Linky na pozadí obsahových sekcí — kreslí se, jak sekce projíždí.
+  var pozadi = [].slice.call(document.querySelectorAll('.krivky')).map(function (obal) {
+    return { cesta: obal.querySelector('path'), sekce: obal.closest('section'), delka: 0 };
+  });
+
   var plochaStuh = document.querySelector('.stuhy__plocha');
   var stuha = document.querySelector('.stuha');
 
@@ -147,7 +152,17 @@
   var plochaRozmer = null;
   var stredKnoflikuBod = null;
 
+  function prepocitejPozadi() {
+    pozadi.forEach(function (p) {
+      if (!p.cesta) return;
+      p.delka = p.cesta.getTotalLength();
+      p.cesta.style.strokeDasharray = p.delka;
+      p.cesta.style.strokeDashoffset = omezitPohyb ? 0 : p.delka;
+    });
+  }
+
   function prepocitejLinky() {
+    prepocitejPozadi();
     if (!plochaStuh || !stuha) return;
     var k = stredKnofliku();
     var r = plochaStuh.getBoundingClientRect();
@@ -225,7 +240,17 @@
       valec.style.setProperty('--krok', ktery);
     }
 
-    // 5) barva lišty podle toho, co je zrovna pod ní. Pořadí odpovídá
+    // 5) linky na pozadí se dokreslují, jak jejich sekce projíždí
+    if (!omezitPohyb) {
+      pozadi.forEach(function (p) {
+        if (!p.delka || !p.sekce) return;
+        var r = p.sekce.getBoundingClientRect();
+        var postupSekce = omez((oknoVyska - r.top) / (r.height * 0.7 + oknoVyska), 0, 1);
+        p.cesta.style.strokeDashoffset = (p.delka * (1 - postupSekce)).toFixed(1);
+      });
+    }
+
+    // 6) barva lišty podle toho, co je zrovna pod ní. Pořadí odpovídá
     //    vrstvení: patička je nad vším, sekce přepínače nad fotkou.
     if (lista) {
       var y = 34;
