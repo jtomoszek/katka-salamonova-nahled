@@ -85,6 +85,9 @@ Co si z šablony bere:
   `stroke-dashoffset`), takže konec sedí na každém displeji,
 - **přepínač se z té tečky zrodí** — nejdřív svítící bod, pak doroste dráha
   a nakonec popisek (`--zrod`),
+- **snová titulní fotka**: rozostření (`--rozostreni`), nižší kontrast a méně
+  syté barvy plus teplý závoj v barvách značky — stejná role jako zelený
+  závoj v šabloně. Ostrost se ladí jedinou proměnnou v `:root`,
 - **prolnutí místo řezu**: titulní fotka zůstane stát a sekce „Filozofie“ se
   do ní prolne — barva sílí (`--najeto`) a titulní text se rozplyne
   (`--zmizeni`), takže obě obrazovky chvíli existují přes sebe,
