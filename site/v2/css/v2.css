@@ -777,35 +777,46 @@ a { color: inherit; }
 
 /* ---------- hranice spolupráce ---------------------------- */
 
-/* Rozvržení podle šablony: dvoubarevný nadpis vlevo, úvod vpravo,
-   pod tím tři bloky, z nichž každý má u pravého okraje obří číslici. */
+/* Rozvržení podle snímků: dvoubarevný nadpis vlevo, úvod vpravo, pod tím
+   tři bloky. Křivky na pozadí stojí na místě, vpravo drží jedno velké
+   číslo, ve kterém se mění jen druhá číslice. */
 .sekce--hranice {
   position: relative;
   /* clip, ne hidden: hidden by ze sekce udělal scrollovací kontejner
-     a přilepené číslice by přestaly fungovat */
+     a přilepené prvky uvnitř by přestaly fungovat */
   overflow: clip;
-  padding-bottom: clamp(40px, 6vh, 90px);
+  padding-bottom: clamp(60px, 10vh, 140px);
 }
 
-/* Sotva znatelné plynoucí křivky na pozadí. */
+/* Křivky se nehýbou — drží na jednom místě po celou sekci.
+   Nulová výška, aby do rozvržení nezasahovaly. */
 .krivky {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
+  position: sticky;
+  top: 0;
+  height: 0;
+  z-index: 0;
   pointer-events: none;
+}
+.krivky__plocha {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100svh;
 }
 .krivky path {
   fill: none;
-  stroke: rgba(77, 54, 37, .13);
+  stroke: rgba(77, 54, 37, .12);
   stroke-width: 1;
 }
 
 .hranice__hlava {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   gap: clamp(20px, 4vw, 60px);
   align-items: end;
-  margin-bottom: clamp(48px, 8vh, 110px);
+  margin-bottom: clamp(48px, 9vh, 120px);
 }
 .hranice__nadpis { font-size: clamp(38px, 6.4vw, 86px); }
 .hranice__nadpis em { font-style: normal; color: var(--copper); }
@@ -817,44 +828,61 @@ a { color: inherit; }
   color: var(--tlumeny);
 }
 
-.krok {
+/* Texty vlevo, číslo vpravo — to zůstává stát, dokud sekce projíždí. */
+.hranice__kroky {
   position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(16px, 4vw, 60px);
-  align-items: center;
-  /* Každý blok je vysoký na obrazovku — tolik prostoru potřebuje
-     číslice, aby u spodní hrany vydržela po celou dobu bloku. */
-  min-height: 120vh;
-  padding: clamp(24px, 4vh, 60px) 0;
 }
-.krok__text { max-width: 44ch; }
+.hranice__texty { grid-column: 1; }
+
+.krok {
+  min-height: 96vh;
+  display: grid;
+  align-content: center;
+  max-width: 44ch;
+}
 .krok h3 {
   font-size: clamp(28px, 3.6vw, 46px);
   line-height: 1.12;
   color: var(--copper-dark);
 }
-/* jen text vlevo — kdyby to platilo na všechna <p>, přebilo by to
-   i obří číslici, která je taky odstavec */
-.krok__text p {
+.krok p {
   margin: 18px 0 0;
   font-size: 15px;
   line-height: 1.75;
   color: var(--tlumeny);
 }
-/* Obří číslice: drží u spodní hrany okna, dokud kolem ní projíždí
-   „její“ blok — a spodní hrana obrazovky ji přitom ořezává. Jakmile
-   blok skončí, číslice odjede a vystřídá ji další. */
-.krok__cislo {
+
+/* Obří číslo: nula stojí, druhá číslice se posouvá jako na počítadle.
+   Válec je vysoký na jednu číslici a přebytek ořezává. */
+.hranice__cislo {
+  grid-column: 2;
   position: sticky;
-  bottom: -.16em;
+  top: 34vh;
+  align-self: start;
+  justify-self: center;
+  display: flex;
   margin: 0;
-  align-self: end;
-  justify-self: end;
-  font-size: clamp(120px, 22vw, 300px);
-  line-height: .78;
+  font-family: var(--font);
+  font-size: clamp(130px, 21vw, 300px);
+  font-weight: 400;
+  line-height: 1;
   color: var(--copper);
-  opacity: .42;
+  opacity: .5;
+}
+.hranice__valec {
+  display: block;
+  height: 1em;
+  overflow: hidden;
+}
+.hranice__valec span {
+  display: block;
+  height: 1em;
+  transform: translateY(calc(var(--krok, 0) * -1em));
+  transition: transform .6s cubic-bezier(.22, .8, .3, 1);
 }
 
 /* ---------- reference ------------------------------------- */
@@ -1025,10 +1053,18 @@ a { color: inherit; }
   .certifikace { grid-template-columns: repeat(2, 1fr); }
   .reference { grid-template-columns: 1fr; }
   .hranice__hlava { grid-template-columns: 1fr; align-items: start; }
-  .krok { grid-template-columns: 1fr; gap: 4px; min-height: 0; }
-  /* Na úzkém displeji by přilepená číslice ležela přes text, proto
-     zůstane nad nadpisem a nikam se nelepí. */
-  .krok__cislo { position: static; justify-self: start; order: -1; opacity: .3; }
+  /* Na úzkém displeji stojí číslo nad texty a nelepí se — jinak by
+     leželo přes ně. */
+  .hranice__kroky { grid-template-columns: 1fr; }
+  .hranice__texty { grid-column: 1; }
+  .hranice__cislo {
+    grid-column: 1;
+    position: static;
+    justify-self: start;
+    margin-bottom: 8px;
+    opacity: .35;
+  }
+  .krok { min-height: 0; padding: 22px 0 38px; }
   .milnik { grid-template-columns: 1fr; gap: 6px; }
   .milnik:nth-child(even) .milnik__cislo { order: 0; text-align: left; }
   .milnik__cislo { font-size: clamp(64px, 18vw, 110px); }

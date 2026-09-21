@@ -57,6 +57,9 @@
   var lista = document.querySelector('.lista');
   var koren = document.documentElement;
 
+  var valec = document.querySelector('.hranice__valec');
+  var kroky = [].slice.call(document.querySelectorAll('.hranice__texty .krok'));
+
   var plochaStuh = document.querySelector('.stuhy__plocha');
   var stuha = document.querySelector('.stuha');
 
@@ -211,7 +214,18 @@
       prepinac.style.setProperty('--zapnuto', zapnuto ? 1 : 0);
     }
 
-    // 4) barva lišty podle toho, co je zrovna pod ní. Pořadí odpovídá
+    // 4) v „Hranicích spolupráce“ se mění jen druhá číslice: platí ten
+    //    blok, jehož vršek už vystoupal nad 45 % výšky okna
+    if (valec && kroky.length) {
+      var hranice = oknoVyska * 0.45;
+      var ktery = 0;
+      kroky.forEach(function (blok, i) {
+        if (blok.getBoundingClientRect().top <= hranice) ktery = i;
+      });
+      valec.style.setProperty('--krok', ktery);
+    }
+
+    // 5) barva lišty podle toho, co je zrovna pod ní. Pořadí odpovídá
     //    vrstvení: patička je nad vším, sekce přepínače nad fotkou.
     if (lista) {
       var y = 34;
