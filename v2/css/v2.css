@@ -777,37 +777,80 @@ a { color: inherit; }
 }
 
 
-/* ---------- co u mě nenajdete ----------------------------- */
+/* ---------- hranice spolupráce ---------------------------- */
 
-.nenajdete {
+/* Rozvržení podle šablony: dvoubarevný nadpis vlevo, úvod vpravo,
+   pod tím tři bloky, z nichž každý má u pravého okraje obří číslici. */
+.sekce--hranice {
+  position: relative;
+  overflow: hidden;          /* číslice smí přetékat až k hraně sekce */
+  padding-bottom: clamp(40px, 6vh, 90px);
+}
+
+/* Sotva znatelné plynoucí křivky na pozadí. */
+.krivky {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+.krivky path {
+  fill: none;
+  stroke: rgba(77, 54, 37, .13);
+  stroke-width: 1;
+}
+
+.hranice__hlava {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(14px, 1.8vw, 24px);
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(20px, 4vw, 60px);
+  align-items: end;
+  margin-bottom: clamp(48px, 8vh, 110px);
 }
-.nenajdete__karta {
-  padding: clamp(24px, 2.6vw, 34px);
-  border-radius: 20px;
-  background: var(--white);
-  box-shadow: inset 0 0 0 1px var(--hairline);
+.hranice__nadpis { font-size: clamp(38px, 6.4vw, 86px); }
+.hranice__nadpis em { font-style: normal; color: var(--copper); }
+.hranice__uvod {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--tlumeny);
 }
-.nenajdete__poradi {
-  display: block;
-  margin-bottom: 18px;
-  font-family: var(--font-display);
-  font-size: 40px;
-  line-height: 1;
-  color: var(--copper);
-  opacity: .55;
+
+.krok {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(16px, 4vw, 60px);
+  align-items: center;
+  /* bloky se o kus překrývají, aby číslice zasahovaly do dalšího */
+  padding: clamp(34px, 7vh, 96px) 0;
 }
-.nenajdete h3 {
-  font-family: var(--font-display);
-  font-size: clamp(22px, 2.2vw, 28px);
-  line-height: 1.2;
+.krok__text { max-width: 44ch; }
+.krok h3 {
+  font-size: clamp(28px, 3.6vw, 46px);
+  line-height: 1.12;
   color: var(--copper-dark);
 }
-.nenajdete h3 i { font-style: normal; margin-right: 8px; }
-.nenajdete p { margin: 14px 0 0; font-size: 14.5px; color: var(--tlumeny); }
-
+/* jen text vlevo — kdyby to platilo na všechna <p>, přebilo by to
+   i obří číslici, která je taky odstavec */
+.krok__text p {
+  margin: 18px 0 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--tlumeny);
+}
+/* Obří číslice u pravého okraje — v šabloně ji spodní hrana sekce ořezává. */
+.krok__cislo {
+  margin: 0;
+  justify-self: end;
+  font-size: clamp(120px, 22vw, 300px);
+  line-height: .78;
+  color: var(--copper);
+  opacity: .42;
+  /* posun dolů, ať číslice zasahuje do dalšího bloku jako v šabloně */
+  transform: translateY(18%);
+}
 
 /* ---------- reference ------------------------------------- */
 
@@ -975,7 +1018,10 @@ a { color: inherit; }
   .pribeh, .studie, .novinky { grid-template-columns: 1fr; }
   .pribeh__fotky { order: -1; padding: 0 0 40px 40px; }
   .certifikace { grid-template-columns: repeat(2, 1fr); }
-  .nenajdete, .reference { grid-template-columns: 1fr; }
+  .reference { grid-template-columns: 1fr; }
+  .hranice__hlava { grid-template-columns: 1fr; align-items: start; }
+  .krok { grid-template-columns: 1fr; gap: 4px; }
+  .krok__cislo { justify-self: start; order: -1; transform: none; opacity: .3; }
   .milnik { grid-template-columns: 1fr; gap: 6px; }
   .milnik:nth-child(even) .milnik__cislo { order: 0; text-align: left; }
   .milnik__cislo { font-size: clamp(64px, 18vw, 110px); }
