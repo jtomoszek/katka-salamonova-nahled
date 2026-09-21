@@ -77,15 +77,17 @@ verze na adrese **/v2/**, první verze zůstává beze změny na `/`.
 
 Co si z šablony bere:
 
-- **světelná linka**, která se při scrollu vykresluje: obloukem přes titulní
-  fotku, pak sjede dolů a skončí přesně na knoflíku přepínače. Tvar počítá
-  `v2.js` z rozměrů sekcí (výsek elipsy + Bézierova křivka), odkrývá se přes
-  `stroke-dashoffset` a konec míří na změřený střed knoflíku, takže sedí na
-  každém displeji,
+- **světelná stuha** kolem hlavy: prstenec (dvě elipsy), který se scrollem
+  otáčí a staví se na hranu — `rx` se zmenšuje, mezera ve stuze putuje dokola
+  přes `stroke-dasharray`,
+- **pokračování stuhy** v sekci filozofie: Bézierova křivka sjede shora a
+  skončí přesně na změřeném středu knoflíku přepínače (odkrývá se přes
+  `stroke-dashoffset`), takže konec sedí na každém displeji,
 - **přepínač se z té tečky zrodí** — nejdřív svítící bod, pak doroste dráha
   a nakonec popisek (`--zrod`),
-- **titulní fotka zůstane stát** a sekce „Filozofie“ na ni najede obloukem,
-  který se při scrollu narovnává (`--oblouk`, počítá `v2.js`),
+- **prolnutí místo řezu**: titulní fotka zůstane stát a sekce „Filozofie“ se
+  do ní prolne — barva sílí (`--najeto`) a titulní text se rozplyne
+  (`--zmizeni`), takže obě obrazovky chvíli existují přes sebe,
 - **přepínač SVOBODA** — jak sekce projíždí, cvakne a s ním se změní pozadí
   z mědi na světlou i zvýrazněný řádek: „Jiní prodávají smlouvy.“ →
   „Já řeším vaši svobodu.“ (obojí je text filozofie z první verze),

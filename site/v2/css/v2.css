@@ -33,9 +33,11 @@
   --sirka:         1180px;
   --okraj:         clamp(20px, 5vw, 64px);
 
-  /* hloubka oblouku, kterým sekce najíždí na titulní fotku;
-     js/v2.js ji při scrollu snižuje k nule */
-  --oblouk:        7vw;
+  /* 0 = sekce filozofie teprve najíždí (fotka ještě prosvítá),
+     1 = je plně krycí. Bez skriptu zůstane krycí. */
+  --najeto:        1;
+  /* jak moc se rozplynul obsah titulní sekce (0 = celý vidět) */
+  --zmizeni:       0;
   /* 0 = přepínač vypnutý, 1 = zapnutý (nastavuje js/v2.js) */
   --zapnuto:       0;
   /* 0 = přepínač ještě není, 1 = hotový; linka ho „přinese“ */
@@ -278,7 +280,8 @@ a { color: inherit; }
   pointer-events: none;
   z-index: 1;
 }
-.linka path {
+.linka path,
+.linka ellipse {
   fill: none;
   stroke: rgba(255, 255, 255, .9);
   stroke-width: 1.4;
@@ -286,6 +289,24 @@ a { color: inherit; }
   filter: drop-shadow(0 0 7px rgba(255, 255, 255, .55))
           drop-shadow(0 0 20px rgba(255, 255, 255, .3));
 }
+/* druhá, slabší smyčka — prstenec tím působí jako stuha, ne drát */
+.linka__prstenec--slaby { stroke: rgba(255, 255, 255, .45); stroke-width: 1; }
+
+/* Sotva znatelné soustředné kruhy v sekci přepínače. */
+.kruhy {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: .5;
+}
+.kruhy circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, .16);
+  stroke-width: 1;
+}
+.prepinac.je-zapnuto .kruhy circle { stroke: rgba(77, 54, 37, .07); transition: stroke .6s ease; }
 /* Na světlém pozadí po přepnutí by bílá linka zmizela — ať radši odejde. */
 .prepinac.je-zapnuto .linka path { opacity: 0; transition: opacity .5s ease; }
 
@@ -321,6 +342,8 @@ a { color: inherit; }
 .hero__obsah {
   position: relative;
   z-index: 2;
+  /* při najíždění další sekce se rozplyne — řídí js/v2.js */
+  opacity: calc(1 - var(--zmizeni));
   height: 100%;
   max-width: var(--sirka);
   margin: 0 auto;
@@ -382,25 +405,33 @@ a { color: inherit; }
   z-index: 1;
   height: 210vh;
   margin-top: -1px;
-  background: linear-gradient(168deg, var(--copper) 0%, #a9825f 45%, var(--brown) 100%);
-  /* oblouk („vlnovka“), kterým sekce najíždí na fotku; js/v2.js ho
-     při scrollu narovnává k nule */
-  border-radius: 50% 50% 0 0 / var(--oblouk) var(--oblouk) 0 0;
+  background: transparent;
   color: var(--white);
+}
+/* Sekce se do fotky prolne: barva se zesiluje, jak najíždí (--najeto).
+   Vrstva sahá o obrazovku výš, aby se prolnula celá plocha včetně fotky
+   nad hranou sekce — jinak by na ní zůstal viditelný šev. */
+.prepinac::after {
+  content: "";
+  position: absolute;
+  top: -105vh; right: 0; bottom: 0; left: 0;
+  z-index: 0;
+  background: linear-gradient(168deg, var(--copper) 0%, #a9825f 45%, var(--brown) 100%);
+  opacity: var(--najeto);
 }
 /* Světlé pozadí druhého stavu — prolne se přes barevný podklad. */
 .prepinac::before {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;               /* nad barevným podkladem z ::after */
   background: var(--papir);
-  /* stejný oblouk jako sekce — clip přes overflow by rozbil sticky */
-  border-radius: inherit;
   opacity: var(--zapnuto);
   transition: opacity .9s ease;
 }
 .prepinac__panel {
   position: sticky;
+  z-index: 3;
   /* vztažný rámec pro světelnou linku */
   isolation: isolate;
   top: 0;
