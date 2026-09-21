@@ -1,13 +1,16 @@
 /* Pohyb druhé verze webu.
  *
- *  1) oblouk, kterým sekce „Filozofie“ najíždí na titulní fotku,
- *     se při scrollu narovnává,
- *  2) přepínač SVOBODA se přehodí, jakmile sekce projede zhruba
- *     do půlky — s ním se mění pozadí i zvýrazněný řádek,
- *  3) lišta si podle podkladu pod sebou přepíná barvu písma,
- *  4) obsah sekcí najíždí zdola, jakmile se k němu uživatel dostane,
- *  5) menu přes celou obrazovku.
+ *  1) světelná linka se při scrollu vykresluje: obloukem přes titulní
+ *     fotku, pak sjede dolů a skončí přesně na knoflíku přepínače —
+ *     ten se v tu chvíli rozsvítí a doroste (--zrod),
+ *  2) přepínač SVOBODA cvakne, jakmile sekce projede zhruba do půlky;
+ *     s ním se mění pozadí i zvýrazněný řádek (--zapnuto),
+ *  3) oblouk, kterým sekce najíždí na fotku, se narovnává (--oblouk),
+ *  4) lišta si podle podkladu pod sebou přepíná barvu písma,
+ *  5) obsah sekcí najíždí zdola,
+ *  6) menu přes celou obrazovku.
  *
+ * Tvar linky se počítá z rozměrů sekcí, aby seděl na každém displeji.
  * Všechno, co se hýbe, se vypne při zapnutém „omezit pohyb“.
  */
 (function () {
@@ -43,17 +46,103 @@
     });
   }
 
-  /* ---------- scroll: oblouk, přepínač, barva lišty ---------- */
+  /* ---------- prvky ---------- */
 
   var hero = document.querySelector('.hero');
   var prepinac = document.querySelector('[data-prepinac]');
+  var panel = document.querySelector('.prepinac__panel');
+  var knoflik = document.querySelector('.spinac__knoflik');
   var paticka = document.querySelector('.paticka');
   var lista = document.querySelector('.lista');
   var koren = document.documentElement;
 
-  var ZLOM = 0.45;   // v jaké části sekce přepínač cvakne
+  var linkaHero = document.querySelector('.linka--hero');
+  var linkaPanel = document.querySelector('.linka--panel');
+
+  var ZLOM = 0.45;        // v jaké části sekce přepínač cvakne
+  var KONEC_KRESBY = 0.3; // kdy linka dojede ke knoflíku
 
   function omez(h, min, max) { return h < min ? min : (h > max ? max : h); }
+
+  /* ---------- tvar linky ---------- */
+
+  /* Výsek elipsy jako křivka „A“ — plynulejší než ručně skládané oblouky
+     a spočítá se ze středu, poloos a dvou úhlů (ve stupních, 0 = vpravo,
+     90 = dole, 270 = nahoře). */
+  function vysecElipsy(cx, cy, rx, ry, odStupnu, doStupnu) {
+    var bod = function (st) {
+      var u = st * Math.PI / 180;
+      return [cx + rx * Math.cos(u), cy + ry * Math.sin(u)];
+    };
+    var a = bod(odStupnu);
+    var b = bod(doStupnu);
+    var velkyOblouk = Math.abs(doStupnu - odStupnu) > 180 ? 1 : 0;
+    var smer = doStupnu > odStupnu ? 1 : 0;
+    return 'M ' + a[0].toFixed(1) + ' ' + a[1].toFixed(1) +
+      ' A ' + rx.toFixed(1) + ' ' + ry.toFixed(1) + ' 0 ' + velkyOblouk + ' ' + smer +
+      ' ' + b[0].toFixed(1) + ' ' + b[1].toFixed(1);
+  }
+
+  /* Připraví SVG: viewBox v pixelech prvku a linku schová do dashoffsetu. */
+  function nastavLinku(svg, d) {
+    if (!svg) return 0;
+    var cesta = svg.querySelector('path');
+    var r = svg.getBoundingClientRect();
+    if (!r.width || !r.height) return 0;
+    svg.setAttribute('viewBox', '0 0 ' + Math.round(r.width) + ' ' + Math.round(r.height));
+    cesta.setAttribute('d', d);
+    var delka = cesta.getTotalLength();
+    cesta.style.strokeDasharray = delka;
+    cesta.style.strokeDashoffset = omezitPohyb ? 0 : delka;
+    return delka;
+  }
+
+  var delkaHero = 0;
+  var delkaPanel = 0;
+
+  /* Střed knoflíku v souřadnicích panelu. Měří se ve stavu „před zrodem“,
+     kdy je dráha přepínače nejužší — přesně tam má linka skončit. */
+  function stredKnofliku() {
+    if (!knoflik || !panel || !prepinac) return null;
+    var puvodni = prepinac.style.getPropertyValue('--zrod');
+    prepinac.style.setProperty('--zrod', '0');
+    var k = knoflik.getBoundingClientRect();
+    var p = panel.getBoundingClientRect();
+    if (puvodni) prepinac.style.setProperty('--zrod', puvodni);
+    else prepinac.style.removeProperty('--zrod');
+    return { x: k.left - p.left + k.width / 2, y: k.top - p.top + k.height / 2 };
+  }
+
+  function prepocitejLinky() {
+    if (hero && linkaHero) {
+      var h = hero.getBoundingClientRect();
+      // Otevřený oblouk kolem nadpisu a fotky: zleva přes vršek doprava.
+      // Na úzkém displeji by se svislá elipsa zmáčkla do skoro rovné čáry,
+      // proto je tam širší a plošší.
+      var uzky = h.width < 700;
+      delkaHero = nastavLinku(linkaHero, uzky
+        ? vysecElipsy(h.width * 0.5, h.height * 0.66, h.width * 0.66, h.height * 0.34, 168, 372)
+        : vysecElipsy(h.width * 0.54, h.height * 0.52, h.width * 0.42, h.height * 0.42, 152, 378));
+    }
+
+    if (panel && linkaPanel) {
+      var p = panel.getBoundingClientRect();
+      var k = stredKnofliku();
+      if (k) {
+        var W = p.width, H = p.height;
+        // sjezd shora: navazuje na oblouk v heru a končí na knoflíku
+        delkaPanel = nastavLinku(linkaPanel,
+          'M ' + (k.x + W * 0.46).toFixed(1) + ' ' + (-H * 0.55).toFixed(1) +
+          ' C ' + (k.x + W * 0.30).toFixed(1) + ' ' + (-H * 0.04).toFixed(1) +
+          ' ' + (k.x - W * 0.34).toFixed(1) + ' ' + (H * 0.02).toFixed(1) +
+          ' ' + (k.x - W * 0.20).toFixed(1) + ' ' + (k.y - H * 0.20).toFixed(1) +
+          ' S ' + (k.x - W * 0.03).toFixed(1) + ' ' + (k.y - H * 0.02).toFixed(1) +
+          ' ' + k.x.toFixed(1) + ' ' + k.y.toFixed(1));
+      }
+    }
+  }
+
+  /* ---------- scroll ---------- */
 
   /* Kryje prvek bod y (měřeno od horní hrany okna)? */
   function kryje(prvek, y) {
@@ -65,26 +154,41 @@
   function prekresli() {
     var oknoVyska = window.innerHeight;
 
-    // 1) oblouk se narovnává, jak sekce najíždí na fotku
+    // 1) linka v heru se kreslí po první obrazovce scrollu
+    if (linkaHero && delkaHero && !omezitPohyb) {
+      var postupHero = omez(window.scrollY / (oknoVyska * 0.8), 0, 1);
+      linkaHero.querySelector('path').style.strokeDashoffset = delkaHero * (1 - postupHero);
+    }
+
+    // 2) oblouk se narovnává, jak sekce najíždí na fotku
     if (hero && prepinac) {
       var zaklad = window.innerWidth * (window.innerWidth < 700 ? 0.11 : 0.07);
       var najeto = omez(-prepinac.getBoundingClientRect().top / (oknoVyska * 0.6) + 1, 0, 1);
       koren.style.setProperty('--oblouk', (zaklad * (1 - najeto)).toFixed(1) + 'px');
     }
 
-    // 2) přepínač
+    // 3) linka v panelu, zrod přepínače a jeho přehození
     var zapnuto = false;
     if (prepinac) {
       var drahaSticky = prepinac.offsetHeight - oknoVyska;
       var postup = drahaSticky > 0
         ? omez(-prepinac.getBoundingClientRect().top / drahaSticky, 0, 1)
         : 0;
+
+      if (linkaPanel && delkaPanel && !omezitPohyb) {
+        var kresba = omez(postup / KONEC_KRESBY, 0, 1);
+        linkaPanel.querySelector('path').style.strokeDashoffset = delkaPanel * (1 - kresba);
+        // z tečky, kterou linka přinesla, vyroste celý přepínač
+        var zrod = omez((postup - KONEC_KRESBY * 0.92) / (KONEC_KRESBY * 0.5), 0, 1);
+        prepinac.style.setProperty('--zrod', zrod.toFixed(3));
+      }
+
       zapnuto = postup > ZLOM;
       prepinac.classList.toggle('je-zapnuto', zapnuto);
       prepinac.style.setProperty('--zapnuto', zapnuto ? 1 : 0);
     }
 
-    // 3) barva lišty podle toho, co je zrovna pod ní. Pořadí odpovídá
+    // 4) barva lišty podle toho, co je zrovna pod ní. Pořadí odpovídá
     //    vrstvení: patička je nad vším, sekce přepínače nad fotkou.
     if (lista) {
       var y = 34;
@@ -103,8 +207,17 @@
     requestAnimationFrame(function () { ceka = false; prekresli(); });
   }
 
+  var cekaRozmer;
+  function naZmenuRozmeru() {
+    clearTimeout(cekaRozmer);
+    cekaRozmer = setTimeout(function () { prepocitejLinky(); prekresli(); }, 150);
+  }
+
   window.addEventListener('scroll', naScroll, { passive: true });
-  window.addEventListener('resize', naScroll);
+  window.addEventListener('resize', naZmenuRozmeru);
+  // po načtení písem se výška obsahu mění — linku je pak nutné přeměřit
+  window.addEventListener('load', function () { prepocitejLinky(); prekresli(); });
+  prepocitejLinky();
   prekresli();
 
   /* ---------- nájezd obsahu ---------- */

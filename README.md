@@ -77,6 +77,13 @@ verze na adrese **/v2/**, první verze zůstává beze změny na `/`.
 
 Co si z šablony bere:
 
+- **světelná linka**, která se při scrollu vykresluje: obloukem přes titulní
+  fotku, pak sjede dolů a skončí přesně na knoflíku přepínače. Tvar počítá
+  `v2.js` z rozměrů sekcí (výsek elipsy + Bézierova křivka), odkrývá se přes
+  `stroke-dashoffset` a konec míří na změřený střed knoflíku, takže sedí na
+  každém displeji,
+- **přepínač se z té tečky zrodí** — nejdřív svítící bod, pak doroste dráha
+  a nakonec popisek (`--zrod`),
 - **titulní fotka zůstane stát** a sekce „Filozofie“ na ni najede obloukem,
   který se při scrollu narovnává (`--oblouk`, počítá `v2.js`),
 - **přepínač SVOBODA** — jak sekce projíždí, cvakne a s ním se změní pozadí

@@ -52,6 +52,10 @@
   <img class="hero__foto" src="../assets/img/katka-hero.webp" alt="Kateřina Šalamonová" width="2400" height="1600" fetchpriority="high">
   <div class="hero__zavoj" aria-hidden="true"></div>
 
+  <!-- Světelná linka. Kreslí se, jak uživatel scrolluje; tvar počítá
+       js/v2.js podle rozměrů sekce, aby seděl na každém displeji. -->
+  <svg class="linka linka--hero" aria-hidden="true" focusable="false"><path /></svg>
+
   <div class="hero__obsah">
     <div>
       <p class="hero__hodnoceni"><span class="hero__hvezdy" aria-hidden="true">★★★★★</span> 4,9 / 5 hodnocení</p>
@@ -75,6 +79,10 @@
      ============================================================ -->
 <section class="prepinac" id="filozofie" data-prepinac>
   <div class="prepinac__panel">
+    <!-- Pokračování linky: sjede shora a skončí přesně na knoflíku
+         přepínače, který se v tu chvíli rozsvítí. -->
+    <svg class="linka linka--panel" aria-hidden="true" focusable="false"><path /></svg>
+
     <div class="prepinac__vnitrek">
 
       <div class="spinac" aria-hidden="true">
