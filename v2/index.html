@@ -49,14 +49,13 @@
      ============================================================ -->
 <div class="uvod">
 
-<!-- Dvě světelné stuhy. Drží na místě přes titulní sekci i sekci
-     filozofie, takže se můžou kreslit jedním tahem až k přepínači.
+<!-- Světelná linka. Drží na místě přes titulní sekci i sekci filozofie:
+     nejdřív se obtočí kolem hlavy do smyčky, při scrollu se smyčka stáčí,
+     zvedá a zužuje a její konec doputuje na knoflík přepínače.
      Tvar počítá js/v2.js z rozměrů okna a ze změřené polohy knoflíku. -->
 <div class="stuhy" aria-hidden="true">
   <svg class="stuhy__plocha" focusable="false">
-    <g class="stuhy__skupina">
-      <path class="stuha stuha--prvni" /><path class="stuha stuha--druha" />
-    </g>
+    <path class="stuha" />
   </svg>
 </div>
 
@@ -64,20 +63,23 @@
   <img class="hero__foto" src="../assets/img/katka-hero.webp" alt="Kateřina Šalamonová" width="2400" height="1600" fetchpriority="high">
   <div class="hero__zavoj" aria-hidden="true"></div>
 
-  <div class="hero__obsah">
-    <div>
-      <p class="hero__hodnoceni"><span class="hero__hvezdy" aria-hidden="true">★★★★★</span> 4,9 / 5 hodnocení</p>
-      <h1 class="display">Přestaňte odkládat.<br>Začněte budovat.</h1>
-    </div>
+</section>
 
-    <div class="hero__vedle">
-      <p class="hero__text">Spoření, hypotéku i investice už možná máte — každé zvlášť jsou to jen produkty. Já z nich stavím jednu finanční architekturu, ve které se navzájem podporují a vydělávají víc než každý sám.</p>
-      <a class="pilulka pilulka--svetla" href="#pilire">Pilíře prosperity</a>
-    </div>
+<!-- Text titulky leží mimo přilepenou fotku, takže při scrollu odjede
+     pryč, zatímco fotka zůstane stát (viz .hero__obsah v css/v2.css). -->
+<div class="hero__obsah">
+  <div>
+    <p class="hero__hodnoceni"><span class="hero__hvezdy" aria-hidden="true">★★★★★</span> 4,9 / 5 hodnocení</p>
+    <h1 class="display">Přestaňte odkládat.<br>Začněte budovat.</h1>
+  </div>
+
+  <div class="hero__vedle">
+    <p class="hero__text">Spoření, hypotéku i investice už možná máte — každé zvlášť jsou to jen produkty. Já z nich stavím jednu finanční architekturu, ve které se navzájem podporují a vydělávají víc než každý sám.</p>
+    <a class="pilulka pilulka--svetla" href="#pilire">Pilíře prosperity</a>
   </div>
 
   <p class="hero__dolu" aria-hidden="true">Posuňte se ↓</p>
-</section>
+</div>
 
 
 <!-- ============================================================
