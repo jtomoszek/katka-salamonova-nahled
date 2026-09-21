@@ -38,6 +38,8 @@
   --oblouk:        7vw;
   /* 0 = přepínač vypnutý, 1 = zapnutý (nastavuje js/v2.js) */
   --zapnuto:       0;
+  /* 0 = přepínač ještě není, 1 = hotový; linka ho „přinese“ */
+  --zrod:          1;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -264,6 +266,30 @@ a { color: inherit; }
 }
 
 
+/* ---------- světelná linka -------------------------------- */
+
+/* Tvar i délku počítá js/v2.js; tady je jen vzhled a záře.
+   stroke-dasharray/offset drží celou linku schovanou, scroll ji odkrývá. */
+.linka {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  overflow: visible;      /* křivka smí přesahovat mimo sekci */
+  pointer-events: none;
+  z-index: 1;
+}
+.linka path {
+  fill: none;
+  stroke: rgba(255, 255, 255, .9);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 7px rgba(255, 255, 255, .55))
+          drop-shadow(0 0 20px rgba(255, 255, 255, .3));
+}
+/* Na světlém pozadí po přepnutí by bílá linka zmizela — ať radši odejde. */
+.prepinac.je-zapnuto .linka path { opacity: 0; transition: opacity .5s ease; }
+
+
 /* ---------- titulní sekce --------------------------------- */
 
 /* Fotka zůstane stát, další sekce na ni najede. */
@@ -294,10 +320,11 @@ a { color: inherit; }
 }
 .hero__obsah {
   position: relative;
+  z-index: 2;
   height: 100%;
   max-width: var(--sirka);
   margin: 0 auto;
-  padding: 0 var(--okraj) clamp(56px, 9vh, 104px);
+  padding: 0 var(--okraj) clamp(96px, 15vh, 170px);
   display: grid;
   align-content: end;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
@@ -374,6 +401,8 @@ a { color: inherit; }
 }
 .prepinac__panel {
   position: sticky;
+  /* vztažný rámec pro světelnou linku */
+  isolation: isolate;
   top: 0;
   height: 100svh;
   display: grid;
@@ -382,7 +411,7 @@ a { color: inherit; }
   text-align: center;
   padding: 0 var(--okraj);
 }
-.prepinac__vnitrek { position: relative; max-width: 940px; }
+.prepinac__vnitrek { position: relative; z-index: 2; max-width: 940px; }
 
 .spinac {
   display: inline-flex;
@@ -390,19 +419,24 @@ a { color: inherit; }
   gap: 14px;
   margin-bottom: 26px;
 }
+/* Dokud k přepínači nedojede linka, není tu nic než světlá tečka
+   (knoflík). Pak doroste dráha a nakonec se objeví popisek. */
 .spinac__popis {
   font-size: 11px;
   font-weight: 500;
   letter-spacing: .2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, .8);
+  opacity: clamp(0, calc((var(--zrod) - .45) * 2.4), 1);
+  transform: translateX(calc((1 - var(--zrod)) * -12px));
   transition: color .6s ease;
 }
 .spinac__telo {
   position: relative;
-  width: 58px; height: 30px;
+  width: calc(30px + var(--zrod) * 28px);
+  height: 30px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, .28);
+  background: rgba(255, 255, 255, calc(var(--zrod) * .28));
   transition: background .5s ease;
 }
 .spinac__knoflik {
@@ -411,7 +445,10 @@ a { color: inherit; }
   width: 24px; height: 24px;
   border-radius: 50%;
   background: var(--white);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+  /* než se přepínač „narodí“, je to světlá tečka na konci linky */
+  opacity: clamp(0, calc(var(--zrod) * 4), 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .2),
+              0 0 calc((1 - var(--zrod)) * 26px) calc((1 - var(--zrod)) * 4px) rgba(255, 255, 255, .85);
   transform: translateX(calc(var(--zapnuto) * 28px));
   transition: transform .5s cubic-bezier(.3, 1.4, .5, 1);
 }
@@ -893,4 +930,6 @@ a { color: inherit; }
   .prijezdy .odkryv { opacity: 1; transform: none; transition: none; }
   .hero__dolu { animation: none; }
   .spinac__knoflik, .prepinac::before, .prepinac h2 span { transition-duration: .01ms; }
+  /* linka se nekreslí, rovnou je celá vidět */
+  .linka path { stroke-dashoffset: 0 !important; }
 }
