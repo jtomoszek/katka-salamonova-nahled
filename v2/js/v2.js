@@ -57,6 +57,7 @@
   var koren = document.documentElement;
 
   var linkaHero = document.querySelector('.linka--hero');
+  var prsteny = [].slice.call(document.querySelectorAll('.linka__prstenec'));
   var linkaPanel = document.querySelector('.linka--panel');
 
   var ZLOM = 0.45;        // v jaké části sekce přepínač cvakne
@@ -65,23 +66,6 @@
   function omez(h, min, max) { return h < min ? min : (h > max ? max : h); }
 
   /* ---------- tvar linky ---------- */
-
-  /* Výsek elipsy jako křivka „A“ — plynulejší než ručně skládané oblouky
-     a spočítá se ze středu, poloos a dvou úhlů (ve stupních, 0 = vpravo,
-     90 = dole, 270 = nahoře). */
-  function vysecElipsy(cx, cy, rx, ry, odStupnu, doStupnu) {
-    var bod = function (st) {
-      var u = st * Math.PI / 180;
-      return [cx + rx * Math.cos(u), cy + ry * Math.sin(u)];
-    };
-    var a = bod(odStupnu);
-    var b = bod(doStupnu);
-    var velkyOblouk = Math.abs(doStupnu - odStupnu) > 180 ? 1 : 0;
-    var smer = doStupnu > odStupnu ? 1 : 0;
-    return 'M ' + a[0].toFixed(1) + ' ' + a[1].toFixed(1) +
-      ' A ' + rx.toFixed(1) + ' ' + ry.toFixed(1) + ' 0 ' + velkyOblouk + ' ' + smer +
-      ' ' + b[0].toFixed(1) + ' ' + b[1].toFixed(1);
-  }
 
   /* Připraví SVG: viewBox v pixelech prvku a linku schová do dashoffsetu. */
   function nastavLinku(svg, d) {
@@ -97,8 +81,8 @@
     return delka;
   }
 
-  var delkaHero = 0;
   var delkaPanel = 0;
+  var stredPrstence = null;
 
   /* Střed knoflíku v souřadnicích panelu. Měří se ve stavu „před zrodem“,
      kdy je dráha přepínače nejužší — přesně tam má linka skončit. */
@@ -114,15 +98,17 @@
   }
 
   function prepocitejLinky() {
-    if (hero && linkaHero) {
+    // Prstenec kolem hlavy: velikost podle sekce, natočení řeší prekresli().
+    if (hero && linkaHero && prsteny.length) {
       var h = hero.getBoundingClientRect();
-      // Otevřený oblouk kolem nadpisu a fotky: zleva přes vršek doprava.
-      // Na úzkém displeji by se svislá elipsa zmáčkla do skoro rovné čáry,
-      // proto je tam širší a plošší.
+      linkaHero.setAttribute('viewBox', '0 0 ' + Math.round(h.width) + ' ' + Math.round(h.height));
       var uzky = h.width < 700;
-      delkaHero = nastavLinku(linkaHero, uzky
-        ? vysecElipsy(h.width * 0.5, h.height * 0.66, h.width * 0.66, h.height * 0.34, 168, 372)
-        : vysecElipsy(h.width * 0.54, h.height * 0.52, h.width * 0.42, h.height * 0.42, 152, 378));
+      stredPrstence = {
+        x: h.width * 0.5,
+        y: h.height * (uzky ? 0.33 : 0.36),
+        rx: h.width * (uzky ? 0.36 : 0.19),
+        ry: h.height * (uzky ? 0.3 : 0.34)
+      };
     }
 
     if (panel && linkaPanel) {
@@ -154,17 +140,32 @@
   function prekresli() {
     var oknoVyska = window.innerHeight;
 
-    // 1) linka v heru se kreslí po první obrazovce scrollu
-    if (linkaHero && delkaHero && !omezitPohyb) {
-      var postupHero = omez(window.scrollY / (oknoVyska * 0.8), 0, 1);
-      linkaHero.querySelector('path').style.strokeDashoffset = delkaHero * (1 - postupHero);
+    // 1) prstenec kolem hlavy se scrollem otáčí a staví se na hranu
+    if (stredPrstence && !omezitPohyb) {
+      var p1 = omez(window.scrollY / (oknoVyska * 1.1), 0, 1);
+      var s1 = stredPrstence;
+      // rx se zmenšuje = prstenec se natáčí k nám hranou
+      var rx = s1.rx * (1 - 0.62 * p1);
+      var uhel = -26 + 30 * p1;
+      prsteny.forEach(function (e, i) {
+        var o = i === 0 ? 1 : 0.88;   // druhá smyčka je o kus menší
+        e.setAttribute('cx', s1.x.toFixed(1));
+        e.setAttribute('cy', s1.y.toFixed(1));
+        e.setAttribute('rx', Math.max(2, rx * o).toFixed(1));
+        e.setAttribute('ry', (s1.ry * o).toFixed(1));
+        e.setAttribute('transform', 'rotate(' + (uhel + i * 5).toFixed(1) + ' ' + s1.x.toFixed(1) + ' ' + s1.y.toFixed(1) + ')');
+        // mezera ve stuze putuje dokola, ať prstenec „teče“
+        var obvod = Math.PI * (3 * (rx * o + s1.ry * o) / 2);
+        e.style.strokeDasharray = (obvod * 0.62).toFixed(1) + ' ' + (obvod * 0.38).toFixed(1);
+        e.style.strokeDashoffset = (-obvod * (0.25 + p1 * 0.5)).toFixed(1);
+      });
     }
 
-    // 2) oblouk se narovnává, jak sekce najíždí na fotku
+    // 2) sekce filozofie se do fotky prolne a titulní obsah se rozplyne
     if (hero && prepinac) {
-      var zaklad = window.innerWidth * (window.innerWidth < 700 ? 0.11 : 0.07);
-      var najeto = omez(-prepinac.getBoundingClientRect().top / (oknoVyska * 0.6) + 1, 0, 1);
-      koren.style.setProperty('--oblouk', (zaklad * (1 - najeto)).toFixed(1) + 'px');
+      var najeto = omez((oknoVyska - prepinac.getBoundingClientRect().top) / (oknoVyska * 0.85), 0, 1);
+      prepinac.style.setProperty('--najeto', najeto.toFixed(3));
+      koren.style.setProperty('--zmizeni', omez(najeto * 1.25, 0, 1).toFixed(3));
     }
 
     // 3) linka v panelu, zrod přepínače a jeho přehození

@@ -52,9 +52,12 @@
   <img class="hero__foto" src="../assets/img/katka-hero.webp" alt="Kateřina Šalamonová" width="2400" height="1600" fetchpriority="high">
   <div class="hero__zavoj" aria-hidden="true"></div>
 
-  <!-- Světelná linka. Kreslí se, jak uživatel scrolluje; tvar počítá
-       js/v2.js podle rozměrů sekce, aby seděl na každém displeji. -->
-  <svg class="linka linka--hero" aria-hidden="true" focusable="false"><path /></svg>
+  <!-- Světelná stuha obíhající hlavu. Při scrollu se otáčí a zplošťuje,
+       jako by se prstenec stavěl na hranu. Rozměry počítá js/v2.js. -->
+  <svg class="linka linka--hero" aria-hidden="true" focusable="false">
+    <ellipse class="linka__prstenec" />
+    <ellipse class="linka__prstenec linka__prstenec--slaby" />
+  </svg>
 
   <div class="hero__obsah">
     <div>
@@ -79,7 +82,12 @@
      ============================================================ -->
 <section class="prepinac" id="filozofie" data-prepinac>
   <div class="prepinac__panel">
-    <!-- Pokračování linky: sjede shora a skončí přesně na knoflíku
+    <!-- Sotva znatelné kruhy v pozadí, jako v šabloně -->
+    <svg class="kruhy" aria-hidden="true" focusable="false" preserveAspectRatio="xMidYMid slice">
+      <circle cx="50%" cy="46%" r="26%" /><circle cx="50%" cy="46%" r="40%" /><circle cx="50%" cy="46%" r="56%" />
+    </svg>
+
+    <!-- Pokračování stuhy: sjede shora a skončí přesně na knoflíku
          přepínače, který se v tu chvíli rozsvítí. -->
     <svg class="linka linka--panel" aria-hidden="true" focusable="false"><path /></svg>
 
