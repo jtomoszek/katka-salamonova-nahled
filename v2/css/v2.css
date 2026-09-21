@@ -806,8 +806,9 @@ a { color: inherit; }
 }
 .krivky path {
   fill: none;
-  stroke: rgba(77, 54, 37, .14);
+  stroke: rgba(77, 54, 37, .09);
   stroke-width: 1;
+  stroke-linecap: round;
 }
 /* Zrcadlení, aby stejná linka nevypadala v každé sekci identicky. */
 .krivky--zrcadlo .krivky__plocha { transform: scaleX(-1); }
