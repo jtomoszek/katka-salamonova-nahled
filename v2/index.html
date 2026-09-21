@@ -370,12 +370,12 @@
   </div>
 
   <div class="obal">
-    <div class="hranice__hlava">
+    <div class="hlava-sekce">
       <div class="odkryv">
         <span class="stitek">Hranice spolupráce</span>
-        <h2 class="display hranice__nadpis">Co u mě <em>nenajdete</em></h2>
+        <h2 class="display hlava-sekce__nadpis">Co u mě <em>nenajdete</em></h2>
       </div>
-      <p class="hranice__uvod odkryv" style="--poradi: 1">Vztah postavený na důvěře vyžaduje jasně vymezené hranice. Toto je můj strategický filtr a závazek vůči vám.</p>
+      <p class="hlava-sekce__uvod odkryv" style="--poradi: 1">Vztah postavený na důvěře vyžaduje jasně vymezené hranice. Toto je můj strategický filtr a závazek vůči vám.</p>
     </div>
 
     <div class="hranice__kroky">
@@ -406,29 +406,43 @@
 
 
 <!-- ============================================================
-     Reference — POZOR: citace jsou ZÁSTUPNÉ, stejně jako v první
-     verzi. Nahraďte je skutečnými a smažte atribut data-zastupne.
+     Reference — stejný jazyk jako „Hranice spolupráce“: velký dvoubarevný
+     nadpis, stojící křivky na pozadí a citace pod sebou oddělené linkou.
+
+     POZOR: citace jsou ZÁSTUPNÉ, stejně jako v první verzi. Nahraďte je
+     skutečnými a smažte atribut data-zastupne.
      ============================================================ -->
-<section class="sekce sekce--sand" id="reference">
+<section class="sekce sekce--sand sekce--citace" id="reference">
+  <div class="krivky" aria-hidden="true">
+    <svg class="krivky__plocha" focusable="false" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+      <path d="M 1260 330 C 1050 180 900 420 700 400 S 380 200 120 330 S -40 520 -60 600" />
+      <path d="M 1260 520 C 1020 560 940 330 760 300 S 460 420 300 560 S 40 660 -60 620" />
+      <path d="M 880 700 C 980 520 900 380 790 410 S 720 600 820 690 S 920 780 880 700" />
+      <path d="M 300 180 C 200 320 280 460 390 430 S 460 240 360 160 S 260 100 300 180" />
+    </svg>
+  </div>
+
   <div class="obal">
-    <div class="sekce__hlava sekce__hlava--stred odkryv">
-      <span class="stitek">Reference</span>
-      <h2 class="display">Co o mně říkají klienti</h2>
+    <div class="hlava-sekce hlava-sekce--sama odkryv">
+      <div>
+        <span class="stitek">Reference</span>
+        <h2 class="display hlava-sekce__nadpis">Co o mně <em>říkají klienti</em></h2>
+      </div>
     </div>
 
-    <div class="reference">
-      <blockquote class="citace odkryv" style="--poradi: 0">
-        <p class="citace__text" data-zastupne>Sem patří reference klienta — vlastními slovy, ideálně konkrétně: s čím přišel, co se změnilo.</p>
+    <div class="citace-seznam">
+      <blockquote class="citace odkryv">
+        <p class="citace__text display" data-zastupne>Sem patří reference klienta — vlastními slovy, ideálně konkrétně: s čím přišel, co se změnilo.</p>
         <footer class="citace__autor">Jméno klienta<span>role nebo obor</span></footer>
       </blockquote>
 
-      <blockquote class="citace odkryv" style="--poradi: 1">
-        <p class="citace__text" data-zastupne>Druhá reference. Nejlépe od někoho v jiné životní situaci, ať je vidět šíře záběru.</p>
+      <blockquote class="citace odkryv">
+        <p class="citace__text display" data-zastupne>Druhá reference. Nejlépe od někoho v jiné životní situaci, ať je vidět šíře záběru.</p>
         <footer class="citace__autor">Jméno klienta<span>role nebo obor</span></footer>
       </blockquote>
 
-      <blockquote class="citace odkryv" style="--poradi: 2">
-        <p class="citace__text" data-zastupne>Třetí reference. Krátká a konkrétní působí věrohodněji než dlouhá chvála.</p>
+      <blockquote class="citace odkryv">
+        <p class="citace__text display" data-zastupne>Třetí reference. Krátká a konkrétní působí věrohodněji než dlouhá chvála.</p>
         <footer class="citace__autor">Jméno klienta<span>role nebo obor</span></footer>
       </blockquote>
     </div>
