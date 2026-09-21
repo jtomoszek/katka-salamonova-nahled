@@ -77,23 +77,25 @@ verze na adrese **/v2/**, první verze zůstává beze změny na `/`.
 
 Co si z šablony bere:
 
-- **světelná stuha** kolem hlavy: prstenec (dvě elipsy), který se scrollem
-  otáčí a staví se na hranu — `rx` se zmenšuje, mezera ve stuze putuje dokola
-  přes `stroke-dasharray`,
-- **pokračování stuhy** v sekci filozofie: Bézierova křivka sjede shora a
-  skončí přesně na změřeném středu knoflíku přepínače (odkrývá se přes
-  `stroke-dashoffset`), takže konec sedí na každém displeji,
+- **dvě světelné stuhy** (podle videa předlohy): obě vycházejí ze stejného
+  bodu nad obrazovkou, cestou se rozevřou do úzké čočky, v polovině se zkříží
+  a bez přerušení skončí na změřeném středu knoflíku přepínače. Druhá stuha
+  je táž páteř s řídicími body odsunutými na opačnou stranu, proto drží
+  pohromadě. Kreslí se jedním tahem od začátku stránky přes titulku až do
+  sekce filozofie (`stroke-dashoffset`) a celá dvojice se přitom mírně stáčí.
+  Vrstva je `position: sticky` přes obě sekce — jinak by tah nešel vést přes
+  hranici sekcí,
 - **přepínač se z té tečky zrodí** — nejdřív svítící bod, pak doroste dráha
   a nakonec popisek (`--zrod`),
-- **snová titulní fotka**: rozostření (`--rozostreni`), nižší kontrast a méně
-  syté barvy plus teplý závoj v barvách značky — stejná role jako zelený
-  závoj v šabloně. Ostrost se ladí jedinou proměnnou v `:root`,
+- **titulní fotka je na začátku ostrá** a teprve při scrollu měkne, ztrácí
+  kontrast, lehce se přibližuje a dostává teplý závoj v barvách značky
+  (`--mekkost` 0 → 1, maximum rozostření ladí `--rozostreni`),
 - **prolnutí místo řezu**: titulní fotka zůstane stát a sekce „Filozofie“ se
   do ní prolne — barva sílí (`--najeto`) a titulní text se rozplyne
   (`--zmizeni`), takže obě obrazovky chvíli existují přes sebe,
-- **přepínač SVOBODA** — jak sekce projíždí, cvakne a s ním se změní pozadí
-  z mědi na světlou i zvýrazněný řádek: „Jiní prodávají smlouvy.“ →
-  „Já řeším vaši svobodu.“ (obojí je text filozofie z první verze),
+- **přepínač SVOBODA** — jak sekce projíždí, cvakne a s ním se vymění celý
+  velký nadpis („Jiní prodávají smlouvy.“ → „Já řeším vaši svobodu.“, obojí
+  je text filozofie z první verze) i pozadí z mědi na světlé,
 - patkový displej **Crimson Text** proti drobnému Poppins v textu,
 - menu schované pod tlačítkem i na velkém displeji,
 - velké číslice u profesních milníků, karty pilířů v barvách značky.
