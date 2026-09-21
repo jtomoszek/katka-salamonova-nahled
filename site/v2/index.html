@@ -350,34 +350,51 @@
 
 
 <!-- ============================================================
-     Co u mě nenajdete
+     Hranice spolupráce — rozvržení podle šablony: dvoubarevný nadpis,
+     úvod vpravo, pod ním tři bloky s obří číslicí. Na pozadí plynou
+     sotva znatelné křivky (css/v2.css → .krivky).
      ============================================================ -->
-<section class="sekce" id="nenajdete">
+<section class="sekce sekce--hranice" id="nenajdete">
+  <svg class="krivky" aria-hidden="true" focusable="false" viewBox="0 0 1200 2400" preserveAspectRatio="xMidYMid slice">
+    <path d="M -90 360 C 250 150 300 760 620 690 S 1180 400 1320 700" />
+    <path d="M 1310 120 C 980 240 1120 690 820 850 S 320 1070 130 1500" />
+    <path d="M -70 1040 C 330 880 430 1440 780 1310 S 1160 960 1310 1170" />
+    <path d="M -50 1780 C 300 1620 520 2060 900 1900 S 1250 1640 1320 1830" />
+    <path d="M 420 1180 C 130 1310 170 1720 530 1760 S 990 1550 900 1270 S 630 1090 420 1180" />
+    <path d="M 250 -40 C 520 220 900 180 1050 420 S 900 900 1150 1060" />
+  </svg>
+
   <div class="obal">
-    <div class="sekce__hlava odkryv">
-      <span class="stitek">Hranice spolupráce</span>
-      <h2 class="display">Co u mě nenajdete</h2>
-      <p>Vztah postavený na důvěře vyžaduje jasně vymezené hranice. Toto je můj strategický filtr a závazek vůči vám.</p>
+    <div class="hranice__hlava">
+      <div class="odkryv">
+        <span class="stitek">Hranice spolupráce</span>
+        <h2 class="display hranice__nadpis">Co u mě <em>nenajdete</em></h2>
+      </div>
+      <p class="hranice__uvod odkryv" style="--poradi: 1">Vztah postavený na důvěře vyžaduje jasně vymezené hranice. Toto je můj strategický filtr a závazek vůči vám.</p>
     </div>
 
-    <div class="nenajdete">
-      <article class="nenajdete__karta odkryv" style="--poradi: 0">
-        <span class="nenajdete__poradi display">01</span>
-        <h3><i aria-hidden="true">✘</i>Unifikované produkty</h3>
+    <div class="krok odkryv">
+      <div class="krok__text">
+        <h3 class="display">&#10008; Unifikované produkty</h3>
         <p>Každá rodina je unikát. Odmítám balíčky, které instituce hromadně tlačí všem klientům bez rozdílu. Vytvářím řešení výhradně na míru vašim možnostem a cílům.</p>
-      </article>
+      </div>
+      <p class="krok__cislo display" aria-hidden="true">01</p>
+    </div>
 
-      <article class="nenajdete__karta odkryv" style="--poradi: 1">
-        <span class="nenajdete__poradi display">02</span>
-        <h3><i aria-hidden="true">✘</i>Nátlak na podpis</h3>
+    <div class="krok odkryv">
+      <div class="krok__text">
+        <h3 class="display">&#10008; Nátlak na podpis</h3>
         <p>Vážná životní rozhodnutí vyžadují čas. U mě nečekejte akční nabídky platné do dnešní půlnoci. Rozhodujeme se racionálně, ne pod tlakem.</p>
-      </article>
+      </div>
+      <p class="krok__cislo display" aria-hidden="true">02</p>
+    </div>
 
-      <article class="nenajdete__karta odkryv" style="--poradi: 2">
-        <span class="nenajdete__poradi display">03</span>
-        <h3><i aria-hidden="true">✘</i>Skryté kličky</h3>
+    <div class="krok odkryv">
+      <div class="krok__text">
+        <h3 class="display">&#10008; Skryté kličky</h3>
         <p>Vše, co spolu vytvoříme, vám vysvětlím lidskou řečí. Bez drobného písma a bez nepřehledných tabulek. Transparentnost je můj základ.</p>
-      </article>
+      </div>
+      <p class="krok__cislo display" aria-hidden="true">03</p>
     </div>
   </div>
 </section>

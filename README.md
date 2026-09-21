@@ -98,7 +98,10 @@ Co si z šablony bere:
   je text filozofie z první verze) i pozadí z mědi na světlé,
 - patkový displej **Crimson Text** proti drobnému Poppins v textu,
 - menu schované pod tlačítkem i na velkém displeji,
-- velké číslice u profesních milníků, karty pilířů v barvách značky.
+- velké číslice u profesních milníků, karty pilířů v barvách značky,
+- **sekce „Hranice spolupráce“** podle druhého videa: dvoubarevný nadpis,
+  úvod vpravo, tři bloky s obří číslicí u pravé hrany a na pozadí sotva
+  znatelné plynoucí křivky (SVG v `index.html`, styl `.krivky`).
 
 ```
 site/v2/
