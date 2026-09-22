@@ -659,10 +659,10 @@ a { color: inherit; }
 
 /* ---------- můj příběh: fotka přes celou šířku ------------- */
 
-/* Sekce je tmavá scéna: dokreslená studiová fotka leží pod vším,
-   přes ni tmavý hnědý přechod (vlevo hustý kvůli textu, vpravo řídký,
-   ať je Katka vidět) a text sedí vlevo. Fotka je ztlumená filtrem,
-   takže je „ve stínu“ a bílý text na ní čte. */
+/* Sekce je světlá studiová scéna: dokreslená šedá stěna z fotky leží
+   pod vším a nese text sama. Katka stojí vpravo bez ztlumení, vlevo
+   je jen lehký šedý závoj ve stejné barvě jako stěna, ať text čte
+   i tam, kde stěna přechází do světlejší. */
 .sekce--pribeh {
   position: relative;
   overflow: clip;
@@ -670,8 +670,8 @@ a { color: inherit; }
   align-items: center;
   min-height: min(100svh, 940px);
   padding: clamp(80px, 12vh, 150px) 0;
-  background: #2b1e16;
-  color: var(--white);
+  background: #ecebea;         /* šedá stěny na levém kraji scény */
+  color: var(--brown);
 }
 .pribeh__scena {
   position: absolute;
@@ -680,14 +680,11 @@ a { color: inherit; }
   height: 100%;
   object-fit: cover;
   object-position: 100% 50%;
-  filter: brightness(.64) saturate(.8);
 }
 .pribeh__stin {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(90deg, rgba(43, 30, 22, .97) 0%, rgba(43, 30, 22, .9) 32%, rgba(43, 30, 22, .5) 60%, rgba(43, 30, 22, .1) 100%),
-    linear-gradient(180deg, rgba(43, 30, 22, .4) 0%, rgba(43, 30, 22, 0) 28%, rgba(43, 30, 22, 0) 68%, rgba(43, 30, 22, .5) 100%);
+  background: linear-gradient(90deg, rgba(236, 235, 234, .75) 0%, rgba(236, 235, 234, .45) 34%, rgba(236, 235, 234, 0) 58%);
 }
 
 .pribeh { position: relative; z-index: 1; }
@@ -695,11 +692,10 @@ a { color: inherit; }
 .pribeh__nadpis {
   font-size: clamp(38px, 5.6vw, 76px);
   margin-bottom: 26px;
-  color: var(--white);
+  color: var(--brown);
 }
-.pribeh__text p { font-size: 15.5px; color: rgba(255, 255, 255, .74); max-width: 46ch; }
-/* podpis je tmavý inkoust — na tmavé scéně se obrátí do bílé */
-.pribeh__podpis { margin-top: 30px; width: 150px; opacity: .8; filter: brightness(0) invert(1); }
+.pribeh__text p { font-size: 15.5px; color: var(--tlumeny); max-width: 46ch; }
+.pribeh__podpis { margin-top: 30px; width: 150px; opacity: .85; }
 
 
 /* ---------- profesní milníky: vodorovná časová osa --------- */
@@ -1357,12 +1353,12 @@ a { color: inherit; }
   .srovnani, .novinky { grid-template-columns: 1fr; }
   .srovnani__vstupy { order: 1; }
   /* Příběh na úzkém displeji: scéna nahoře (Katka vpravo), text pod ní.
-     Spodek scény přechází do hnědé, na které text stojí. */
+     Spodek scény přechází do šedé stěny, na které text stojí. */
   .sekce--pribeh { display: block; min-height: 0; padding: 88svh 0 72px; }
-  .pribeh__scena { height: 92svh; filter: brightness(.8) saturate(.85); }
+  .pribeh__scena { height: 92svh; }
   .pribeh__stin {
     height: 92svh;
-    background: linear-gradient(180deg, rgba(43, 30, 22, .25) 0%, rgba(43, 30, 22, 0) 22%, rgba(43, 30, 22, 0) 52%, #2b1e16 100%);
+    background: linear-gradient(180deg, rgba(236, 235, 234, 0) 0%, rgba(236, 235, 234, 0) 62%, #ecebea 100%);
   }
   .pribeh__text { max-width: none; }
   .certifikace { grid-template-columns: repeat(2, 1fr); }

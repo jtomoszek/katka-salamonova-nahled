@@ -104,16 +104,14 @@ Co si z šablony bere:
   soubory v repozitáři nejsou — patří do `site/assets/fonts/` podle návodu
   v té složce. Dokud chybí, prohlížeč tiše použije Poppins,
 - menu schované pod tlačítkem i na velkém displeji,
-- **„Můj příběh“ jako tmavá scéna přes celou šířku**: fotka
-  `assets/img/katka-scena.webp` vzniká z `katka-cela.webp` — studiová
-  stěna je dokreslená do stran a nahoru (barva se bere z okrajů fotky
+- **„Můj příběh“ jako světlá studiová scéna přes celou šířku**: fotka
+  `assets/img/katka-scena.webp` vzniká z `katka-cela.webp` — šedá stěna
+  ze studia je dokreslená do stran a nahoru (barva se bere z okrajů fotky
   řádek po řádku, švy se prolínají jen tam, kde je jistě pozadí, navrch
-  jemné zrno). Katka stojí vpravo, přes fotku leží hnědý přechod
-  (`.pribeh__stin`, vlevo hustý kvůli textu) a fotka je ztlumená filtrem,
-  aby byla „ve stínu“. Podpis se na tmavé ploše obrací do bílé. Na úzkém
-  displeji je scéna nahoře a text pod ní na hnědé, do které spodek scény
-  přechází. Lišta nad touto sekcí svítí bíle (`v2.js` ji bere jako tmavý
-  podklad),
+  jemné zrno). Katka stojí vpravo bez ztlumení, text sedí vlevo přímo na
+  stěně; `.pribeh__stin` je jen lehký závoj v barvě stěny, ať text čte
+  i tam, kde stěna světlá. Na úzkém displeji je scéna nahoře a text pod ní
+  na stejné šedé, do které spodek scény přechází,
 - **profesní milníky jako vodorovná časová osa**: panel se přilepí
   (`.osa-panel` v obalu `.osa-vrstva`, který je o 90 vh vyšší než okno)
   a linka se po tu dráhu kreslí zleva doprava — `v2.js` nastavuje
