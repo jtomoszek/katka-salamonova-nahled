@@ -525,7 +525,7 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
 .s--reference { padding-bottom: 90px; }
 .reference__mrizka {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: var(--gutter);
   margin-top: 46px;
 }
@@ -554,22 +554,27 @@ html:not(.prijezdy-aktivni) [data-prijezd] {
   vertical-align: -6px;
   margin-right: 2px;
 }
+/* Podpis pod citací: portrét klienta a jeho jméno vedle sebe. */
 .reference__autor {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   font-size: 13px;
-  font-weight: 700;
   color: var(--copper-dark);
 }
+.reference__autor img {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.reference__autor b { font-weight: 700; }
 .reference__autor span {
   display: block;
+  margin-top: 2px;
   font-weight: 300;
   color: rgba(0, 0, 0, .5);
-}
-
-/* Zástupné citace — ať je na první pohled jasné, že nejde o skutečné
-   reference. Po doplnění reálného textu atribut data-zastupne smažte. */
-[data-zastupne] {
-  color: rgba(0, 0, 0, .45);
-  font-style: italic;
 }
 
 
