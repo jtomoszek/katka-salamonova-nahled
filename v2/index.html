@@ -15,7 +15,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/graf.css">
 <link rel="stylesheet" href="css/v2.css">
 </head>
 <body>
@@ -36,7 +35,7 @@
     <li><a href="#filozofie">Filozofie</a></li>
     <li><a href="#pilire">Pilíře</a></li>
     <li><a href="#pribeh">O mně</a></li>
-    <li><a href="#studie">Případové studie</a></li>
+    <li><a href="#srovnani">Důkaz místo slibů</a></li>
     <li><a href="kalkulacky/">Kalkulačky</a></li>
     <li><a href="#reference">Reference</a></li>
     <li><a href="#novinky">Novinky</a></li>
@@ -313,51 +312,56 @@
 
 
 <!-- ============================================================
-     Případová studie s interaktivním grafem (js/graf.js sdílí
-     obě verze, styly grafu jsou v css/graf.css).
+     Důkaz místo slibů — srovnávací kalkulačka. Stejná částka, stejný
+     čas, dvě cesty: peníze odkládané po svém a peníze v portfoliu
+     postaveném s Katkou. Počítá js/srovnani.js, výnosy obou cest jsou
+     konstanty na začátku skriptu.
      ============================================================ -->
-<section class="sekce sekce--surface" id="studie">
+<section class="sekce sekce--surface" id="srovnani">
   <div class="obal">
     <div class="sekce__hlava sekce__hlava--stred odkryv">
       <span class="stitek">Důkaz místo slibů</span>
-      <h2 class="display">Případové studie</h2>
+      <h2 class="display">Stejné peníze. Jiný výsledek.</h2>
+      <p>Rozdíl nedělá to, kolik odkládáte, ale kam. Posuňte si částku a&nbsp;horizont a&nbsp;podívejte se, co s&nbsp;vašimi penězi udělá čas, když pracují správně.</p>
     </div>
 
-    <div class="studie">
-      <div class="odkryv">
-        <h3>Transformace 10 produktů<br>v jeden funkční ekosystém</h3>
-        <p class="studie__text">Klient ve věku 42 let měl roztříštěné portfolio, které požírala inflace a vysoké poplatky. Standardní trh mu prodal produkty, ale nedal mu strategii. Mým cílem bylo nastavit jasnou trajektorii k rentě 60 000 Kč měsíčně od 50 let věku.</p>
-        <div class="studie__vysledek">
-          <h4>Výsledek architektury</h4>
-          <p>Klient přesně ví, v jakém bodě cesty se nachází. Investuje efektivněji a získá svobodu o dekádu dříve než při původním nastavení.</p>
-        </div>
+    <div class="srovnani odkryv" data-srovnani>
+      <div class="srovnani__vstupy">
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Měsíčně odkládám <b data-vypis="mesicne"></b></span>
+          <input type="range" data-vstup="mesicne" min="1000" max="50000" step="500" value="10000">
+        </label>
+        <label class="posuvnik">
+          <span class="posuvnik__popis">Po dobu <b data-vypis="roky"></b></span>
+          <input type="range" data-vstup="roky" min="5" max="40" step="1" value="20">
+        </label>
+
+        <p class="srovnani__poznamka">Ilustrativní model, ne příslib výnosu. Sám: peníze na spořicím účtu, <b data-vypis="vynosSam"></b> ročně. S&nbsp;Katkou: dlouhodobé diverzifikované portfolio, <b data-vypis="vynosKatka"></b> ročně. Obojí bez daní a&nbsp;inflace.</p>
       </div>
 
-      <div class="odkryv" style="--poradi: 1">
-        <div class="graf" data-graf>
-          <p class="graf__nadpis">Kdy vám portfolio začne platit rentu?</p>
-
-          <svg class="graf__plocha" viewBox="0 0 520 196" role="img"
-               aria-labelledby="graf-popis" preserveAspectRatio="xMidYMid meet"></svg>
-          <p class="graf__popis vizualne-skryte" id="graf-popis"></p>
-
-          <p class="graf__odecet"></p>
-
-          <div class="graf__ovladace">
-            <label class="graf__ovladac">
-              <span class="graf__stitek">Měsíčně investuji <b data-vypis="mesicne"></b></span>
-              <input type="range" data-vstup="mesicne" min="5000" max="80000" step="1000" value="35000">
-            </label>
-            <label class="graf__ovladac">
-              <span class="graf__stitek">Cílová renta <b data-vypis="cil"></b></span>
-              <input type="range" data-vstup="cil" min="20000" max="120000" step="5000" value="60000">
-            </label>
-          </div>
-
-          <p class="graf__shrnuti"></p>
-
-          <p class="graf__poznamka">Ilustrativní model, ne příslib výnosu. Výchozí portfolio 10 mil. Kč, reálný výnos 5,5 % p.a.</p>
+      <div class="srovnani__vysledek">
+        <!-- Graf: dvě křivky a mezi nimi vyplněný rozdíl. Kreslí skript. -->
+        <svg class="srovnani__graf" viewBox="0 0 600 240" role="img" aria-labelledby="srovnani-popis" preserveAspectRatio="none">
+          <title id="srovnani-popis">Graf růstu úspor: sám a s Katkou</title>
+          <path class="srovnani__rozdil" d=""></path>
+          <path class="srovnani__cara srovnani__cara--sam" d=""></path>
+          <path class="srovnani__cara srovnani__cara--katka" d=""></path>
+        </svg>
+        <div class="srovnani__osa" aria-hidden="true">
+          <span>dnes</span><span data-vypis="polovina"></span><span data-vypis="konec"></span>
         </div>
+
+        <dl class="srovnani__cisla">
+          <div class="srovnani__cislo srovnani__cislo--sam">
+            <dt>Ukládám sám</dt>
+            <dd data-vystup="sam"></dd>
+          </div>
+          <div class="srovnani__cislo srovnani__cislo--katka">
+            <dt>S Katkou</dt>
+            <dd data-vystup="katka"></dd>
+          </div>
+        </dl>
+        <p class="srovnani__shrnuti">Rozdíl <b data-vystup="rozdil"></b> — stejná částka, stejný čas.</p>
       </div>
     </div>
   </div>
@@ -572,7 +576,7 @@
 </footer>
 
 <script src="js/v2.js"></script>
-<script src="../js/graf.js"></script>
+<script src="js/srovnani.js"></script>
 <script src="../js/newsletter.js"></script>
 </body>
 </html>
