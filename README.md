@@ -98,7 +98,9 @@ Co si z šablony bere:
 - **reference ve stejném jazyce**: velká dvoubarevná hlava, stojící linka
   na pozadí a citace pod sebou oddělené vlasovou linkou — bez karet, nese to
   typografie (`.sekce--citace`),
-- patkový displej **Crimson Text** proti drobnému Poppins v textu,
+- nadpisy v **Lufze** (`--font-display`). Je to komerční písmo, takže
+  soubory v repozitáři nejsou — patří do `site/assets/fonts/` podle návodu
+  v té složce. Dokud chybí, prohlížeč tiše použije Poppins,
 - menu schované pod tlačítkem i na velkém displeji,
 - velké číslice u profesních milníků, karty pilířů v barvách značky,
 - **sekce „Hranice spolupráce“** podle snímků: dvoubarevný nadpis, úvod
