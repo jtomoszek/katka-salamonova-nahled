@@ -181,6 +181,26 @@ a { color: inherit; }
   color: var(--white);
   transition: color .4s ease, background .4s ease;
 }
+/* Pod lištou leží rozmazaný pruh, který směrem dolů měkce mizí — obsah
+   pod ní projíždí rozostřený a s textem lišty se nesráží. Pruh je vyšší
+   než lišta, aby přechod nekončil ostrou hranou. Maska řídí, jak moc se
+   rozmazání směrem dolů ztrácí. */
+.lista::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -46px;
+  z-index: -1;
+  pointer-events: none;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0, #000 45%, transparent 100%);
+  background: linear-gradient(to bottom, rgba(40, 28, 20, .28), rgba(40, 28, 20, 0));
+  transition: background .4s ease;
+}
+.lista.je-tmava::before {
+  background: linear-gradient(to bottom, rgba(250, 248, 246, .82), rgba(250, 248, 246, 0));
+}
 /* Na světlém podkladu se lišta přebarví do hněda (řídí js/v2.js). */
 .lista.je-tmava { color: var(--brown); }
 
@@ -905,6 +925,66 @@ a { color: inherit; }
   text-transform: uppercase;
   color: var(--tlumeny);
 }
+
+/* čtení hodnot pod myší */
+.srovnani__plocha {
+  position: relative;
+  touch-action: pan-y;   /* prst táhne po grafu, svislý posun stránky zůstává */
+  cursor: crosshair;
+}
+.srovnani__kurzor {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(77, 54, 37, .28);
+  transform: translateX(-.5px);
+}
+.srovnani__tecka {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--surface);
+  box-shadow: 0 0 0 2px rgba(77, 54, 37, .35);
+}
+.srovnani__tecka--katka { box-shadow: 0 0 0 2px var(--copper-dark); }
+.srovnani__bublina {
+  position: absolute;
+  display: grid;
+  gap: 3px;
+  min-width: 150px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(250, 248, 246, .94);
+  box-shadow: 0 0 0 1px var(--hairline), 0 14px 30px -18px rgba(77, 54, 37, .5);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--tlumeny);
+  pointer-events: none;
+}
+.srovnani__kdy {
+  margin-bottom: 3px;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--copper-dark);
+}
+.srovnani__radek { display: flex; justify-content: space-between; gap: 14px; }
+.srovnani__radek b { font-weight: 500; color: var(--brown); white-space: nowrap; }
+.srovnani__radek--rozdil { margin-top: 2px; padding-top: 5px; border-top: 1px solid var(--hairline); }
+.srovnani__radek--rozdil b { color: var(--copper-dark); }
+.srovnani__kurzor,
+.srovnani__tecka,
+.srovnani__bublina {
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+.srovnani__plocha.je-aktivni .srovnani__kurzor,
+.srovnani__plocha.je-aktivni .srovnani__tecka,
+.srovnani__plocha.je-aktivni .srovnani__bublina { opacity: 1; }
 
 /* dvě čísla pod grafem */
 .srovnani__cisla {

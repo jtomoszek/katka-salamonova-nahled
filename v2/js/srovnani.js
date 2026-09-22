@@ -23,14 +23,14 @@
   /* ---------- formátování ---------- */
 
   var cislo = function (h) {
-    return Math.round(h).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return Math.round(h).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0');
   };
-  var kc = function (h) { return cislo(h) + ' Kč'; };
-  var proc = function (h) { return String(h).replace('.', ',') + ' %'; };
+  var kc = function (h) { return cislo(h) + '\u00a0Kč'; };
+  var proc = function (h) { return String(h).replace('.', ',') + '\u00a0%'; };
   var sklonuj = function (n, jeden, dva, pet) {
     return n === 1 ? jeden : (n >= 2 && n <= 4 ? dva : pet);
   };
-  var roky = function (n) { return n + ' ' + sklonuj(n, 'rok', 'roky', 'let'); };
+  var roky = function (n) { return n + '\u00a0' + sklonuj(n, 'rok', 'roky', 'let'); };
 
   /* Zůstatek po daném počtu měsíců při měsíčním vkladu a ročním výnosu. */
   function zustatek(mesicne, rocniVynos, pocetMesicu) {
@@ -51,6 +51,16 @@
   var caraSam = obal.querySelector('.srovnani__cara--sam');
   var caraKatka = obal.querySelector('.srovnani__cara--katka');
   var rozdil = obal.querySelector('.srovnani__rozdil');
+
+  var plocha = obal.querySelector('[data-plocha]');
+  var kurzor = obal.querySelector('.srovnani__kurzor');
+  var teckaSam = obal.querySelector('.srovnani__tecka--sam');
+  var teckaKatka = obal.querySelector('.srovnani__tecka--katka');
+  var bublina = obal.querySelector('.srovnani__bublina');
+  var doBubliny = function (klic) { return obal.querySelector('[data-bublina="' + klic + '"]'); };
+
+  // poslední spočítaný stav — čte ho kurzor pod myší
+  var stav = { mesicne: 0, pocetMesicu: 0, bSam: [], bKatka: [] };
 
   // Rozměry kreslicí plochy odpovídají viewBox 0 0 600 240.
   var PLOCHA = { x0: 0, x1: 600, y0: 14, y1: 232 };
@@ -130,7 +140,67 @@
 
     nastavDelku(caraSam, bSam);
     nastavDelku(caraKatka, bKatka);
+
+    stav = { mesicne: mesicne, pocetMesicu: pocetMesicu, bSam: bSam, bKatka: bKatka };
+    if (plocha.classList.contains('je-aktivni')) ukazMesic(posledniMesic);
   }
+
+  /* ---------- čtení pod myší ---------- */
+
+  var mesicu = function (n) { return n + '\u00a0' + sklonuj(n, 'měsíc', 'měsíce', 'měsíců'); };
+  function kdy(m) {
+    if (m === 0) return 'dnes';
+    var r = Math.floor(m / 12), zb = m % 12;
+    if (!r) return 'za ' + mesicu(zb);
+    return 'za ' + roky(r) + (zb ? ' a ' + mesicu(zb) : '');
+  }
+
+  var posledniMesic = 0;
+
+  /* Postaví kurzor, oba puntíky a bublinu na daný měsíc. Polohy jsou
+     v procentech plochy, spočítané z bodů křivek (viewBox 600 × 240). */
+  function ukazMesic(m) {
+    if (!stav.bKatka.length) return;
+    m = Math.max(0, Math.min(stav.pocetMesicu, m));
+    posledniMesic = m;
+
+    var pS = stav.bSam[m], pK = stav.bKatka[m];
+    var x = pS[0] / 600 * 100;
+    var yS = pS[1] / 240 * 100, yK = pK[1] / 240 * 100;
+
+    kurzor.style.left = x + '%';
+    teckaSam.style.left = x + '%';
+    teckaSam.style.top = yS + '%';
+    teckaKatka.style.left = x + '%';
+    teckaKatka.style.top = yK + '%';
+
+    var sam = zustatek(stav.mesicne, VYNOS_SAM, m);
+    var katka = zustatek(stav.mesicne, VYNOS_KATKA, m);
+    doBubliny('kdy').textContent = kdy(m);
+    doBubliny('katka').textContent = kc(katka);
+    doBubliny('sam').textContent = kc(sam);
+    doBubliny('rozdil').textContent = '+' + kc(katka - sam);
+
+    // bublina stojí nad horním puntíkem; u krajů se přesune, ať nevyjede z plochy
+    bublina.style.left = x + '%';
+    bublina.style.top = yK + '%';
+    var posunX = x < 28 ? '0' : (x > 72 ? '-100%' : '-50%');
+    bublina.style.transform = 'translate(' + posunX + ', calc(-100% - 14px))';
+  }
+
+  function naPohyb(e) {
+    var r = plocha.getBoundingClientRect();
+    if (!r.width) return;
+    var podil = (e.clientX - r.left) / r.width;
+    plocha.classList.add('je-aktivni');
+    ukazMesic(Math.round(Math.max(0, Math.min(1, podil)) * stav.pocetMesicu));
+  }
+  function naOdchod() { plocha.classList.remove('je-aktivni'); }
+
+  plocha.addEventListener('pointermove', naPohyb);
+  plocha.addEventListener('pointerdown', naPohyb);
+  plocha.addEventListener('pointerleave', naOdchod);
+  plocha.addEventListener('pointercancel', naOdchod);
 
   Object.keys(vstupy).forEach(function (klic) {
     vstupy[klic].addEventListener('input', prepocitej);
