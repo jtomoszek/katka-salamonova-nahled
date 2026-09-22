@@ -53,7 +53,6 @@
   var panel = document.querySelector('.prepinac__panel');
   var knoflik = document.querySelector('.spinac__knoflik');
   var paticka = document.querySelector('.paticka');
-  var pribeh = document.querySelector('.sekce--pribeh');   // tmavá scéna s fotkou
   var lista = document.querySelector('.lista');
   var koren = document.documentElement;
 
@@ -194,7 +193,6 @@
       var y = 34;
       var tmavePozadi = kryje(hero, y);
       if (kryje(prepinac, y)) tmavePozadi = !zapnuto;
-      if (kryje(pribeh, y)) tmavePozadi = true;
       if (kryje(paticka, y)) tmavePozadi = true;
       // je-tmava = tmavé písmo, tedy světlý podklad pod lištou
       lista.classList.toggle('je-tmava', !tmavePozadi);
