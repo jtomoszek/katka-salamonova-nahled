@@ -270,6 +270,26 @@ a { color: inherit; }
 }
 
 
+/* ---------- kruhy v sekci přepínače ----------------------- */
+
+/* Sotva znatelné soustředné kruhy za textem. Bez fill: none by SVG
+   kruhy vyplnila výchozí černá. */
+.kruhy {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: .5;
+}
+.kruhy circle {
+  fill: none;
+  stroke: rgba(255, 255, 255, .16);
+  stroke-width: 1;
+}
+.prepinac.je-zapnuto .kruhy circle { stroke: rgba(77, 54, 37, .07); transition: stroke .6s ease; }
+
+
 /* ---------- titulní sekce --------------------------------- */
 
 /* Fotka zůstane stát, další sekce na ni najede. */
