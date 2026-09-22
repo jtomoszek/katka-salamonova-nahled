@@ -898,18 +898,38 @@ a { color: inherit; }
   line-height: 1.24;
   color: var(--brown);
 }
-/* Zástupný text — po doplnění skutečné reference atribut smažte. */
-.citace__text[data-zastupne] { font-style: italic; color: rgba(77, 54, 37, .48); }
+/* Rozbalení dlouhé reference — bez skriptu, stačí <details>. */
+.citace__vice { margin-top: 14px; font-size: 15px; line-height: 1.75; color: var(--tlumeny); }
+.citace__vice summary {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .04em;
+  color: var(--copper-dark);
+}
+.citace__vice summary::marker { color: var(--copper); }
+.citace__vice p { margin: 14px 0 0; }
 
 .citace__autor {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   padding-bottom: 6px;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: .04em;
   color: var(--copper-dark);
 }
-.citace__autor span {
+.citace__autor img {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+.citace__autor small {
   display: block;
+  margin-top: 2px;
+  font-size: 12px;
   font-weight: 300;
   letter-spacing: 0;
   color: var(--tlumeny);

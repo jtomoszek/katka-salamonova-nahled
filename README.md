@@ -97,7 +97,9 @@ Co si z šablony bere:
   čtyři bloky oddělené vlasovou linkou s tichou ikonou,
 - **reference ve stejném jazyce**: velká dvoubarevná hlava, stojící linka
   na pozadí a citace pod sebou oddělené vlasovou linkou — bez karet, nese to
-  typografie (`.sekce--citace`),
+  typografie (`.sekce--citace`). Citace i portréty jsou doslovně převzaté
+  z www.salamonova.cz/reference/; dlouhá reference Chupáčových je schovaná
+  pod `<details>`, aby nepřebila ostatní,
 - nadpisy v **Lufze** (`--font-display`). Je to komerční písmo, takže
   soubory v repozitáři nejsou — patří do `site/assets/fonts/` podle návodu
   v té složce. Dokud chybí, prohlížeč tiše použije Poppins,
@@ -140,8 +142,9 @@ podpora u stavebního spoření) jsou konstanty v `kalkulacky.js` označené
 komentářem — při změně zákona je potřeba je upravit.
 
 Graf případové studie i přihlášení k odběru jsou sdílené: `css/graf.css`,
-`js/graf.js` a `js/newsletter.js` používají obě verze. Reference jsou i tady
-zástupné.
+`js/graf.js` a `js/newsletter.js` používají obě verze. Reference jsou v obou
+verzích skutečné — texty i fotky pocházejí z www.salamonova.cz/reference/,
+portréty jsou v `site/assets/img/reference/`.
 
 ## Lokální náhled
 
@@ -208,11 +211,12 @@ cwebp -q 82 -m 6 /tmp/x.jpg -o site/assets/img/katka-hero.webp
 Zachováno 1:1, protože takhle stránka v databázi opravdu vypadala:
 
 1. **Reference** — v databázi měla sekce pod nadpisem omylem zkopírovanou
-   případovou studii. Teď je přestavěná na tři citace a přesunutá pod
-   „Co u mě nenajdete“. **Citace jsou zástupné** — skutečné reference
-   v podkladech nejsou a vymyslet je nelze, jde o výroky konkrétních lidí.
-   V HTML jsou označené atributem `data-zastupne` (kurzíva, ztlumená barva);
-   po doplnění reálného textu atribut smažte.
+   případovou studii. Teď je přestavěná na citace a přesunutá pod
+   „Co u mě nenajdete“. Zástupné texty už tam nejsou: sekce nese čtyři
+   skutečné reference (Jiří Vatral, Monika Dlouhá, Renáta Brableczová,
+   Aleš a Gabriela Chupáčovi) i s portréty ze
+   www.salamonova.cz/reference/. Reference Chupáčových je na zdroji delší,
+   v kartě první verze je její úvodní odstavec, celé znění nese druhá verze.
 2. **Sekce 9 (patička)** — v databázi jen hnědé pozadí `#4d3625` a prázdná
    mřížka. Barva i rozvržení zůstaly, obsah je **doplněný** z toho, co
    stránka sama uvádí (odbornost, spolupráce, právní doložka).
