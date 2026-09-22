@@ -104,7 +104,17 @@ Co si z šablony bere:
   soubory v repozitáři nejsou — patří do `site/assets/fonts/` podle návodu
   v té složce. Dokud chybí, prohlížeč tiše použije Poppins,
 - menu schované pod tlačítkem i na velkém displeji,
-- velké číslice u profesních milníků, karty pilířů v barvách značky,
+- **profesní milníky jako vodorovná časová osa**: panel se přilepí
+  (`.osa-panel` v obalu `.osa-vrstva`, který je o 90 vh vyšší než okno)
+  a linka se po tu dráhu kreslí zleva doprava — `v2.js` nastavuje
+  `--postup` od 0 do 1 a výplň linky je jen `scaleX(var(--postup))`.
+  Body se rozsvěcejí, jakmile k nim linka dojede; práh se nečte z pevného
+  čísla, ale z polohy puntíku, takže platí i po přerovnání. Na displeji
+  do 980 px se osa postaví, kreslí se shora dolů (`scaleY`) a panel se
+  nelepí — skript to pozná podle toho, že obal už nemá přesah,
+- pod osou řádek odborností (EFPA, ČNB, DIP, 20 let) — jen malá ikona,
+  zkratka a řádek popisu, bez karet,
+- karty pilířů v barvách značky,
 - **sekce „Hranice spolupráce“** podle snímků: dvoubarevný nadpis, úvod
   vpravo a tři bloky vysoké skoro na obrazovku. Na pozadí stojí jedna plynulá linka
   (`position: sticky` s nulovou výškou), vpravo drží jedno velké číslo —

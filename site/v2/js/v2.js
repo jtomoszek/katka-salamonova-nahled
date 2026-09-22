@@ -6,8 +6,10 @@
  *  3) sekce filozofie se do fotky prolne (--najeto),
  *  4) linky na pozadí sekcí se dokreslují, jak sekce projíždějí,
  *  5) v „Hranicích spolupráce“ se přepíná druhá číslice,
- *  6) lišta si podle podkladu pod sebou přepíná barvu písma,
- *  7) obsah sekcí najíždí zdola a menu jede přes celou obrazovku.
+ *  6) časová osa profesních milníků se kreslí zleva doprava a body se
+ *     rozsvěcejí, jakmile k nim linka dojede,
+ *  7) lišta si podle podkladu pod sebou přepíná barvu písma,
+ *  8) obsah sekcí najíždí zdola a menu jede přes celou obrazovku.
  *
  * Všechno, co se hýbe, se vypne při zapnutém „omezit pohyb“.
  */
@@ -56,6 +58,13 @@
 
   var valec = document.querySelector('.hranice__valec');
   var kroky = [].slice.call(document.querySelectorAll('.hranice__texty .krok'));
+
+  // Časová osa milníků: obal nese dráhu, panel se v něm lepí.
+  var osa = document.querySelector('[data-osa]');
+  var osaVrstva = osa && osa.closest('.osa-vrstva');
+  var osaPanel = osa && osa.closest('.osa-panel');
+  var osaLinka = osa && osa.querySelector('.osa__linka');
+  var osaBody = osa ? [].slice.call(osa.querySelectorAll('.osa__bod')) : [];
 
   // Linky na pozadí obsahových sekcí — kreslí se, jak sekce projíždí.
   var pozadi = [].slice.call(document.querySelectorAll('.krivky')).map(function (obal) {
@@ -125,7 +134,50 @@
       valec.style.setProperty('--krok', ktery);
     }
 
-    // 5) linky na pozadí se dokreslují, jak jejich sekce projíždí
+    // 5) časová osa: kolik už je nakresleno a které body svítí
+    if (osa && osaLinka) {
+      var postupOsy;
+      if (omezitPohyb) {
+        postupOsy = 1;
+      } else if (osaVrstva && osaPanel && osaVrstva.offsetHeight - osaPanel.offsetHeight > 40) {
+        // panel se lepí — dráhou je přesah obalu nad výšku panelu
+        var drahaOsy = osaVrstva.offsetHeight - oknoVyska;
+        postupOsy = drahaOsy > 0
+          ? omez(-osaVrstva.getBoundingClientRect().top / drahaOsy, 0, 1)
+          : 1;
+      } else {
+        /* Stojatá osa na úzkém displeji: kreslit se začne, jakmile její
+           vršek vstoupí do spodní pětiny okna, a dokreslí se ve chvíli,
+           kdy spodek vystoupá nad polovinu. */
+        var rOsy = osa.getBoundingClientRect();
+        var zacatek = oknoVyska * 0.85;
+        var drahaStojate = rOsy.height + oknoVyska * 0.4;
+        postupOsy = omez((zacatek - rOsy.top) / drahaStojate, 0, 1);
+      }
+      osa.style.setProperty('--postup', postupOsy.toFixed(3));
+
+      /* Práh každého bodu čteme z rozvržení, ne z pevného čísla — osa je
+         jednou na šířku a jednou na výšku a body nemusí být rozmístěné
+         rovnoměrně. */
+      var rLinky = osaLinka.getBoundingClientRect();
+      var svisla = rLinky.height > rLinky.width;
+      var delkaOsy = svisla ? rLinky.height : rLinky.width;
+      if (delkaOsy > 0) {
+        osaBody.forEach(function (bod) {
+          var tecka = bod.querySelector('.osa__tecka');
+          if (!tecka) return;
+          var rT = tecka.getBoundingClientRect();
+          var podil = svisla
+            ? (rT.top + rT.height / 2 - rLinky.top) / delkaOsy
+            : (rT.left + rT.width / 2 - rLinky.left) / delkaOsy;
+          // první bod stojí na samém začátku — ať se nerozsvítí dřív,
+          // než se linka vůbec rozjede
+          bod.classList.toggle('je-tam', postupOsy >= Math.max(podil, 0.05));
+        });
+      }
+    }
+
+    // 6) linky na pozadí se dokreslují, jak jejich sekce projíždí
     if (!omezitPohyb) {
       pozadi.forEach(function (p) {
         if (!p.delka || !p.sekce) return;
@@ -135,7 +187,7 @@
       });
     }
 
-    // 6) barva lišty podle toho, co je zrovna pod ní. Pořadí odpovídá
+    // 7) barva lišty podle toho, co je zrovna pod ní. Pořadí odpovídá
     //    vrstvení: patička je nad vším, sekce přepínače nad fotkou.
     if (lista) {
       var y = 34;
