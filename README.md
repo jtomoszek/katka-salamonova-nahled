@@ -159,7 +159,15 @@ má místo případové studie **srovnávací kalkulačku** (`#srovnani`,
 a mezi nimi vyplněný rozdíl. Výnosy obou cest (2 % a 6 % p.a.) jsou
 konstanty na začátku skriptu a je třeba je **potvrdit s Katkou**; poznámka
 pod posuvníky je vypisuje, takže po změně čísla souhlasí. Čáry se poprvé
-dokreslí, až sekce najede do okna, pak reagují na posuvník hned. Reference jsou v obou
+dokreslí, až sekce najede do okna, pak reagují na posuvník hned. Pod myší
+(i prstem) se ukáže svislý kurzor, puntík na každé křivce a bublina
+s časem, oběma částkami a rozdílem — kurzor i puntíky jsou HTML prvky
+položené přes SVG v procentech, protože SVG se roztahuje nestejnoměrně
+a kruh by v něm vyšel jako elipsa.
+
+Lišta nahoře má pod sebou rozmazaný pruh (`.lista::before`
+s `backdrop-filter` a maskou, která směrem dolů mizí), takže obsah pod ní
+projíždí rozostřený a s textem lišty se nesráží. Reference jsou v obou
 verzích skutečné — texty i fotky pocházejí z www.salamonova.cz/reference/,
 portréty jsou v `site/assets/img/reference/`.
 

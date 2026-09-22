@@ -340,13 +340,27 @@
       </div>
 
       <div class="srovnani__vysledek">
-        <!-- Graf: dvě křivky a mezi nimi vyplněný rozdíl. Kreslí skript. -->
-        <svg class="srovnani__graf" viewBox="0 0 600 240" role="img" aria-labelledby="srovnani-popis" preserveAspectRatio="none">
-          <title id="srovnani-popis">Graf růstu úspor: sám a s Katkou</title>
-          <path class="srovnani__rozdil" d=""></path>
-          <path class="srovnani__cara srovnani__cara--sam" d=""></path>
-          <path class="srovnani__cara srovnani__cara--katka" d=""></path>
-        </svg>
+        <!-- Graf: dvě křivky a mezi nimi vyplněný rozdíl. Kreslí skript.
+             Kurzor, puntíky a bublina jsou obyčejné HTML prvky položené
+             přes SVG v procentech — SVG se roztahuje nestejnoměrně a
+             kruh by v něm vyšel jako elipsa. -->
+        <div class="srovnani__plocha" data-plocha>
+          <svg class="srovnani__graf" viewBox="0 0 600 240" role="img" aria-labelledby="srovnani-popis" preserveAspectRatio="none">
+            <title id="srovnani-popis">Graf růstu úspor: sám a s Katkou</title>
+            <path class="srovnani__rozdil" d=""></path>
+            <path class="srovnani__cara srovnani__cara--sam" d=""></path>
+            <path class="srovnani__cara srovnani__cara--katka" d=""></path>
+          </svg>
+          <div class="srovnani__kurzor" aria-hidden="true"></div>
+          <div class="srovnani__tecka srovnani__tecka--sam" aria-hidden="true"></div>
+          <div class="srovnani__tecka srovnani__tecka--katka" aria-hidden="true"></div>
+          <div class="srovnani__bublina" role="status" aria-live="polite">
+            <span class="srovnani__kdy" data-bublina="kdy"></span>
+            <span class="srovnani__radek srovnani__radek--katka"><span>S Katkou</span><b data-bublina="katka"></b></span>
+            <span class="srovnani__radek srovnani__radek--sam"><span>Sám</span><b data-bublina="sam"></b></span>
+            <span class="srovnani__radek srovnani__radek--rozdil"><span>Rozdíl</span><b data-bublina="rozdil"></b></span>
+          </div>
+        </div>
         <div class="srovnani__osa" aria-hidden="true">
           <span>dnes</span><span data-vypis="polovina"></span><span data-vypis="konec"></span>
         </div>
