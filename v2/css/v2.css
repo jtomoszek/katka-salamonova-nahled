@@ -657,32 +657,49 @@ a { color: inherit; }
 
 /* ---------- můj příběh ------------------------------------ */
 
-.sekce--pribeh { position: relative; overflow: clip; }
+/* ---------- můj příběh: fotka přes celou šířku ------------- */
 
-.pribeh {
+/* Sekce je tmavá scéna: dokreslená studiová fotka leží pod vším,
+   přes ni tmavý hnědý přechod (vlevo hustý kvůli textu, vpravo řídký,
+   ať je Katka vidět) a text sedí vlevo. Fotka je ztlumená filtrem,
+   takže je „ve stínu“ a bílý text na ní čte. */
+.sekce--pribeh {
   position: relative;
-  z-index: 1;
+  overflow: clip;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: clamp(28px, 5vw, 80px);
   align-items: center;
+  min-height: min(100svh, 940px);
+  padding: clamp(80px, 12vh, 150px) 0;
+  background: #2b1e16;
+  color: var(--white);
 }
+.pribeh__scena {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 100% 50%;
+  filter: brightness(.64) saturate(.8);
+}
+.pribeh__stin {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(43, 30, 22, .97) 0%, rgba(43, 30, 22, .9) 32%, rgba(43, 30, 22, .5) 60%, rgba(43, 30, 22, .1) 100%),
+    linear-gradient(180deg, rgba(43, 30, 22, .4) 0%, rgba(43, 30, 22, 0) 28%, rgba(43, 30, 22, 0) 68%, rgba(43, 30, 22, .5) 100%);
+}
+
+.pribeh { position: relative; z-index: 1; }
+.pribeh__text { max-width: 580px; }
 .pribeh__nadpis {
   font-size: clamp(38px, 5.6vw, 76px);
   margin-bottom: 26px;
+  color: var(--white);
 }
-.pribeh__text p { font-size: 15.5px; color: var(--tlumeny); max-width: 46ch; }
-.pribeh__podpis { margin-top: 30px; width: 150px; opacity: .85; }
-
-/* Jedna fotka na celou postavu — ať je klientka vidět i s botami. */
-.pribeh__fotky { display: flex; justify-content: center; }
-.pribeh__fotka {
-  width: auto;
-  max-width: 100%;
-  max-height: min(78vh, 760px);
-  border-radius: 16px;
-  box-shadow: 0 30px 60px -40px rgba(77, 54, 37, .6);
-}
+.pribeh__text p { font-size: 15.5px; color: rgba(255, 255, 255, .74); max-width: 46ch; }
+/* podpis je tmavý inkoust — na tmavé scéně se obrátí do bílé */
+.pribeh__podpis { margin-top: 30px; width: 150px; opacity: .8; filter: brightness(0) invert(1); }
 
 
 /* ---------- profesní milníky: vodorovná časová osa --------- */
@@ -1337,9 +1354,17 @@ a { color: inherit; }
   .hero__obsah { grid-template-columns: 1fr; align-content: end; gap: 22px; }
   .hero__vedle { padding-bottom: 0; }
   .prepinac__texty { grid-template-columns: 1fr; }
-  .pribeh, .srovnani, .novinky { grid-template-columns: 1fr; }
+  .srovnani, .novinky { grid-template-columns: 1fr; }
   .srovnani__vstupy { order: 1; }
-  .pribeh__fotky { order: -1; padding: 0 0 40px 40px; }
+  /* Příběh na úzkém displeji: scéna nahoře (Katka vpravo), text pod ní.
+     Spodek scény přechází do hnědé, na které text stojí. */
+  .sekce--pribeh { display: block; min-height: 0; padding: 88svh 0 72px; }
+  .pribeh__scena { height: 92svh; filter: brightness(.8) saturate(.85); }
+  .pribeh__stin {
+    height: 92svh;
+    background: linear-gradient(180deg, rgba(43, 30, 22, .25) 0%, rgba(43, 30, 22, 0) 22%, rgba(43, 30, 22, 0) 52%, #2b1e16 100%);
+  }
+  .pribeh__text { max-width: none; }
   .certifikace { grid-template-columns: repeat(2, 1fr); }
   .citace { grid-template-columns: 1fr; gap: 14px; align-items: start; }
   .hlava-sekce { grid-template-columns: 1fr; align-items: start; }

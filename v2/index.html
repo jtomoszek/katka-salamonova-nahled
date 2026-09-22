@@ -196,12 +196,13 @@
 <!-- ============================================================
      Můj příběh — text, podpis a dvojice fotek přes sebe.
      ============================================================ -->
-<section class="sekce sekce--surface sekce--pribeh" id="pribeh">
-  <div class="krivky krivky--zrcadlo" aria-hidden="true">
-    <svg class="krivky__plocha" focusable="false" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
-      <path d="M -120.0 520.0 C -86.7 508.7 10.0 473.3 80.0 452.0 C 150.0 430.7 226.7 395.7 300.0 392.0 C 373.3 388.3 453.3 408.7 520.0 430.0 C 586.7 451.3 640.0 497.3 700.0 520.0 C 760.0 542.7 820.0 566.0 880.0 566.0 C 940.0 566.0 986.7 547.0 1060.0 520.0 C 1133.3 493.0 1276.7 423.3 1320.0 404.0" />
-    </svg>
-  </div>
+<section class="sekce sekce--pribeh" id="pribeh">
+  <!-- Fotka přes celou šířku: studiové pozadí je dokreslené do stran
+       (assets/img/katka-scena.webp vzniká z katka-cela.webp), Katka stojí
+       vpravo, text sedí vlevo do stínu. Tmavý přechod je vlastní vrstva,
+       ať jde ladit bez zásahu do obrázku. -->
+  <img class="pribeh__scena" src="../assets/img/katka-scena.webp" alt="" width="3200" height="1750" loading="lazy">
+  <div class="pribeh__stin" aria-hidden="true"></div>
 
   <div class="obal pribeh">
     <div class="pribeh__text odkryv">
@@ -211,10 +212,6 @@
       <p>Věřím, že deset procent spokojenosti určují vnější okolnosti a celých čtyřicet procent záleží čistě na nás samotných. To je dost na to, abychom byli zodpovědní za každé své rozhodnutí. Ve financích to platí dvojnásob, protože peníze jsou stále až na prvním místě.</p>
       <p>To, co dělám, beru jako práci, která mě už 20 let baví. Podařilo se mi zařadit se ke šťastlivcům, kteří si umí užít byznys a přitom dávat své práci smysl, profesionalitu a hlavně individuální přístup ke každému z vás. Díky vzájemné důvěře a otevřenosti se dostaví úspěch zachycený v číslech.</p>
       <img class="pribeh__podpis" src="../assets/img/podpis.png" alt="" width="172" height="67">
-    </div>
-
-    <div class="pribeh__fotky odkryv" style="--poradi: 1">
-      <img class="pribeh__fotka" src="../assets/img/katka-cela.webp" alt="Kateřina Šalamonová" width="1006" height="2000">
     </div>
   </div>
 </section>
