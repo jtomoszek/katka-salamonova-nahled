@@ -152,7 +152,14 @@ podpora u stavebního spoření) jsou konstanty v `kalkulacky.js` označené
 komentářem — při změně zákona je potřeba je upravit.
 
 Graf případové studie i přihlášení k odběru jsou sdílené: `css/graf.css`,
-`js/graf.js` a `js/newsletter.js` používají obě verze. Reference jsou v obou
+`js/graf.js` používá jen první verze; `js/newsletter.js` obě. Druhá verze
+má místo případové studie **srovnávací kalkulačku** (`#srovnani`,
+`v2/js/srovnani.js`): stejná měsíční částka a stejný počet let, dvě křivky
+— peníze odkládané po svém na spořicím účtu a peníze v portfoliu s Katkou —
+a mezi nimi vyplněný rozdíl. Výnosy obou cest (2 % a 6 % p.a.) jsou
+konstanty na začátku skriptu a je třeba je **potvrdit s Katkou**; poznámka
+pod posuvníky je vypisuje, takže po změně čísla souhlasí. Čáry se poprvé
+dokreslí, až sekce najede do okna, pak reagují na posuvník hned. Reference jsou v obou
 verzích skutečné — texty i fotky pocházejí z www.salamonova.cz/reference/,
 portréty jsou v `site/assets/img/reference/`.
 
