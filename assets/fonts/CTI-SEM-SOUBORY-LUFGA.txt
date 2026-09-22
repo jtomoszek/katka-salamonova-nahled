@@ -1,0 +1,11 @@
+Sem patří licencované soubory písma Lufga ve formátu woff2:
+
+  lufga-regular.woff2    (váha 400)
+  lufga-medium.woff2     (váha 500)
+  lufga-semibold.woff2   (váha 600)
+
+Lufga je komerční písmo, do repozitáře ho nelze přidat bez licence.
+Dokud soubory chybí, prohlížeč tiše použije Poppins — web funguje
+dál, jen nadpisy vypadají o něco jinak.
+
+Odkazy na soubory jsou v site/v2/css/v2.css (@font-face nahoře).

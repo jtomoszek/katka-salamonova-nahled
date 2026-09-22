@@ -1,15 +1,14 @@
 /* Pohyb druhé verze webu.
  *
- *  1) titulní fotka z ostré měkne a lehce se přibližuje, přepínač
- *     se z tečky rozsvítí a doroste (--zrod),
+ *  1) titulní fotka z ostré měkne a lehce se přibližuje,
  *  2) přepínač SVOBODA cvakne, jakmile sekce projede zhruba do půlky;
  *     s ním se mění pozadí i zvýrazněný řádek (--zapnuto),
- *  3) oblouk, kterým sekce najíždí na fotku, se narovnává (--oblouk),
- *  4) lišta si podle podkladu pod sebou přepíná barvu písma,
- *  5) obsah sekcí najíždí zdola,
- *  6) menu přes celou obrazovku.
+ *  3) sekce filozofie se do fotky prolne (--najeto),
+ *  4) linky na pozadí sekcí se dokreslují, jak sekce projíždějí,
+ *  5) v „Hranicích spolupráce“ se přepíná druhá číslice,
+ *  6) lišta si podle podkladu pod sebou přepíná barvu písma,
+ *  7) obsah sekcí najíždí zdola a menu jede přes celou obrazovku.
  *
- * Tvar linky se počítá z rozměrů sekcí, aby seděl na každém displeji.
  * Všechno, co se hýbe, se vypne při zapnutém „omezit pohyb“.
  */
 (function () {
@@ -64,7 +63,6 @@
   });
 
   var ZLOM = 0.45;        // v jaké části sekce přepínač cvakne
-  var KONEC_KRESBY = 0.3; // kdy linka dojede ke knoflíku
 
   function omez(h, min, max) { return h < min ? min : (h > max ? max : h); }
 
@@ -103,17 +101,13 @@
       prepinac.style.setProperty('--najeto', najeto.toFixed(3));
     }
 
-    // 3) kreslení stuh, zrod přepínače a jeho přehození
+    // 3) přehození přepínače SVOBODA
     var zapnuto = false;
     if (prepinac) {
       var drahaSticky = prepinac.offsetHeight - oknoVyska;
       var postup = drahaSticky > 0
         ? omez(-prepinac.getBoundingClientRect().top / drahaSticky, 0, 1)
         : 0;
-
-      // z tečky vyroste přepínač, jakmile sekce projede kousek dál
-      var zrod = omez((postup - KONEC_KRESBY * 0.92) / (KONEC_KRESBY * 0.5), 0, 1);
-      prepinac.style.setProperty('--zrod', zrod.toFixed(3));
 
       zapnuto = postup > ZLOM;
       prepinac.classList.toggle('je-zapnuto', zapnuto);

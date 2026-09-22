@@ -27,7 +27,7 @@
 
   /* písmo: patkové na displeje, Poppins (z první verze) na text */
   --font:          'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-display:  'Crimson Text', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --font-display:  'Lufga', 'Poppins', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --fs-body:       16px;
 
   --sirka:         1180px;
@@ -42,8 +42,30 @@
   --mekkost:       0;
   /* 0 = přepínač vypnutý, 1 = zapnutý (nastavuje js/v2.js) */
   --zapnuto:       0;
-  /* 0 = přepínač ještě není, 1 = hotový; linka ho „přinese“ */
-  --zrod:          1;
+}
+
+/* Lufga je komerční písmo — soubory patří do site/assets/fonts/.
+   Dokud tam nejsou, prohlížeč tiše použije Poppins z rodiny níž. */
+@font-face {
+  font-family: 'Lufga';
+  src: url('../../assets/fonts/lufga-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lufga';
+  src: url('../../assets/fonts/lufga-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Lufga';
+  src: url('../../assets/fonts/lufga-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -458,17 +480,15 @@ a { color: inherit; }
   letter-spacing: .2em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, .8);
-  opacity: clamp(0, calc((var(--zrod) - .45) * 2.4), 1);
-  transform: translateX(calc((1 - var(--zrod)) * -12px));
   transition: color .6s ease;
 }
 .spinac__telo {
   position: relative;
-  width: calc(30px + var(--zrod) * 28px);
+  width: 58px;
   height: 30px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, calc(var(--zrod) * .28));
-  transition: background .5s ease;
+  background: rgba(255, 255, 255, .28);
+  transition: background .45s ease;
 }
 .spinac__knoflik {
   position: absolute;
@@ -476,13 +496,10 @@ a { color: inherit; }
   width: 24px; height: 24px;
   border-radius: 50%;
   background: var(--white);
-  /* Tečka je vidět od chvíle, kdy se sekce objeví — linka k ní teprve
-     doputuje. Teprve pak z ní doroste dráha a popisek. */
-  opacity: 1;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .2),
-              0 0 calc((1 - var(--zrod)) * 14px) calc((1 - var(--zrod)) * 2px) rgba(255, 255, 255, .7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+  /* cvaknutí: knoflík přejede s mírným přeskočením, ať je změna vidět */
   transform: translateX(calc(var(--zapnuto) * 28px));
-  transition: transform .5s cubic-bezier(.3, 1.4, .5, 1);
+  transition: transform .45s cubic-bezier(.34, 1.56, .5, 1);
 }
 
 .prepinac__nadpis {
@@ -637,26 +654,14 @@ a { color: inherit; }
 .pribeh__text p { font-size: 15.5px; color: var(--tlumeny); max-width: 46ch; }
 .pribeh__podpis { margin-top: 30px; width: 150px; opacity: .85; }
 
-/* Dvě fotky přes sebe — stejný motiv jako v šabloně. */
-.pribeh__fotky { position: relative; padding: 0 0 48px 48px; }
-.pribeh__fotky img { border-radius: 16px; }
-/* Portrét je na výšku 1:2 — ořez na 4:5 drží sloupec v rozumné výšce. */
-.pribeh__hlavni {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  max-height: 620px;
-  object-fit: cover;
-  object-position: center 22%;
+/* Jedna fotka na celou postavu — ať je klientka vidět i s botami. */
+.pribeh__fotky { display: flex; justify-content: center; }
+.pribeh__fotka {
+  width: auto;
+  max-width: 100%;
+  max-height: min(78vh, 760px);
+  border-radius: 16px;
   box-shadow: 0 30px 60px -40px rgba(77, 54, 37, .6);
-}
-.pribeh__vedlejsi {
-  position: absolute;
-  left: 0; bottom: 0;
-  width: 46%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border: 6px solid var(--surface);
-  box-shadow: 0 20px 50px -30px rgba(77, 54, 37, .7);
 }
 
 
