@@ -222,80 +222,92 @@
 
 
 <!-- ============================================================
-     Profesní milníky s velkými číslicemi + certifikace.
+     Profesní milníky jako vodorovná časová osa. Panel se přilepí
+     a osa se zleva doprava dokresluje podle toho, kolik obalu už
+     projelo (--postup nastavuje js/v2.js). Pod osou stojí řádek
+     odborností — jen ikona, zkratka a popis, žádné karty.
      ============================================================ -->
-<section class="sekce">
+<section class="sekce sekce--milniky" id="milniky">
+  <div class="osa-vrstva">
+    <div class="osa-panel">
+      <div class="obal">
+        <div class="sekce__hlava odkryv">
+          <span class="stitek">Profesní milníky</span>
+          <h2 class="display">Cesta k architektuře</h2>
+        </div>
+
+        <div class="osa" data-osa>
+          <div class="osa__linka" aria-hidden="true"><span class="osa__vypln"></span></div>
+
+          <ol class="osa__body">
+            <li class="osa__bod">
+              <span class="osa__tecka" aria-hidden="true"></span>
+              <span class="osa__rok">2005</span>
+              <h3>Plné nasazení v osobních financích</h3>
+              <p>Zápis do registru ČNB a budování vlastního týmu pro komplexní péči o klienty.</p>
+            </li>
+
+            <li class="osa__bod">
+              <span class="osa__tecka" aria-hidden="true"></span>
+              <span class="osa__rok">Od roku 2008</span>
+              <h3>PFP certifikace a lektorství</h3>
+              <p>Lektorka přednášek v ZPF Akademii. Získání prestižní certifikace Poradce finančního plánování od EFPA.</p>
+            </li>
+
+            <li class="osa__bod">
+              <span class="osa__tecka" aria-hidden="true"></span>
+              <span class="osa__rok">2024</span>
+              <h3>Spoluzakladatelka Fines group s.r.o.</h3>
+              <p>Zahájení strategické spolupráce se společností EFEKTA brokerpool a.s.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="obal">
-    <div class="sekce__hlava odkryv">
-      <span class="stitek">Profesní milníky</span>
-      <h2 class="display">Cesta k architektuře</h2>
-    </div>
-
-    <div class="milnik odkryv">
-      <div>
-        <span class="milnik__rok">2024</span>
-        <h3>Spoluzakladatelka Fines group s.r.o.</h3>
-        <p>Zahájení strategické spolupráce se společností EFEKTA brokerpool a.s.</p>
-      </div>
-      <p class="milnik__cislo display" aria-hidden="true">01</p>
-    </div>
-
-    <div class="milnik odkryv">
-      <div>
-        <span class="milnik__rok">Od roku 2008</span>
-        <h3>PFP Certifikace a Lektorství</h3>
-        <p>Lektorka přednášek v ZPF Akademii. Získání prestižní certifikace Poradce finančního plánování od EFPA.</p>
-      </div>
-      <p class="milnik__cislo display" aria-hidden="true">02</p>
-    </div>
-
-    <div class="milnik odkryv">
-      <div>
-        <span class="milnik__rok">2005</span>
-        <h3>Plné nasazení v osobních financích</h3>
-        <p>Zápis do registru ČNB a budování vlastního týmu pro komplexní péči o klienty.</p>
-      </div>
-      <p class="milnik__cislo display" aria-hidden="true">03</p>
-    </div>
-
-    <div class="certifikace">
-      <div class="cert odkryv" style="--poradi: 0">
+    <ul class="certifikace">
+      <li class="cert odkryv" style="--poradi: 0">
         <span class="cert__ikona" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="9.5" r="5.5"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.4 14.4 7 21l5-2.4L17 21l-1.4-6.6"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="9" r="5.2"/><path d="m9.8 9.2 1.6 1.6 3-3.1"/><path d="M8.6 13.6 7.2 21l4.8-2.3L16.8 21l-1.4-7.4"/>
           </svg>
         </span>
-        <h3>EFPA</h3>
-        <p>Poradce finančního<br>plánování (PFP)</p>
-      </div>
-      <div class="cert odkryv" style="--poradi: 1">
+        <b>EFPA</b>
+        <span>Poradce finančního plánování (PFP)</span>
+      </li>
+
+      <li class="cert odkryv" style="--poradi: 1">
         <span class="cert__ikona" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="9.5" r="5.5"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.4 14.4 7 21l5-2.4L17 21l-1.4-6.6"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.8 4.5 5.9v5.4c0 4.5 3.1 8.1 7.5 9.6 4.4-1.5 7.5-5.1 7.5-9.6V5.9Z"/><path d="m9.2 11.8 2 2 3.6-3.9"/>
           </svg>
         </span>
-        <h3>ČNB</h3>
-        <p>Regulovaný subjekt<br>finančního trhu</p>
-      </div>
-      <div class="cert odkryv" style="--poradi: 2">
+        <b>ČNB</b>
+        <span>Regulovaný subjekt finančního trhu</span>
+      </li>
+
+      <li class="cert odkryv" style="--poradi: 2">
         <span class="cert__ikona" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="9.5" r="5.5"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.4 14.4 7 21l5-2.4L17 21l-1.4-6.6"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3.4 2.6 8.2 12 13l9.4-4.8Z"/><path d="M6.4 10.4v5c0 1.7 2.5 3 5.6 3s5.6-1.3 5.6-3v-5"/><path d="M21.4 8.2v6"/>
           </svg>
         </span>
-        <h3>DIP</h3>
-        <p>Investiční<br>akademie</p>
-      </div>
-      <div class="cert odkryv" style="--poradi: 3">
+        <b>DIP</b>
+        <span>Investiční akademie</span>
+      </li>
+
+      <li class="cert odkryv" style="--poradi: 3">
         <span class="cert__ikona" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="9.5" r="5.5"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.4 14.4 7 21l5-2.4L17 21l-1.4-6.6"/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9.2"/><path d="M12 6.6V12l3.6 2.2"/>
           </svg>
         </span>
-        <h3>20 let</h3>
-        <p>Více než praxe<br>v oboru</p>
-      </div>
-    </div>
+        <b>20 let</b>
+        <span>Více než praxe v oboru</span>
+      </li>
+    </ul>
   </div>
 </section>
 

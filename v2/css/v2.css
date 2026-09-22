@@ -665,25 +665,76 @@ a { color: inherit; }
 }
 
 
-/* ---------- milníky (velké číslice) ----------------------- */
+/* ---------- profesní milníky: vodorovná časová osa --------- */
 
-.milnik {
+/* Obal je vyšší než okno, panel se v něm přilepí — ten rozdíl je dráha,
+   po které se osa zleva doprava dokresluje. Vlastní kreslení řídí
+   js/v2.js proměnnou --postup (0 až 1). */
+.osa-vrstva { height: calc(100svh + 90vh); }
+.osa-panel {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100svh;
+}
+
+.osa { position: relative; }
+
+.osa__linka {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--hairline);
+}
+.osa__vypln {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--copper-dark);
+  transform: scaleX(var(--postup, 0));
+  transform-origin: left center;
+}
+
+.osa__body {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(16px, 4vw, 64px);
-  align-items: center;
-  padding: clamp(26px, 4vw, 48px) 0;
-  border-top: 1px solid var(--hairline);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 3.4vw, 56px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.milnik__cislo {
-  font-family: var(--font-display);
-  font-size: clamp(90px, 15vw, 190px);
-  line-height: .9;
-  color: var(--copper);
-  opacity: .5;
+
+/* Bod čeká ztlumený, dokud k němu linka nedojede. */
+.osa__bod {
+  position: relative;
+  padding: 34px clamp(8px, 1.6vw, 24px) 0 0;
+  opacity: .28;
+  transform: translateY(12px);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.22, .8, .3, 1);
 }
-.milnik:nth-child(even) .milnik__cislo { order: -1; text-align: right; }
-.milnik__rok {
+.osa__bod.je-tam { opacity: 1; transform: none; }
+
+.osa__tecka {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--papir);
+  box-shadow: inset 0 0 0 1px rgba(77, 54, 37, .28);
+  transition: background .45s ease, box-shadow .45s ease;
+}
+.osa__bod.je-tam .osa__tecka {
+  background: var(--copper-dark);
+  box-shadow: 0 0 0 5px rgba(184, 138, 94, .18);
+}
+
+.osa__rok {
   display: block;
   margin-bottom: 10px;
   font-size: 11px;
@@ -692,29 +743,56 @@ a { color: inherit; }
   text-transform: uppercase;
   color: var(--copper-dark);
 }
-.milnik h3 { font-family: var(--font-display); font-size: clamp(26px, 3vw, 38px); line-height: 1.15; }
-/* jen text vedle číslice — kdyby to platilo na všechna <p>, přebilo by to
-   i velkou číslici, která je taky odstavec */
-.milnik div p { margin: 14px 0 0; font-size: 15px; color: var(--tlumeny); }
+.osa__bod h3 {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 28px);
+  line-height: 1.2;
+  color: var(--brown);
+}
+.osa__bod p {
+  margin: 12px 0 0;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--tlumeny);
+}
 
+/* ---------- odbornosti pod osou --------------------------- */
+
+/* Bez karet: jen malá ikona, zkratka a jeden řádek popisu. */
 .certifikace {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: clamp(12px, 1.6vw, 20px);
-  margin-top: clamp(36px, 6vh, 64px);
+  gap: clamp(18px, 2.6vw, 40px);
+  margin: 0;
+  padding: clamp(26px, 4vh, 44px) 0 0;
+  border-top: 1px solid var(--hairline);
+  list-style: none;
 }
 .cert {
-  padding: 24px 20px;
-  border-radius: 16px;
-  background: var(--white);
-  box-shadow: inset 0 0 0 1px var(--hairline);
-  text-align: center;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: start;
+  gap: 4px 12px;
 }
-.sekce--surface .cert { background: var(--white); }
-.cert__ikona { width: 26px; height: 26px; margin: 0 auto 12px; color: var(--copper); }
+.cert__ikona {
+  grid-row: span 2;
+  width: 22px;
+  height: 22px;
+  margin-top: 1px;
+  color: var(--copper);
+}
 .cert__ikona svg { width: 100%; height: 100%; }
-.cert h3 { font-family: var(--font-display); font-size: 26px; }
-.cert p { margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: var(--tlumeny); }
+.cert b {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--brown);
+}
+.cert span {
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--tlumeny);
+}
 
 
 /* ---------- případová studie ------------------------------ */
@@ -894,8 +972,8 @@ a { color: inherit; }
 
 .citace__text {
   margin: 0;
-  font-size: clamp(22px, 2.9vw, 38px);
-  line-height: 1.24;
+  font-size: clamp(17px, 1.5vw, 23px);
+  line-height: 1.5;
   color: var(--brown);
 }
 /* Rozbalení dlouhé reference — bez skriptu, stačí <details>. */
@@ -1077,9 +1155,24 @@ a { color: inherit; }
     opacity: .35;
   }
   .krok { min-height: 0; padding: 22px 0 38px; }
-  .milnik { grid-template-columns: 1fr; gap: 6px; }
-  .milnik:nth-child(even) .milnik__cislo { order: 0; text-align: left; }
-  .milnik__cislo { font-size: clamp(64px, 18vw, 110px); }
+  /* Na úzkém displeji se osa postaví a kreslí se shora dolů; panel se
+     nelepí, protože body už se nevejdou vedle sebe. Obal bez přesahu
+     zároveň říká skriptu, že se má počítat průjezdem okna. */
+  .osa-vrstva { height: auto; }
+  .osa-panel { position: static; min-height: 0; display: block; }
+  .osa__body { grid-template-columns: 1fr; gap: clamp(28px, 5vh, 44px); }
+  .osa__linka {
+    top: 0;
+    bottom: 0;
+    left: 7px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .osa__vypln { transform: scaleY(var(--postup, 0)); transform-origin: center top; }
+  .osa__bod { padding: 0 0 0 34px; transform: translateX(10px); }
+  .osa__bod.je-tam { transform: none; }
+  .osa__tecka { top: 1px; }
 }
 
 @media (max-width: 700px) {
