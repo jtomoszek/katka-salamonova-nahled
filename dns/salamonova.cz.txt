@@ -1,0 +1,40 @@
+;; DNS záznamy salamonova.cz k importu do vlastního účtu Cloudflare
+;; (Add a domain → pak DNS → Import and Export → Import DNS records).
+;; Posbíráno z veřejného DNS 26. 9. 2026. Ve staré zóně jde všechno přes
+;; proxy Cloudflare včetně pošty; tady jsou poštovní hostitelé úmyslně
+;; „DNS only“ (šedý mrak), protože proxy Cloudflare umí jen HTTP a
+;; IMAP/SMTP by přes ni nefungovaly. Po importu zkontrolujte, že mrak
+;; svítí oranžově jen u @ a www.
+;;
+;; 88.86.119.65 = ion06.vas-server.cz, server vas-hostingu, kde běží
+;; původní web i pošta.
+
+$ORIGIN salamonova.cz.
+$TTL 300
+
+; web — po nasazení Workeru (routes ve wrangler.jsonc) obslouží tyto dva
+; hostitele Worker; záznamy zůstávají, jen musí být proxované (oranžově)
+@            IN A     88.86.119.65
+www          IN A     88.86.119.65
+
+; pošta zůstává na vas-hostingu — tyto záznamy nechat DNS only (šedě)
+@            IN MX 10 ion06.vas-server.cz.
+mail         IN A     88.86.119.65
+webmail      IN A     88.86.119.65
+smtp         IN A     88.86.119.65
+imap         IN A     88.86.119.65
+pop3         IN A     88.86.119.65
+autoconfig   IN A     88.86.119.65
+autodiscover IN A     88.86.119.65
+ftp          IN A     88.86.119.65
+
+; ověření a SPF (beze změny)
+@            IN TXT   "v=spf1 a mx ?all"
+@            IN TXT   "google-site-verification=cG0oTrqGvytSKwKCRWguW-iuGY6UmlAVvyiXvODb1lQ"
+
+; DMARC ve staré zóně není; volitelný minimální záznam (jen hlášení, nic
+; neblokuje). Odkomentujte, až bude kam hlášení posílat:
+; _dmarc      IN TXT   "v=DMARC1; p=none; rua=mailto:dmarc@salamonova.cz"
+
+; Newsletter posílá Resend — po ověření domény v Resendu sem přibudou
+; jeho záznamy (DKIM resend._domainkey, MX/SPF pro send.salamonova.cz).

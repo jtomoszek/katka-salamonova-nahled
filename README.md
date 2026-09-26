@@ -179,6 +179,11 @@ projíždí rozostřený a s textem lišty se nesráží. Reference jsou v obou
 verzích skutečné — texty i fotky pocházejí z www.salamonova.cz/reference/,
 portréty jsou v `site/assets/img/reference/`.
 
+## Nasazení na ostrou doménu
+
+Postup, stav DNS a checklist před spuštěním jsou v [NASAZENI.md](NASAZENI.md);
+záznamy k importu do Cloudflare v `dns/salamonova.cz.txt`.
+
 ## Lokální náhled
 
 ```bash

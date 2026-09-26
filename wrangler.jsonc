@@ -35,8 +35,18 @@
   // Každou minutu odejde další dávka e-mailů z fronty.
   "triggers": { "crons": ["* * * * *"] },
 
+  // Ostrá doména. Odkomentovat, až bude zóna salamonova.cz v tomto účtu
+  // Cloudflare (postup v NASAZENI.md). Worker pak obslouží celou doménu
+  // místo původního hostingu; záznamy A pro @ a www zůstávají, jen musí
+  // být proxované (oranžový mrak). Zároveň přepnout WEB_URL níže.
+  // "routes": [
+  //   { "pattern": "salamonova.cz/*", "zone_name": "salamonova.cz" },
+  //   { "pattern": "www.salamonova.cz/*", "zone_name": "salamonova.cz" }
+  // ],
+
   "vars": {
     // Veřejná adresa webu — z ní se skládají odkazy v e-mailech.
+    // Po nasazení na doménu: "https://salamonova.cz"
     "WEB_URL": "https://katka-salamonova.jtomoszek.workers.dev",
     // Odesílatel musí být na doméně ověřené u Resendu.
     "ODESILATEL": "Kateřina Šalamonová <novinky@DOPLNIT-DOMENU.cz>",
